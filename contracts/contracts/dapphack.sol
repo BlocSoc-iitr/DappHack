@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.19;
+pragma solidity ^0.8.19;
+import {ProjectNFTs} from "./project.sol";
 
-contract DappHack {
+contract DappHack is ProjectNFTs {
     ///////////////////
     // Errors
     ///////////////////
@@ -24,6 +25,7 @@ contract DappHack {
         string name;
         address[] participants;
         bool validProject;
+        bool projectSubmitted;
     }
 
     struct Winner {
@@ -76,7 +78,7 @@ contract DappHack {
     );
     event BuilderSignedUp(address indexed builder);
     event TeamInitialized(string name, address[] participants);
-    event ProjectSubmitted(uint256 teamNumber, uint256 projectNftId);
+    event ProjectSubmitted(uint256 teamNumber, string nftUri);
     event WinnerJudged(uint256 trackNumber, uint256 winnerNumber);
     event PrizeDistributed(uint256 amount);
 
@@ -129,22 +131,24 @@ contract DappHack {
      * @dev Initializes the contract with the given parameters.
      * @param startTime The start time of the competition.
      * @param endTime The end time of the competition.
-     * @param totalPrizePool The total prize pool for the competition.
      * @param maxParticipants The maximum number of participants allowed in the competition.
      * @param teamSizeLimit The maximum size of a team in the competition.
      * @param organizers The addresses of the organizers of the competition.
+     * @param name The name of the project NFT.
+     * @param symbol The symbol of the project NFT.
      */
     constructor(
         uint256 startTime,
         uint256 endTime,
-        uint256 totalPrizePool,
         uint256 maxParticipants,
         uint256 teamSizeLimit,
-        address[] memory organizers
-    ) {
+        address[] memory organizers,
+        string memory name,
+        string memory symbol
+    ) ProjectNFTs(name, symbol) {
         s_startTime = startTime;
         s_endTime = endTime;
-        s_totalPrizePool = totalPrizePool;
+        s_totalPrizePool = 0;
         s_maxParticipants = maxParticipants;
         s_teamSizeLimit = teamSizeLimit;
         s_organizers = organizers;
@@ -211,7 +215,7 @@ contract DappHack {
         string memory name,
         address[] memory participants
     ) public OnlyValidTeamSize(participants.length) {
-        s_teams.push(Team(name, participants, false));
+        s_teams.push(Team(name, participants, false, false));
         for (uint256 i = 0; i < participants.length; i++) {
             builderToTeam[participants[i]] = s_teams[s_teams.length - 1];
         }
@@ -221,15 +225,25 @@ contract DappHack {
     /**
      * @dev Submits a project for the competition.
      * @param teamNumber The index of the team in the `s_teams` array.
-     * @param projectNftId The ID of the project NFT.
+     * @param nftUri The ID of the project NFT.
      */
     function submitProject(
         uint256 teamNumber,
-        uint256 projectNftId
-    ) public OnlyValidProject(teamNumber) {
+        string memory nftUri
+    ) public OnlyBuilder {
+        require(
+            s_teams[teamNumber].projectSubmitted == false,
+            "Project already submitted"
+        );
         s_teams[teamNumber].validProject = true;
-        teamToProject[teamNumber] = projectNftId;
-        emit ProjectSubmitted(teamNumber, projectNftId);
+        for (uint256 i = 0; i < s_teams[teamNumber].participants.length; i++) {
+            mint();
+            setTokenOwner(s_tokenId, s_teams[teamNumber].participants[i]);
+            setOwnerTokenId(s_teams[teamNumber].participants[i], s_tokenId);
+            setTokenUri(s_tokenId, nftUri);
+            s_teams[teamNumber].projectSubmitted = true;
+        }
+        emit ProjectSubmitted(teamNumber, nftUri);
     }
 
     /**
@@ -268,6 +282,15 @@ contract DappHack {
     function returnStake(address sponsor) public payable {}
 
     // internal
+    function transferNFTAfterHackathon(
+        uint256 teamNumber
+    ) internal OnlyValidProject(teamNumber) {
+        Team memory t = s_teams[teamNumber];
+        for (uint256 i = 0; i < t.participants.length; i++) {
+            transferNFT(t.participants[i], tokenIdOf(t.participants[i]));
+        }
+    }
+
     // private
 
     // internal & private view & pure functions
