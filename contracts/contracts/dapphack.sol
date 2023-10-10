@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
+import {ProjectNFTs} from "./project.sol";
 
-contract DappHack {
+contract DappHack is ProjectNFTs {
     ///////////////////
     // Errors
     ///////////////////
@@ -17,15 +18,15 @@ contract DappHack {
         string name;
         address[] sponsors;
         uint256[] prizeArray; //track ke lie prize distribution
-        uint256 poolPrize; 
+        uint256 poolPrize;
         uint256 numberOfPoolPrize;
-
     }
 
     struct Team {
         string name;
         address[] participants;
         bool validProject;
+        bool projectSubmitted;
     }
 
     struct Winner {
@@ -62,15 +63,15 @@ contract DappHack {
     //teams
     Team[] public s_teams;
 
-    //mapping(uint256 => uint256) public teamToProject; 
-   
+    //mapping(uint256 => uint256) public teamToProject;
+
     //winners
     Winner[] public s_winners;
 
     mapping(uint256 => Winner) public sponsorToWinner; //track number to winner number
-    
+
     // Eventsteam
-    event SponsorSignedUp(string name, address indexed sponsor, uint256 prize); 
+    event SponsorSignedUp(string name, address indexed sponsor, uint256 prize);
     event PrizePoolChanged(
         address indexed sponsor,
         uint256 oldPrize,
@@ -78,7 +79,7 @@ contract DappHack {
     );
     event BuilderSignedUp(address indexed builder);
     event TeamInitialized(string name, address[] participants);
-    event ProjectSubmitted(uint256 teamNumber, uint256 projectNftId);
+    event ProjectSubmitted(uint256 teamNumber, string nftUri);
     event WinnerJudged(uint256 trackNumber, uint256 winnerNumber);
     event PrizeDistributed(uint256 amount);
 
@@ -88,7 +89,10 @@ contract DappHack {
     modifier OnlySponsor() {
         //implement by getting sponsor id from sponsor address
 
-        require(sponsorToId[msg.sender] != 0, "Only sponsors can call this function")
+        require(
+            sponsorToId[msg.sender] != 0,
+            "Only sponsors can call this function"
+        );
         _;
     }
     modifier OnlyBuilder() {
@@ -123,17 +127,19 @@ contract DappHack {
         );
         _;
     }
-    
+
     //create mapping for this
-    modifier NotInTeam () {
-        require(s_teams[msg.sender] == 0, "Already in a team");
+    modifier NotInTeam() {
+        // require(s_teams[msg.sender] == 0, "Already in a team");
         _;
     }
-    
+
     //create mapping for this
     modifier NotAlreadySignedUp() {
-        require(s_builders[msg.sender] == 0, "Already signed up");
+        // require(s_builders[msg.sender] == 0, "Already signed up");
+        _;
     }
+
     // Functions
 
     // Layout of Functions:
@@ -143,18 +149,21 @@ contract DappHack {
      * @dev Initializes the contract with the given parameters.
      * @param startTime The start time of the competition.
      * @param endTime The end time of the competition.
-     * @param totalPrizePool The total prize pool for the competition.
      * @param maxParticipants The maximum number of participants allowed in the competition.
      * @param teamSizeLimit The maximum size of a team in the competition.
      * @param organizers The addresses of the organizers of the competition.
+     * @param name The name of the project NFT.
+     * @param symbol The symbol of the project NFT.
      */
     constructor(
         uint256 startTime,
         uint256 endTime,
         uint256 maxParticipants,
         uint256 teamSizeLimit,
-        address[] memory organizers
-    ) {
+        address[] memory organizers,
+        string memory name,
+        string memory symbol
+    ) ProjectNFTs(name, symbol) {
         s_startTime = startTime;
         s_endTime = endTime;
         s_totalPrizePool = 0;
@@ -171,42 +180,88 @@ contract DappHack {
 
     // external
     // public
+    /**
+     * @dev Distributes the prize for a track to the organizers.
+     * @param prize The prize amount.
+     * @param team The team that won the track.
+     */
+    function distributePrizeTrack(
+        uint256 prize,
+        Team memory team
+    ) public payable OnlyOrganizer {
+        uint256 num = team.participants.length;
+        uint256 prizeToEach = prize / num;
+
+        for (uint i = 0; i < num; ++i) {
+            payable(msg.sender).transfer(prizeToEach);
+        }
+    }
+
+    /**
+     * @dev Distributes the prize for a pool prize to the organizers.
+     * @param prize The prize amount.
+     * @param team The team that won the pool prize.
+     */
+
+    function distributePrizePool(
+        uint256 prize,
+        Team memory team
+    ) public payable OnlyOrganizer {
+        uint256 num = team.participants.length;
+        uint256 prizeToEach = prize / num;
+        for (uint i = 0; i < num; ++i) {
+            payable(msg.sender).transfer(prizeToEach);
+        }
+    }
 
     /**
      * @dev Allows a sponsor to sign up for the competition and contribute to the prize pool.
      * @param name The name of the sponsor.
      */
-    function sponsorSignup(string memory name, address[] _sponsors , uint256[] _prizeArray , uint256 _poolPrize , uint256 _number0fPoolPrize) public payable {
-       
-        // send a positive value 
+    function sponsorSignup(
+        string memory name,
+        address[] memory _sponsors,
+        uint256[] memory _prizeArray,
+        uint256 _poolPrize,
+        uint256 _number0fPoolPrize
+    ) public payable {
+        // send a positive value
         require(msg.value > 0, "Invalid prize amount");
-        
+
         uint256 sum = 0;
 
-        for(int i=0;i<_prizeArray.length;++i){
-           sum += _prizeArray[i];
+        for (uint i = 0; i < _prizeArray.length; ++i) {
+            sum += _prizeArray[i];
         }
-        
+
         // they give the right amount of prize
         require(msg.value >= sum + _poolPrize, "Invalid prize amount");
-        
+
         //send the money to our escrow contract
-        payable(address(this)).transfer(msg.value);       
+        payable(address(this)).transfer(msg.value);
         // update total prize pool
         s_totalPrizePool += msg.value;
-        
+
         s_sponsors.push(
-            Sponsor(name,_sponsors,_prizeArray,_poolPrize,_number0fPoolPrize);
+            Sponsor(
+                name,
+                _sponsors,
+                _prizeArray,
+                _poolPrize,
+                _number0fPoolPrize
+            )
         );
-        
+
         // give each sponsor a sponsor protocol
-        for(int i=0;i<_sponsors.length;++i){
-           sponsorToSponsorProtocol[_sponsors[i]] = s_sponsors[s_sponsors.length - 1];
+        for (uint i = 0; i < _sponsors.length; ++i) {
+            sponsorToSponsorProtocol[_sponsors[i]] = s_sponsors[
+                s_sponsors.length - 1
+            ];
         }
 
         //give sponsor a id
         sponsorToId[msg.sender] = s_sponsors.length - 1;
-        
+
         //add in sponsor prizepool array
         sponsorPrizePool[s_sponsors.length - 1] = msg.value; //safe when sponsor cant be deleted.
 
@@ -219,48 +274,44 @@ contract DappHack {
      * @param newPrize The new prize amount for the sponsor.
      */
 
-
     function changePrizePool(
         uint256 sponsorNumber,
         uint256 newPrize
     ) public payable OnlySponsor {
-
         require(newPrize > 0, "Invalid prize amount");
 
-        Sponsor public sponsor = s_sponsors[sponsorNumber];
+        Sponsor memory sponsor = s_sponsors[sponsorNumber];
 
-        int temp_sum = 0;
-        uint256[] temp_array = sponsor.prizeArray;
-        for(int i=0;i<temp_array.length;++i){
-           temp_sum += temp_array[i];
+        uint256 temp_sum = 0;
+        uint256[] memory temp_array = sponsor.prizeArray;
+        for (uint i = 0; i < temp_array.length; ++i) {
+            temp_sum += temp_array[i];
         }
-         
+
         // check that the newPrize fund is greater than the sum of all the prizes
-        require(newPrize >= temp_sum + sponsor.poolPrize, "Invalid prize amount");
-        
-        
+        require(
+            newPrize >= temp_sum + sponsor.poolPrize,
+            "Invalid prize amount"
+        );
+
         uint256 oldPrize = sponsorPrizePool[sponsorNumber];
 
+        int amt = int(newPrize - oldPrize);
 
-        int amt = newPrize - oldPrize;
-
-        if(amt>=0){
-           payable(address(this)).transfer(amt);
-        }else{
-           msg.sender.transfer(-amt);
+        if (amt >= 0) {
+            payable(address(this)).transfer(uint256(amt));
+        } else {
+            payable(msg.sender).transfer(uint256(-amt));
         }
         //update total prize pool
-        s_totalPrizePool += amt;
+        s_totalPrizePool += uint256(amt);
 
         //prizePoolStructChange to be called
-
 
         sponsorPrizePool[sponsorNumber] = newPrize;
         s_sponsors[sponsorNumber].poolPrize = newPrize;
 
-
         emit PrizePoolChanged(msg.sender, oldPrize, newPrize);
-
     }
 
     function changePrizePoolSTruct() public payable {
@@ -270,12 +321,15 @@ contract DappHack {
     /**
      * @dev Allows a builder to sign up for the competition.
      */
-    function builderSignup() public payable OnlyMaxParticipantsNotReached , NotAlreadySignedUp {
-
+    function builderSignup()
+        public
+        payable
+        OnlyMaxParticipantsNotReached
+        NotAlreadySignedUp
+    {
         require(msg.value >= STAKE, "Insufficient stake");
 
         s_builders.push(msg.sender);
-
 
         //transfer stake to contract
 
@@ -294,11 +348,10 @@ contract DappHack {
     function initializeTeam(
         string memory name,
         address[] memory participants
-    ) public OnlyValidTeamSize , NotInTeam {
-
+    ) public OnlyValidTeamSize(participants.length) NotInTeam {
         //add the team to the team array
-        s_teams.push(Team(name, participants, false)); // ATTACK_VECTOR: People can add members already in a team , a Problem
-        
+        s_teams.push(Team(name, participants, false, false)); // ATTACK_VECTOR: People can add members already in a team , a Problem
+
         // give the team to builder in mapping
 
         for (uint256 i = 0; i < participants.length; i++) {
@@ -307,21 +360,31 @@ contract DappHack {
 
         emit TeamInitialized(name, participants);
 
-        //team withdraw ? 
+        //team withdraw ?
     }
 
     /**
      * @dev Submits a project for the competition.
      * @param teamNumber The index of the team in the `s_teams` array.
-     * @param projectNftId The ID of the project NFT.
+     * @param nftUri The ID of the project NFT.
      */
     function submitProject(
         uint256 teamNumber,
-        uint256 projectNftId
-    ) public (uint256 teamNumber) { 
+        string memory nftUri
+    ) public OnlyBuilder {
+        require(
+            s_teams[teamNumber].projectSubmitted == false,
+            "Project already submitted"
+        );
         s_teams[teamNumber].validProject = true;
-        teamToProject[teamNumber] = projectNftId;
-        emit ProjectSubmitted(teamNumber, projectNftId);
+        for (uint256 i = 0; i < s_teams[teamNumber].participants.length; i++) {
+            mint();
+            setTokenOwner(s_tokenId, s_teams[teamNumber].participants[i]);
+            setOwnerTokenId(s_teams[teamNumber].participants[i], s_tokenId);
+            setTokenUri(s_tokenId, nftUri);
+            s_teams[teamNumber].projectSubmitted = true;
+        }
+        emit ProjectSubmitted(teamNumber, nftUri);
     }
 
     /**
@@ -331,7 +394,7 @@ contract DappHack {
      */
 
     function judgeWinner(
-        string _sponsor_name.
+        string memory _sponsor_name,
         uint256[] memory trackWinners,
         uint256[] memory poolPrizeWinners
     ) public OnlySponsor {
@@ -339,7 +402,9 @@ contract DappHack {
 
         s_winners.push(Winner(_sponsor_name, trackWinners, poolPrizeWinners));
 
-        sponsorToWinner[sponsorToId[msg.sender]] = s_winners[s_winners.length - 1];
+        sponsorToWinner[sponsorToId[msg.sender]] = s_winners[
+            s_winners.length - 1
+        ];
 
         // initialize sponsor to winner mapping
         emit WinnerJudged(s_winners.length - 1, poolPrizeWinners.length);
@@ -349,28 +414,31 @@ contract DappHack {
      * @dev Distributes the prize pool to the organizers.
      */
     function distributePrize() public payable OnlyOrganizer {
-        
         require(
             address(this).balance >= s_totalPrizePool,
             "Insufficient balance"
         );
 
-       for(int i=0;i<s_sponsors.length;++i){
+        for (uint i = 0; i < s_sponsors.length; ++i) {
+            // get the entire winner of that particular protocol
+            Winner memory winners = sponsorToWinner[i];
 
-        // get the entire winner of that particular protocol
-        Winner winners =  sponsorToWinner[i];
+            // track winners
+            for (uint j = 0; j < winners.trackWinners.length; ++j) {
+                distributePrizeTrack(
+                    s_sponsors[i].prizeArray[j],
+                    s_teams[winners.trackWinners[j]]
+                );
+            }
 
-        // track winners
-         for(int j=0;j<winners.trackWinners.length;++j){
-            distributePrizeTrack(s_sponsor[i].trackPrize[j],s_team[winners.trackWinners[j]]);
-         }
-
-        // pool prize winners
-         for(int j=0;j<winners.poolPrizeWinners.length;++j){
-            distributePrizePool(s_sponsor[i].poolPrize/s_sponsor[i].numberOfPoolPrize,s_team[winners.poolPrizeWinners[j]]);
-         }
-
-       }
+            // pool prize winners
+            for (uint j = 0; j < winners.poolPrizeWinners.length; ++j) {
+                distributePrizePool(
+                    s_sponsors[i].poolPrize / s_sponsors[i].numberOfPoolPrize,
+                    s_teams[winners.poolPrizeWinners[j]]
+                );
+            }
+        }
 
         emit PrizeDistributed(address(this).balance);
     }
@@ -378,31 +446,22 @@ contract DappHack {
     function returnStake(address sponsor) public payable {}
 
     // internal
+    /**
+     * @param teamNumber The index of the team in the `s_teams` array.
+     */
+
+    function transferNFTAfterHackathon(
+        uint256 teamNumber
+    ) internal OnlyValidProject(teamNumber) {
+        Team memory t = s_teams[teamNumber];
+        for (uint256 i = 0; i < t.participants.length; i++) {
+            transferNFT(t.participants[i], tokenIdOf(t.participants[i]));
+        }
+    }
+
     // private
 
     // internal & private view & pure functions
-    
-    function distributePrizeTrack (uint256 prize, Team team) internal payable {
-         
-        uint256 num = team.participants;
-        uint256 prizeToEach = prize / num;
-
-        for(int i=0;i<num;++i){
-            msg.sender.transfer(prizeToEach);
-        }
-    }
-    
-    function distributePrizePool (uint256 , Team team) internal payable {
-     
-          
-        uint256 num = team.participants;
-        uint256 prizeToEach = prize / num;
-
-        for(int i=0;i<num;++i){
-            msg.sender.transfer(prizeToEach);
-        }
-    }
-
 
     /**
      * @dev Checks if the given address is a sponsor.
@@ -553,16 +612,16 @@ contract DappHack {
         return s_teams[teamNumber].participants[participantNumber];
     }
 
-    /**
-     * @dev Returns the project NFT ID for the team at the given index.
-     * @param teamNumber The index of the team.
-     * @return The project NFT ID for the team.
-     */
-    function getTeamProjectNftId(
-        uint256 teamNumber
-    ) public view returns (uint256) {
-        return teamToProject[teamNumber];
-    }
+    // /**
+    //  * @dev Returns the project NFT ID for the team at the given index.
+    //  * @param teamNumber The index of the team.
+    //  * @return The project NFT ID for the team.
+    //  */
+    // function getTeamProjectNftId(
+    //     uint256 teamNumber
+    // ) public view returns (uint256) {
+    //     return teamToProject[teamNumber];
+    // }
 
     /**
      * @dev Returns the number of winners.
