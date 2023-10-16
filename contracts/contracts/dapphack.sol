@@ -130,13 +130,21 @@ contract DappHack is ProjectNFTs {
 
     //create mapping for this
     modifier NotInTeam() {
+        // need a mapping from address(of the signer) to team as cant fetch a team that is not created
         // require(s_teams[msg.sender] == 0, "Already in a team");
         _;
     }
 
     //create mapping for this
     modifier NotAlreadySignedUp() {
-        // require(s_builders[msg.sender] == 0, "Already signed up");
+        bool flag = false;
+        for (uint i = 0; i < s_builders.length; i++) {
+            if (s_builders[i] == msg.sender) {
+                flag = true;
+                break;
+            }
+        }
+        require(!flag, "Already signed up");
         _;
     }
 
