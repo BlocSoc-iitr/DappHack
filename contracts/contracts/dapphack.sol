@@ -130,13 +130,21 @@ contract DappHack is ProjectNFTs {
 
     //create mapping for this
     modifier NotInTeam() {
+        // need a mapping from address(of the signer) to team as cant fetch a team that is not created
         // require(s_teams[msg.sender] == 0, "Already in a team");
         _;
     }
 
     //create mapping for this
     modifier NotAlreadySignedUp() {
-        // require(s_builders[msg.sender] == 0, "Already signed up");
+        bool flag = false;
+        for (uint i = 0; i < s_builders.length; i++) {
+            if (s_builders[i] == msg.sender) {
+                flag = true;
+                break;
+            }
+        }
+        require(!flag, "Already signed up");
         _;
     }
 
@@ -443,7 +451,15 @@ contract DappHack is ProjectNFTs {
         emit PrizeDistributed(address(this).balance);
     }
 
-    function returnStake(address sponsor) public payable {}
+    function returnStake(address sponsor) public payable {
+        for (uint i = 0; i < s_teams.length; ++i) {
+            if (s_teams[i].validProject == true) {
+                for (uint j = 0; j < s_teams[i].participants.length; ++j) {
+                    payable(s_teams[i].participants[j]).transfer(STAKE);
+                }
+            }
+        }
+    }
 
     // internal
     /**
