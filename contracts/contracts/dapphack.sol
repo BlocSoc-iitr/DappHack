@@ -451,7 +451,15 @@ contract DappHack is ProjectNFTs {
         emit PrizeDistributed(address(this).balance);
     }
 
-    function returnStake(address sponsor) public payable {}
+    function returnStake(address sponsor) public payable {
+        for (uint i = 0; i < s_teams.length; ++i) {
+            if (s_teams[i].validProject == true) {
+                for (uint j = 0; j < s_teams[i].participants.length; ++j) {
+                    payable(s_teams[i].participants[j]).transfer(STAKE);
+                }
+            }
+        }
+    }
 
     // internal
     /**
