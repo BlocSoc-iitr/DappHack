@@ -14,7 +14,7 @@ contract ProjectNFTs is ERC721 {
 
     function mint() internal {
         s_tokenId++;
-        _safeMint(address(this), s_tokenId);
+        _mint(address(this), s_tokenId);
     }
 
     function setTokenUri(uint256 tokenId, string memory uri) internal {

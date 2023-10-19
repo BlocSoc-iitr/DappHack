@@ -587,85 +587,85 @@ contract DappHack is ProjectNFTs {
         return s_builders[builderNumber];
     }
 
-    /**
-     * @dev Returns the number of teams.
-     * @return The number of teams.
-     */
-    function getTeamCount() public view returns (uint256) {
-        return s_teams.length;
-    }
-
-    /**
-     * @dev Returns the name of the team at the given index.
-     * @param teamNumber The index of the team.
-     * @return The name of the team.
-     */
-    function getTeamName(
-        uint256 teamNumber
-    ) public view returns (string memory) {
-        return s_teams[teamNumber].name;
-    }
-
-    /**
-     * @dev Returns the number of participants in the team at the given index.
-     * @param teamNumber The index of the team.
-     * @return The number of participants in the team.
-     */
-    function getTeamSize(uint256 teamNumber) public view returns (uint256) {
-        return s_teams[teamNumber].participants.length;
-    }
-
-    /**
-     * @dev Returns the address of the participant in the team at the given index.
-     * @param teamNumber The index of the team.
-     * @param participantNumber The index of the participant.
-     * @return The address of the participant.
-     */
-    function getTeamParticipantAddress(
-        uint256 teamNumber,
-        uint256 participantNumber
-    ) public view returns (address) {
-        return s_teams[teamNumber].participants[participantNumber];
-    }
-
     // /**
-    //  * @dev Returns the project NFT ID for the team at the given index.
-    //  * @param teamNumber The index of the team.
-    //  * @return The project NFT ID for the team.
+    //  * @dev Returns the number of teams.
+    //  * @return The number of teams.
     //  */
-    // function getTeamProjectNftId(
-    //     uint256 teamNumber
-    // ) public view returns (uint256) {
-    //     return teamToProject[teamNumber];
+    // function getTeamCount() public view returns (uint256) {
+    //     return s_teams.length;
     // }
 
-    /**
-     * @dev Returns the number of winners.
-     * @return The number of winners.
-     */
-    function getWinnerCount() public view returns (uint256) {
-        return s_winners.length;
-    }
+    // /**
+    //  * @dev Returns the name of the team at the given index.
+    //  * @param teamNumber The index of the team.
+    //  * @return The name of the team.
+    //  */
+    // function getTeamName(
+    //     uint256 teamNumber
+    // ) public view returns (string memory) {
+    //     return s_teams[teamNumber].name;
+    // }
 
-    /**
-     * @dev Returns the indices of the track winners for the winner at the given index.
-     * @param winnerNumber The index of the winner.
-     * @return The indices of the track winners.
-     */
-    function getWinnerTrackWinners(
-        uint256 winnerNumber
-    ) public view returns (uint256[] memory) {
-        return s_winners[winnerNumber].trackWinners;
-    }
+    // /**
+    //  * @dev Returns the number of participants in the team at the given index.
+    //  * @param teamNumber The index of the team.
+    //  * @return The number of participants in the team.
+    //  */
+    // function getTeamSize(uint256 teamNumber) public view returns (uint256) {
+    //     return s_teams[teamNumber].participants.length;
+    // }
 
-    /**
-     * @dev Returns the indices of the pool prize winners for the winner at the given index.
-     * @param winnerNumber The index of the winner.
-     * @return The indices of the pool prize winners.
-     */
-    function getWinnerPoolPrizeWinners(
-        uint256 winnerNumber
-    ) public view returns (uint256[] memory) {
-        return s_winners[winnerNumber].poolPrizeWinners;
-    }
+    // /**
+    //  * @dev Returns the address of the participant in the team at the given index.
+    //  * @param teamNumber The index of the team.
+    //  * @param participantNumber The index of the participant.
+    //  * @return The address of the participant.
+    //  */
+    // function getTeamParticipantAddress(
+    //     uint256 teamNumber,
+    //     uint256 participantNumber
+    // ) public view returns (address) {
+    //     return s_teams[teamNumber].participants[participantNumber];
+    // }
+
+    // // /**
+    // //  * @dev Returns the project NFT ID for the team at the given index.
+    // //  * @param teamNumber The index of the team.
+    // //  * @return The project NFT ID for the team.
+    // //  */
+    // // function getTeamProjectNftId(
+    // //     uint256 teamNumber
+    // // ) public view returns (uint256) {
+    // //     return teamToProject[teamNumber];
+    // // }
+
+    // /**
+    //  * @dev Returns the number of winners.
+    //  * @return The number of winners.
+    //  */
+    // function getWinnerCount() public view returns (uint256) {
+    //     return s_winners.length;
+    // }
+
+    // /**
+    //  * @dev Returns the indices of the track winners for the winner at the given index.
+    //  * @param winnerNumber The index of the winner.
+    //  * @return The indices of the track winners.
+    //  */
+    // function getWinnerTrackWinners(
+    //     uint256 winnerNumber
+    // ) public view returns (uint256[] memory) {
+    //     return s_winners[winnerNumber].trackWinners;
+    // }
+
+    // /**
+    //  * @dev Returns the indices of the pool prize winners for the winner at the given index.
+    //  * @param winnerNumber The index of the winner.
+    //  * @return The indices of the pool prize winners.
+    //  */
+    // function getWinnerPoolPrizeWinners(
+    //     uint256 winnerNumber
+    // ) public view returns (uint256[] memory) {
+    //     return s_winners[winnerNumber].poolPrizeWinners;
+    // }
 }
