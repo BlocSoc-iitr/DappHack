@@ -1,0 +1,89 @@
+.prizes-container {
+  margin: 2rem 0;
+  border-radius: 8px;
+  border: 1px solid var(--neutrals-rich-black, #00061d);
+  background-color: #fff;
+  display: flex;
+}
+.prizes-container > div {
+  padding: 2rem;
+}
+.prizes-container > div:nth-child(1) {
+  position: relative;
+  flex: 2;
+}
+.prizes-container > div:nth-child(2) {
+  position: relative;
+  flex: 8;
+}
+.prizes-container > div:nth-child(1)::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: 100%;
+  background-color: #00061d;
+  opacity: 0.2;
+}
+.sponsor-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+.details-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.heading {
+  font-size: 48px;
+  font-weight: 600;
+  color: var(--neutrals-rich-black, #00061d);
+}
+.prize {
+  color: #b9bccc;
+  font-size: 36px;
+  font-weight: 700;
+}
+.address-chain {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+.address-chain > div {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  gap: 0.5rem;
+  background-color: rgba(0, 51, 255, 0.9);
+  border-radius: 92px;
+}
+.address-chain > div > p {
+  color: var(--clr-light);
+  font-size: var(--ft-300);
+  font-weight: 500;
+}
+.sponsor-description {
+  margin-bottom: 2rem;
+}
+.sponsor-description > h1 {
+  font-size: var(--ft-600);
+  font-weight: 700;
+  color: var(--neutrals-rich-black, #00061d);
+  margin-bottom: 1rem;
+}
+
+/* Hack Prize Card */
+.prize-card {
+  padding: 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.sponsor-icon {
+  width: 56px;
+  height: 56px;
+  background: #d9d9d9;
+}
