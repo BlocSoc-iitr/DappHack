@@ -15,7 +15,7 @@ function PageTemplate({ children }) {
               <Image src={searchIcon} alt="search" />
             </label>
           </div>
-          <Link href={"/"}>+ Organize Hackathon</Link>
+          <Link href={"/organize"}>+ Organize Hackathon</Link>
         </div>
         <div className="main-content">{children}</div>
       </div>
