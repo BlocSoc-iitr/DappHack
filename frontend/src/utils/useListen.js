@@ -10,7 +10,6 @@ export const useListen = () => {
           method: "eth_getBalance",
           params: [newAccounts[0], "latest"],
         });
-
         dispatch({
           type: "connect",
           wallet: newAccounts[0],
