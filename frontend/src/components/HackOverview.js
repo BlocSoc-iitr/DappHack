@@ -133,7 +133,7 @@ const HackOverview = () => {
         </div>
         <p>Application ends in </p>
         <h6>15d:2h:16m</h6>
-        <Link href="/">Apply Now</Link>
+        <Link href="/apply/hackathon">Apply Now</Link>
       </div>
     </div>
   );
