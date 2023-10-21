@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 import {ProjectNFTs} from "./project.sol";
+import { AxelarExecutable } from '@axelar-network/axelar-gmp-sdk-solidity/contracts/executable/AxelarExecutable.sol';
+import { IAxelarGateway } from '@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGateway.sol';
+import { IAxelarGasService } from '@axelar-network/axelar-gmp-sdk-solidity/contracts/interfaces/IAxelarGasService.sol';
 
-contract DappHack is ProjectNFTs {
+contract DappHack is ProjectNFTs, AxelarExecutable {
     ///////////////////
     // Errors
     ///////////////////
@@ -34,6 +37,8 @@ contract DappHack is ProjectNFTs {
         uint256[] trackWinners;
         uint256[] poolPrizeWinners;
     }
+
+    IAxelarGasService public immutable gasService;
 
     ///////////////////
     // State Variables
@@ -170,14 +175,17 @@ contract DappHack is ProjectNFTs {
         uint256 teamSizeLimit,
         address[] memory organizers,
         string memory name,
-        string memory symbol
-    ) ProjectNFTs(name, symbol) {
+        string memory symbol,
+        address gateway_,
+        address gasReceiver_
+    ) ProjectNFTs(name, symbol) AxelarExecutable(gateway_){
         s_startTime = startTime;
         s_endTime = endTime;
         s_totalPrizePool = 0;
         s_maxParticipants = maxParticipants;
         s_teamSizeLimit = teamSizeLimit;
         s_organizers = organizers;
+        gasService = IAxelarGasService(gasReceiver_);
     }
 
     // receive function (if exists)
@@ -451,7 +459,7 @@ contract DappHack is ProjectNFTs {
         emit PrizeDistributed(address(this).balance);
     }
 
-    function returnStake(address sponsor) public payable {
+    function returnStake() public payable OnlyOrganizer {
         for (uint i = 0; i < s_teams.length; ++i) {
             if (s_teams[i].validProject == true) {
                 for (uint j = 0; j < s_teams[i].participants.length; ++j) {
@@ -525,6 +533,18 @@ contract DappHack is ProjectNFTs {
         return false;
     }
 
+    // Axelar Cross-Chain Functions
+        function _execute(string calldata sourceChain_, string calldata sourceAddress_, bytes calldata payload_) internal override {
+        // // DealRequest calldata deal;
+        // DealRequest[] memory deal = abi.decode(payload_, (DealRequest[]));
+        // makeBatchDealProposal(deal);
+        address builder = abi.decode(payload_, (address));
+        s_builders.push(builder);
+        emit BuilderSignedUp(builder);
+    }
+
+
+
     // external & public view & pure functions
 
     /**
@@ -587,85 +607,85 @@ contract DappHack is ProjectNFTs {
         return s_builders[builderNumber];
     }
 
-    // /**
-    //  * @dev Returns the number of teams.
-    //  * @return The number of teams.
-    //  */
-    // function getTeamCount() public view returns (uint256) {
-    //     return s_teams.length;
-    // }
+    /**
+     * @dev Returns the number of teams.
+     * @return The number of teams.
+     */
+    function getTeamCount() public view returns (uint256) {
+        return s_teams.length;
+    }
+
+    /**
+     * @dev Returns the name of the team at the given index.
+     * @param teamNumber The index of the team.
+     * @return The name of the team.
+     */
+    function getTeamName(
+        uint256 teamNumber
+    ) public view returns (string memory) {
+        return s_teams[teamNumber].name;
+    }
+
+    /**
+     * @dev Returns the number of participants in the team at the given index.
+     * @param teamNumber The index of the team.
+     * @return The number of participants in the team.
+     */
+    function getTeamSize(uint256 teamNumber) public view returns (uint256) {
+        return s_teams[teamNumber].participants.length;
+    }
+
+    /**
+     * @dev Returns the address of the participant in the team at the given index.
+     * @param teamNumber The index of the team.
+     * @param participantNumber The index of the participant.
+     * @return The address of the participant.
+     */
+    function getTeamParticipantAddress(
+        uint256 teamNumber,
+        uint256 participantNumber
+    ) public view returns (address) {
+        return s_teams[teamNumber].participants[participantNumber];
+    }
 
     // /**
-    //  * @dev Returns the name of the team at the given index.
+    //  * @dev Returns the project NFT ID for the team at the given index.
     //  * @param teamNumber The index of the team.
-    //  * @return The name of the team.
+    //  * @return The project NFT ID for the team.
     //  */
-    // function getTeamName(
+    // function getTeamProjectNftId(
     //     uint256 teamNumber
-    // ) public view returns (string memory) {
-    //     return s_teams[teamNumber].name;
+    // ) public view returns (uint256) {
+    //     return teamToProject[teamNumber];
     // }
 
-    // /**
-    //  * @dev Returns the number of participants in the team at the given index.
-    //  * @param teamNumber The index of the team.
-    //  * @return The number of participants in the team.
-    //  */
-    // function getTeamSize(uint256 teamNumber) public view returns (uint256) {
-    //     return s_teams[teamNumber].participants.length;
-    // }
+    /**
+     * @dev Returns the number of winners.
+     * @return The number of winners.
+     */
+    function getWinnerCount() public view returns (uint256) {
+        return s_winners.length;
+    }
 
-    // /**
-    //  * @dev Returns the address of the participant in the team at the given index.
-    //  * @param teamNumber The index of the team.
-    //  * @param participantNumber The index of the participant.
-    //  * @return The address of the participant.
-    //  */
-    // function getTeamParticipantAddress(
-    //     uint256 teamNumber,
-    //     uint256 participantNumber
-    // ) public view returns (address) {
-    //     return s_teams[teamNumber].participants[participantNumber];
-    // }
+    /**
+     * @dev Returns the indices of the track winners for the winner at the given index.
+     * @param winnerNumber The index of the winner.
+     * @return The indices of the track winners.
+     */
+    function getWinnerTrackWinners(
+        uint256 winnerNumber
+    ) public view returns (uint256[] memory) {
+        return s_winners[winnerNumber].trackWinners;
+    }
 
-    // // /**
-    // //  * @dev Returns the project NFT ID for the team at the given index.
-    // //  * @param teamNumber The index of the team.
-    // //  * @return The project NFT ID for the team.
-    // //  */
-    // // function getTeamProjectNftId(
-    // //     uint256 teamNumber
-    // // ) public view returns (uint256) {
-    // //     return teamToProject[teamNumber];
-    // // }
-
-    // /**
-    //  * @dev Returns the number of winners.
-    //  * @return The number of winners.
-    //  */
-    // function getWinnerCount() public view returns (uint256) {
-    //     return s_winners.length;
-    // }
-
-    // /**
-    //  * @dev Returns the indices of the track winners for the winner at the given index.
-    //  * @param winnerNumber The index of the winner.
-    //  * @return The indices of the track winners.
-    //  */
-    // function getWinnerTrackWinners(
-    //     uint256 winnerNumber
-    // ) public view returns (uint256[] memory) {
-    //     return s_winners[winnerNumber].trackWinners;
-    // }
-
-    // /**
-    //  * @dev Returns the indices of the pool prize winners for the winner at the given index.
-    //  * @param winnerNumber The index of the winner.
-    //  * @return The indices of the pool prize winners.
-    //  */
-    // function getWinnerPoolPrizeWinners(
-    //     uint256 winnerNumber
-    // ) public view returns (uint256[] memory) {
-    //     return s_winners[winnerNumber].poolPrizeWinners;
-    // }
+    /**
+     * @dev Returns the indices of the pool prize winners for the winner at the given index.
+     * @param winnerNumber The index of the winner.
+     * @return The indices of the pool prize winners.
+     */
+    function getWinnerPoolPrizeWinners(
+        uint256 winnerNumber
+    ) public view returns (uint256[] memory) {
+        return s_winners[winnerNumber].poolPrizeWinners;
+    }
 }

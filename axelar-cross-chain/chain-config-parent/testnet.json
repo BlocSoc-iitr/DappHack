@@ -1,0 +1,160 @@
+[
+  {
+    "name": "Avalanche",
+    "id": "Avalanche",
+    "chainId": 43113,
+    "rpc": "https://api.avax-test.network/ext/bc/C/rpc",
+    "tokenSymbol": "AVAX",
+    "contracts": {
+      "AxelarGateway": {
+        "address": "0xC249632c2D40b9001FE907806902f63038B737Ab"
+      },
+      "AxelarGasService": {
+        "salt": "AxelarGasService",
+        "address": "0xbE406F0189A0B4cf3A05C286473D23791Dd44Cc6",
+        "implementation": "0x125AAf72B24a78f7aE5Cae92D7717f533633320d",
+        "deployer": "0xB8Cd93C83A974649D76B1c19f311f639e62272BC",
+        "collector": "0x7F83F5cA2AE4206AbFf8a3C3668e88ce5F11C0B5",
+        "owner": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
+      },
+      "AxelarDepositService": {
+        "salt": "AxelarDepositService",
+        "address": "0xc1DCb196BA862B337Aa23eDA1Cb9503C0801b955",
+        "implementation": "0xb6241272C569767072e0587098415DF6BA0aaEe9",
+        "deployer": "0xd55cd98cdE61c3CcE1286F9aF50cDbF16f5dba5b",
+        "wrappedSymbol": "WAVAX",
+        "refundIssuer": "0x4f671f34d2d23fec3eE3087E3A0221f8D314D9dF"
+      },
+      "ConstAddressDeployer": {
+        "address": "0x98B2920D53612483F91F12Ed7754E51b4A77919e"
+      },
+      "Create3Deployer": {
+        "salt": "Create3Deployer",
+        "address": "0xf49B10ccFB7D82C3a8749fFB1aAF3e0c936Eba36",
+        "deployer": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
+        "deploymentMethod": "create2"
+      },
+      "InterchainTokenService": {
+        "gasOptions": {
+          "gasLimit": 8000000
+        },
+        "salt": "ITS v0.3.0",
+        "deployer": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
+        "tokenManagerDeployer": "0x6Aa459645b696108894C7548A898192E4716Ef15",
+        "standardizedTokenLockUnlock": "0x3a27e5d92C50C022510B74D2eBc53956E3b3cAd6",
+        "standardizedTokenMintBurn": "0x9b63b458cD214C3786f117aD3d2821a9aC8E4201",
+        "standardizedTokenDeployer": "0x6c6632071c792f7F73BBC404A1FD1973e60B8C0C",
+        "remoteAddressValidatorImplementation": "0x33FEfaaD1D97d82C930B2d920613c8697787823D",
+        "remoteAddressValidator": "0x30c8dffBfb0f0535A1B56A7D00d5627692B399D5",
+        "tokenManagerImplementations": {
+          "tokenManagerLockUnlock": "0xADE0d3f7E7325219610907F80e7438CD22B0d27D",
+          "tokenManagerMintBurn": "0x2dF7688066d10e6aAEd5116814eB0f701cF6F74f",
+          "tokenManagerLiquidityPool": "0x5D16dFFFb32889eB4d023030FD63B598334C9C90"
+        },
+        "implementation": "0x60b991bAf941550b0FeA76fa50696b4f488881Dd",
+        "address": "0xF786e21509A9D50a9aFD033B5940A2b7D872C208"
+      },
+      "InterchainProposalSender": {
+        "address": "0x1f8A4d195B647647c7dD45650CBd553FD33cCAA6",
+        "deployer": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
+        "deploymentMethod": "create3",
+        "salt": "InterchainProposalSender v1.2"
+      },
+      "Operators": {
+        "owner": "0xB8Cd93C83A974649D76B1c19f311f639e62272BC",
+        "address": "0x7F83F5cA2AE4206AbFf8a3C3668e88ce5F11C0B5",
+        "deployer": "0xB8Cd93C83A974649D76B1c19f311f639e62272BC",
+        "deploymentMethod": "create2",
+        "salt": "Operators"
+      }
+    },
+    "explorer": {
+      "url": "https://testnet.snowtrace.io",
+      "api": "https://api-testnet.snowtrace.io/api"
+    },
+    "AxelarGasService": {
+      "address": "0xbE406F0189A0B4cf3A05C286473D23791Dd44Cc6"
+    },
+    "gateway": "0xC249632c2D40b9001FE907806902f63038B737Ab",
+    "gasService": "0xbE406F0189A0B4cf3A05C286473D23791Dd44Cc6",
+    "contract": {
+      "abi": [
+        "constructor(uint256 startTime, uint256 endTime, uint256 maxParticipants, uint256 teamSizeLimit, address[] organizers, string name, string symbol, address gateway_, address gasReceiver_)",
+        "error InvalidAddress()",
+        "error InvalidProject(uint256 teamNumber)",
+        "error InvalidTeamSize(uint256 teamSize, uint256 teamSizeLimit)",
+        "error MaxParticipantsReached(uint256 maxParticipants)",
+        "error NotApprovedByGateway()",
+        "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
+        "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
+        "event BuilderSignedUp(address indexed builder)",
+        "event PrizeDistributed(uint256 amount)",
+        "event PrizePoolChanged(address indexed sponsor, uint256 oldPrize, uint256 newPrize)",
+        "event ProjectSubmitted(uint256 teamNumber, string nftUri)",
+        "event SponsorSignedUp(string name, address indexed sponsor, uint256 prize)",
+        "event TeamInitialized(string name, address[] participants)",
+        "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
+        "event WinnerJudged(uint256 trackNumber, uint256 winnerNumber)",
+        "function STAKE() view returns (uint256)",
+        "function approve(address to, uint256 tokenId)",
+        "function balanceOf(address owner) view returns (uint256)",
+        "function builderSignup() payable",
+        "function builderToTeam(address) view returns (string name, bool validProject, bool projectSubmitted)",
+        "function changePrizePool(uint256 sponsorNumber, uint256 newPrize) payable",
+        "function changePrizePoolSTruct() payable",
+        "function distributePrize() payable",
+        "function distributePrizePool(uint256 prize, tuple(string name, address[] participants, bool validProject, bool projectSubmitted) team) payable",
+        "function distributePrizeTrack(uint256 prize, tuple(string name, address[] participants, bool validProject, bool projectSubmitted) team) payable",
+        "function execute(bytes32 commandId, string sourceChain, string sourceAddress, bytes payload)",
+        "function executeWithToken(bytes32 commandId, string sourceChain, string sourceAddress, bytes payload, string tokenSymbol, uint256 amount)",
+        "function gasService() view returns (address)",
+        "function gateway() view returns (address)",
+        "function getApproved(uint256 tokenId) view returns (address)",
+        "function getBuilderAddress(uint256 builderNumber) view returns (address)",
+        "function getBuilderCount() view returns (uint256)",
+        "function getSponsorAddress(uint256 sponsorNumber) view returns (address)",
+        "function getSponsorCount() view returns (uint256)",
+        "function getSponsorName(uint256 sponsorNumber) view returns (string)",
+        "function getSponsorPrizePool(uint256 sponsorNumber) view returns (uint256)",
+        "function getTeamCount() view returns (uint256)",
+        "function getTeamName(uint256 teamNumber) view returns (string)",
+        "function getTeamParticipantAddress(uint256 teamNumber, uint256 participantNumber) view returns (address)",
+        "function getTeamSize(uint256 teamNumber) view returns (uint256)",
+        "function getWinnerCount() view returns (uint256)",
+        "function getWinnerPoolPrizeWinners(uint256 winnerNumber) view returns (uint256[])",
+        "function getWinnerTrackWinners(uint256 winnerNumber) view returns (uint256[])",
+        "function initializeTeam(string name, address[] participants)",
+        "function isApprovedForAll(address owner, address operator) view returns (bool)",
+        "function judgeWinner(string _sponsor_name, uint256[] trackWinners, uint256[] poolPrizeWinners)",
+        "function name() view returns (string)",
+        "function ownerOf(uint256 tokenId) view returns (address)",
+        "function returnStake() payable",
+        "function s_builders(uint256) view returns (address)",
+        "function s_endTime() view returns (uint256)",
+        "function s_maxParticipants() view returns (uint256)",
+        "function s_organizers(uint256) view returns (address)",
+        "function s_sponsors(uint256) view returns (string name, uint256 poolPrize, uint256 numberOfPoolPrize)",
+        "function s_startTime() view returns (uint256)",
+        "function s_teamSizeLimit() view returns (uint256)",
+        "function s_teams(uint256) view returns (string name, bool validProject, bool projectSubmitted)",
+        "function s_totalPrizePool() view returns (uint256)",
+        "function s_winners(uint256) view returns (string name)",
+        "function safeTransferFrom(address from, address to, uint256 tokenId)",
+        "function safeTransferFrom(address from, address to, uint256 tokenId, bytes data)",
+        "function setApprovalForAll(address operator, bool approved)",
+        "function sponsorPrizePool(uint256) view returns (uint256)",
+        "function sponsorSignup(string name, address[] _sponsors, uint256[] _prizeArray, uint256 _poolPrize, uint256 _number0fPoolPrize) payable",
+        "function sponsorToId(address) view returns (uint256)",
+        "function sponsorToSponsorProtocol(address) view returns (string name, uint256 poolPrize, uint256 numberOfPoolPrize)",
+        "function sponsorToWinner(uint256) view returns (string name)",
+        "function submitProject(uint256 teamNumber, string nftUri)",
+        "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+        "function symbol() view returns (string)",
+        "function tokenIdOf(address owner) view returns (uint256)",
+        "function tokenURI(uint256 tokenId) view returns (string)",
+        "function transferFrom(address from, address to, uint256 tokenId)"
+      ],
+      "address": "0x612cB98334A868096038D790E34071ad5c663291"
+    }
+  }
+]

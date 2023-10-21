@@ -1,0 +1,26 @@
+.sidebar {
+  flex: 2;
+  max-width: 300px;
+  padding: 0 1.5rem;
+  margin-top: 2rem;
+}
+.links-list {
+  list-style: none;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.links-list-item > a {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.text {
+  font-size: var(--ft-400);
+  font-weight: 600;
+  color: var(--Text);
+}
