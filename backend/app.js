@@ -5,6 +5,8 @@ const cors = require("cors");
 const globalErrorHandler = require("./controllers/errorController");
 const AppError = require("./utils/appError");
 
+const userRouter = require("./routes/userRoutes");
+
 dotenv.config();
 
 const app = express();
@@ -45,6 +47,8 @@ app.use(express.json({ limit: "8mb" }));
 app.get("/app/v1", (req, res, next) => {
   res.send("Test working");
 });
+
+app.use("/app/v1/users", userRouter);
 
 app.use("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
