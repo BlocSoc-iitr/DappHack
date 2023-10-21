@@ -18,30 +18,37 @@ const routes = [
   {
     title: "Explore",
     icon: exploreIcon,
+    path: "/",
   },
   {
     title: "My Hackathons",
     icon: myHackathonsIcon,
+    path: "/",
   },
   {
     title: "My Projects",
     icon: myProjectsIcon,
+    path: "/",
   },
   {
     title: "Organize",
     icon: organizeIcon,
+    path: "/organize",
   },
   {
     title: "My Profile",
     icon: myProfileIcon,
+    path: "/",
   },
   {
     title: "Settings",
     icon: settingsIcon,
+    path: "/",
   },
   {
     title: "Logout",
     icon: logoutIcon,
+    path: "/",
   },
 ];
 
@@ -77,7 +84,7 @@ function Sidebar() {
       <ul className={classes["links-list"]}>
         {routes.map((route) => (
           <li className={classes["links-list-item"]} key={route.title}>
-            <Link className="active" href="/">
+            <Link className="active" href={route.path}>
               <Image
                 style={{ fill: "red" }}
                 src={route.icon}

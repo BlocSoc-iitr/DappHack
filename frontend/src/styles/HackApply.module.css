@@ -62,3 +62,145 @@
   background-color: #03f;
   transform: translateX(-50%);
 }
+
+/* Apply Basics */
+
+.apply-basics-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.apply-basics {
+  margin: 2rem 0;
+  padding: 2rem;
+  background-color: #fff;
+}
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 2rem 0;
+  background-color: #fff;
+}
+.input-field-container {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  border: 0.5px solid rgba(0, 0, 0, 0.6);
+  padding: 18px 20px;
+}
+.input-field-container:nth-child(1) {
+  flex: 2 1 400px;
+}
+.input-field-container:nth-child(2) {
+  flex: 1 1 400px;
+}
+.input-field-container:nth-child(3) {
+  flex: 1 1 1700px;
+}
+.input-field-container > label {
+  color: #03f;
+  font-size: 18px;
+  font-weight: 400;
+}
+.input-field-container > input,
+.input-field-container > textarea {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 2rem 4rem 4rem 0;
+}
+.cancel-btn {
+  border-radius: 24px;
+  border: 0.5px solid #03f;
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--blue-blue, #03f);
+  cursor: pointer;
+}
+.next-btn {
+  border-radius: 24px;
+  border: 0.5px solid #03f;
+  padding: 16px 40px;
+  background-color: var(--blue-blue, #03f);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Apply Team Formation */
+.address-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+.address-container > h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--neutrals-rich-black, #00061d);
+  white-space: nowrap;
+}
+.address-container > form {
+  flex: 1;
+  display: flex;
+  gap: 1rem;
+}
+.address-container > form > input {
+  border: none;
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.28);
+  border-radius: 8px;
+  padding: 0.9rem 1.6rem;
+  flex: 1;
+  font-size: 14px;
+  font-weight: 300;
+}
+.add-btn {
+  padding: 0.8rem 4rem;
+  background-color: #03f;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+}
+.row {
+  display: flex;
+  padding: 0.5rem 1rem;
+  gap: 0.7rem;
+  font-size: 14px;
+  font-weight: 400;
+}
+.row:nth-child(1) {
+  background-color: rgba(192, 201, 240, 0.4);
+
+  color: var(--blue-blue, #03f);
+}
+.row > * {
+  flex: 1;
+}
+.row > *:last-child {
+  width: fit-content;
+  text-align: right;
+}
+.row button {
+  border: none;
+  cursor: pointer;
+  color: #e8000e;
+  font-size: 14px;
+  background: none;
+  font-weight: 600;
+}
