@@ -12,7 +12,7 @@ const useDeployContract = () => {
     console.log(userAccount);
     console.log(nftCount);
     const newContractInstance = await MyContract.deploy({
-      data: bytecode.subscriptionNft,
+      data: bytecode.dappHack,
       arguments: argument,
     }).send({
       from: userAccount,
