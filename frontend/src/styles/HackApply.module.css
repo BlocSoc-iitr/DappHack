@@ -1,0 +1,64 @@
+.hack-details {
+  position: relative;
+  padding-bottom: 1rem;
+}
+.hack-details > h1 {
+  color: var(--neutrals-rich-black, #00061d);
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.hack-details > p {
+  font-size: 20px;
+  font-weight: 600;
+}
+.hack-details::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #03f;
+  opacity: 0.3;
+}
+
+.application-process {
+  position: relative;
+  padding-bottom: 1rem;
+}
+.application-process::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #898383;
+  opacity: 0.3;
+}
+.application-process > h1 {
+  margin: 1rem 0;
+}
+.page-navigator > ul {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+.page-navigator > ul > li {
+  cursor: pointer;
+}
+.page-navigator > ul > li.active {
+  color: var(--blue-blue, #03f);
+  position: relative;
+}
+.page-navigator > ul > li.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 10px;
+  height: 2px;
+  background-color: #03f;
+  transform: translateX(-50%);
+}

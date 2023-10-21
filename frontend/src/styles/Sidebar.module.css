@@ -1,8 +1,8 @@
 .sidebar {
   flex: 2;
   max-width: 300px;
-  margin-top: 7rem;
   padding: 0 1.5rem;
+  margin-top: 2rem;
 }
 .links-list {
   list-style: none;
@@ -10,6 +10,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 2rem;
+  margin-top: 2rem;
 }
 
 .links-list-item > a {
