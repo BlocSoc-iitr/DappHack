@@ -2,8 +2,22 @@
 import Link from "next/link";
 import { useListen } from "@/utils/useListen";
 import { useMetamask } from "@/utils/useMetamask";
+import { useMoralis } from "react-moralis";
+import { useEffect } from "react";
 
 export default function Wallet() {
+  const {
+    enableWeb3,
+    account,
+    isWeb3Enabled,
+    Moralis,
+    deactivateWeb3,
+    isWeb3EnableLoading,
+    chainId,
+  } = useMoralis();
+
+  console.log(isWeb3Enabled);
+  console.log(account, chainId);
   const {
     dispatch,
     state: { status, isMetamaskInstalled, wallet, balance },
@@ -29,7 +43,10 @@ export default function Wallet() {
         params: [accounts[0], "latest"],
       });
 
-      dispatch({ type: "connect", wallet: accounts[0], balance });
+      const ret = await enableWeb3();
+      if (typeof ret !== "undefined") {
+        dispatch({ type: "connect", wallet: accounts[0], balance });
+      }
 
       listen();
     }
@@ -38,6 +55,23 @@ export default function Wallet() {
   const handleDisconnect = () => {
     dispatch({ type: "disconnect" });
   };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (window.localStorage.getItem("metamaskState")) {
+        enableWeb3();
+      }
+    }
+  }, [isWeb3Enabled]);
+
+  useEffect(() => {
+    Moralis.onAccountChanged((newAccount) => {
+      if (newAccount == null) {
+        window.localStorage.removeItem("metamaskState");
+        deactivateWeb3();
+      }
+    });
+  }, []);
 
   return (
     <div>

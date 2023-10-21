@@ -3,6 +3,7 @@ import { MetamaskProvider } from "@/utils/useMetamask";
 import { Nunito } from "next/font/google";
 import "@/styles/globals.css";
 import { MoralisProvider } from "react-moralis";
+
 const nunito = Nunito({ subsets: ["latin"] });
 
 // export const metadata = {
@@ -14,11 +15,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={nunito.className}>
-        <MetamaskProvider>
-          <MoralisProvider initializeOnMount={false}>
-            {children}
-          </MoralisProvider>
-        </MetamaskProvider>
+        <MoralisProvider initializeOnMount={false}>
+          <MetamaskProvider>{children}</MetamaskProvider>
+        </MoralisProvider>
       </body>
     </html>
   );
