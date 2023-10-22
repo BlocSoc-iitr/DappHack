@@ -176,6 +176,183 @@ const useDappHack = () => {
       console.log(error);
     }
   };
+
+  const getSponsorName = async (sponsorId) => {
+    const parameters = {
+      abi: abi.dappHack,
+      contractAddress: contractAddress.dappHack,
+      functionName: "getSponsorName",
+      params: {
+        sponsorNumber: sponsorId,
+      },
+    };
+    try {
+      const response = await fetch({
+        params: parameters,
+        onSuccess: (response) => {
+          console.log(response);
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+      console.log(response.result);
+      return response.result;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getSponsorCount = async () => {
+    const parameters = {
+      abi: abi.dappHack,
+      contractAddress: contractAddress.dappHack,
+      functionName: "getSponsorCount",
+      params: {},
+    };
+    try {
+      const response = await fetch({
+        params: parameters,
+        onSuccess: (response) => {
+          console.log(response);
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+      console.log(response.result);
+      return response.result;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getSponsorAddress = async (sponsorId) => {
+    const parameters = {
+      abi: abi.dappHack,
+      contractAddress: contractAddress.dappHack,
+      functionName: "getSponsorAddress",
+      params: {
+        sponsorNumber: sponsorId,
+      },
+    };
+    try {
+      const response = await fetch({
+        params: parameters,
+        onSuccess: (response) => {
+          console.log(response);
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+      console.log(response.result);
+      return response.result;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getBuilderCount = async () => {
+    const parameters = {
+      abi: abi.dappHack,
+      contractAddress: contractAddress.dappHack,
+      functionName: "getBuilderCount",
+      params: {},
+    };
+    try {
+      const response = await fetch({
+        params: parameters,
+        onSuccess: (response) => {
+          console.log(response);
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+      console.log(response.result);
+      return response.result;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getTeamCount = async () => {
+    const parameters = {
+      abi: abi.dappHack,
+      contractAddress: contractAddress.dappHack,
+      functionName: "getTeamCount",
+      params: {},
+    };
+    try {
+      const response = await fetch({
+        params: parameters,
+        onSuccess: (response) => {
+          console.log(response);
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+      console.log(response.result);
+      return response.result;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getTeamName = async (teamId) => {
+    const parameters = {
+      abi: abi.dappHack,
+      contractAddress: contractAddress.dappHack,
+      functionName: "getTeamName",
+      params: {
+        teamNumber: teamId,
+      },
+    };
+    try {
+      const response = await fetch({
+        params: parameters,
+        onSuccess: (response) => {
+          console.log(response);
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+      console.log(response.result);
+      return response.result;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getTeamParticipantAddress = async (teamId, participantId) => {
+    const parameters = {
+      abi: abi.dappHack,
+      contractAddress: contractAddress.dappHack,
+      functionName: "getTeamParticipantAddress",
+      params: {
+        teamNumber: teamId,
+        participantNumber: participantId,
+      },
+    };
+    try {
+      const response = await fetch({
+        params: parameters,
+        onSuccess: (response) => {
+          console.log(response);
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+      console.log(response.result);
+      return response.result;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     builderSignup,
     sponsorSignup,
@@ -183,6 +360,12 @@ const useDappHack = () => {
     submitProject,
     judgeWinners,
     distributePrize,
+    getSponsorName,
+    getSponsorCount,
+    getSponsorAddress,
+    getBuilderCount,
+    getTeamCount,
+    getTeamName,
   };
 };
 export default useDappHack;

@@ -15,11 +15,12 @@ async function deploy(chain, wallet) {
 
 async function execute(chains, wallet, options) {
     const { source, destination, calculateBridgeFee } = options;
-
+    // console.log(source);
     const fee = await calculateBridgeFee(source, destination);
-
-    const tx = await source.contract.crossSponsorSignup(destination.id, destination.contract.address, [DealRequestStruct], {
-        value: fee + 1000000000000000,
+    console.log(fee);
+    const tx = await source.contract.crossBuilderSignup(destination.id, destination.contract.address, {
+        value: fee,
+        gasLimit: 300000000,
     });
     const reciept = await tx.wait();
     console.log(reciept.transactionHash);

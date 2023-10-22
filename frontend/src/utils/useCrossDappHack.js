@@ -7,7 +7,7 @@ const useCrossDappHack = () => {
   const { runContractFunction, fetch, data, error, isLoading } =
     useWeb3Contract({});
   console.log(contractAddress.crossDappHack);
-  const stake = 10000000000000000;
+  const stake = "1000000000000000000";
   const crossBuilderSignup = async () => {
     const parameters = {
       abi: abi.crossDappHack,

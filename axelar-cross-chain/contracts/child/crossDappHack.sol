@@ -19,10 +19,9 @@ contract CrossDappHack is AxelarExecutable {
     ) external payable {
         //could be exploited. Include gas fee in the the require
         require(msg.value > STAKE, 'Stake is not enough');
-                payable(address(this)).transfer(STAKE);
 
         bytes memory payload = abi.encode(msg.sender);
-        gasService.payNativeGasForContractCall{ value: msg.value }(
+        gasService.payNativeGasForContractCall{ value: msg.value - STAKE }(
             address(this),
             destinationChain,
             destinationAddress,
@@ -30,5 +29,7 @@ contract CrossDappHack is AxelarExecutable {
             msg.sender
         );
         gateway.callContract(destinationChain, destinationAddress, payload);
+                        payable(address(this)).transfer(STAKE);
+
     }
 }
