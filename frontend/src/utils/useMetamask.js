@@ -5,25 +5,33 @@ const initialState = {
   isMetamaskInstalled: false,
   status: "loading",
   balance: null,
+  chainId: null,
 };
 
 function metamaskReducer(state, action) {
   switch (action.type) {
     case "connect": {
-      const { wallet, balance } = action;
-      const newState = { ...state, wallet, balance, status: "idle" };
+      const { wallet, balance, chainId } = action;
+      const newState = { ...state, wallet, balance, chainId, status: "idle" };
       const info = JSON.stringify(newState);
       window.localStorage.setItem("metamaskState", info);
-
+      console.log(newState);
       return newState;
     }
     case "disconnect": {
       window.localStorage.removeItem("metamaskState");
-      return { ...state, wallet: null, balance: null };
+      return { ...state, wallet: null, balance: null, chainId: null };
     }
     case "pageLoaded": {
-      const { isMetamaskInstalled, balance, wallet } = action;
-      return { ...state, isMetamaskInstalled, status: "idle", wallet, balance };
+      const { isMetamaskInstalled, balance, wallet, chainId } = action;
+      return {
+        ...state,
+        isMetamaskInstalled,
+        status: "idle",
+        wallet,
+        balance,
+        chainId,
+      };
     }
     case "loading": {
       return { ...state, status: "loading" };
@@ -36,7 +44,14 @@ function metamaskReducer(state, action) {
       if (typeof window.ethereum !== undefined) {
         window.ethereum.removeAllListeners(["accountsChanged"]);
       }
-      return { ...state, wallet: null, balance: null };
+      return { ...state, wallet: null, balance: null, chainId: null };
+    }
+    case "changeChain": {
+      const { chainId } = action;
+      const newState = { ...state, chainId, status: "idle" };
+      const info = JSON.stringify(newState);
+      window.localStorage.setItem("metamaskState", info);
+      return newState;
     }
     default: {
       throw new Error("Unhandled action type");

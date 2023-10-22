@@ -1,7 +1,7 @@
 // const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-import { storeImages, storeTokenUriMetadata } from "./uploadToPinata.js";
+const { storeImages, storeTokenUriMetadata } = require("./uploadToPinata.js");
 
 const imagesLocation = path.join(__dirname, "../../nftFiles");
 
@@ -53,4 +53,4 @@ const createNftUri = async (formData) => {
   // return "done";
 };
 
-export default createNftUri;
+module.exports = createNftUri;

@@ -10,10 +10,15 @@ export const useListen = () => {
           method: "eth_getBalance",
           params: [newAccounts[0], "latest"],
         });
+        const newChainId = await window.ethereum?.request({
+          method: "eth_chainId",
+        });
+        console.log(newChainId);
         dispatch({
           type: "connect",
           wallet: newAccounts[0],
           balance: newBalance,
+          chianId: newChainId,
         });
       } else {
         dispatch({ type: "disconnect" });

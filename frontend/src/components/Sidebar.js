@@ -28,7 +28,7 @@ const routes = [
   {
     title: "My Projects",
     icon: myProjectsIcon,
-    path: "/",
+    path: "/project/Test%20Hack",
   },
   {
     title: "Organize",

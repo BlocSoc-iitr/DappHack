@@ -9,8 +9,8 @@ import useWeb3 from "@/utils/useWeb3";
 import useDeployContract from "@/utils/useDeployContract";
 import useDappHack from "@/utils/useDappHack";
 import useCrossDappHack from "@/utils/useCrossDappHack";
-import useDatabase from "@/utils/useDatabase";
-import { tableName } from "@/utils/useDatabase";
+import useDatabase, { projectTableName } from "@/utils/useDatabase";
+import ProjectOverview from "@/components/ProjectOverview";
 const pageNavigators = ["Overview", "Projects", "Timeline", "Prizes"];
 const HackPage = ({ params }) => {
   const [selectedNavigator, setSelectedNavigator] = useState(pageNavigators[0]);
@@ -34,39 +34,22 @@ const HackPage = ({ params }) => {
   const { builderSignup } = useDappHack();
   const { crossBuilderSignup } = useCrossDappHack();
 
-  const [hackData, setHackData] = useState([]);
+  const [projectData, setProjectData] = useState({});
   const { readDatabase } = useDatabase();
   console.log(params.hackName.replace("%20", " "));
 
   useEffect(() => {
     const fetch = async () => {
-      // const hackData = await readDatabase(tableName);
-      // const filtered = hackData.filter(
-      //   (hack) => hack.name.hackName === params["hackName"]
-      // );
-      const hackData = [];
-      hackData.push({
-        id: 1,
-        name: {
-          description: "test",
-          endTime: 5000,
-          gasService: "0xbe406f0189a0b4cf3a05c286473d23791dd44cc6",
-          gateway: "0x999117D44220F33e0441fbAb2A5aDB8FF485c54D",
-          hackName: "ethonline",
-          maxParticipants: 500,
-          organizer: ["0xA65920F5F3672dacf04e20DBAA99DE4053324d96"],
-          rules: ["submit the project"],
-          startTime: 1000,
-          symbol: "TH",
-          teamSizeLimit: 5,
-        },
-      });
-      setHackData(hackData[0].name);
+      const hackData = await readDatabase(projectTableName);
+      //   const filtered = hackData.filter(
+      //     (hack) => hack.name.hackName === params["hackName"].replace("%20", " ")
+      //   );
+      setProjectData(hackData[0].name);
     };
 
     fetch();
   }, []);
-  console.log(hackData);
+  console.log(projectData);
   return (
     <PageTemplate>
       {/* <ConnectButton moralisAuth={false} /> */}
@@ -106,7 +89,7 @@ const HackPage = ({ params }) => {
       {selectedNavigator === "Prizes" ? (
         <HackPrizes />
       ) : (
-        <HackOverview hackData={hackData} />
+        <ProjectOverview projectData={projectData} />
       )}
     </PageTemplate>
   );

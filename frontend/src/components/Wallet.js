@@ -42,10 +42,12 @@ export default function Wallet() {
         method: "eth_getBalance",
         params: [accounts[0], "latest"],
       });
-
+      const chainId = await window.ethereum.request({
+        method: "eth_chainId",
+      });
       const ret = await enableWeb3();
       if (typeof ret !== "undefined") {
-        dispatch({ type: "connect", wallet: accounts[0], balance });
+        dispatch({ type: "connect", wallet: accounts[0], balance, chainId });
       }
 
       listen();

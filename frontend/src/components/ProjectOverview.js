@@ -1,17 +1,14 @@
 import classes from "@/styles/HackOverview.module.css";
-import styles from "@/styles/page.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import timeIcon from "../../public/icons/time.svg";
 import locationIcon from "../../public/icons/location.svg";
 import emailIcon from "../../public/icons/email.svg";
 import shareIcon from "../../public/icons/share.svg";
-import HackCard from "@/components/HackCard";
+import { useEffect, useState } from "react";
 import projectImage from "../../public/project.jpeg";
 import hackImage from "../../public/hackathon.jpeg";
-import { useEffect, useState } from "react";
-
-const HackOverview = ({ hackData }) => {
+const ProjectOverview = ({ projectData }) => {
   const [timeLeft, setTimeLeft] = useState(null);
 
   useEffect(() => {
@@ -43,20 +40,20 @@ const HackOverview = ({ hackData }) => {
         <div className={classes["img-container"]}>
           <Image
             style={{ borderRadius: "8px" }}
-            src={projectImage}
+            src={hackImage}
             height={380}
             width={700}
             alt="hack-img"
           />
           <div className={classes["hack-name-tag"]}>
-            <h1>{hackData.hackName}</h1>
+            <h1>{projectData.name}</h1>
             <p>Tagline</p>
           </div>
         </div>
 
         <div className={classes["overview-container"]}>
           <h3>Overview</h3>
-          <p>{hackData.description}</p>
+          <p>{projectData.description}</p>
           {/* <p>
             Hack Unicorn Club presents Hack Unicorn 2.0, India's prestigious
             hackathon, uniting tech enthusiasts nationwide. This hybrid event
@@ -74,15 +71,15 @@ const HackOverview = ({ hackData }) => {
             Prizes.
           </p> */}
         </div>
-        <div className={classes["overview-container"]}>
+        {/* <div className={classes["overview-container"]}>
           <h3>Eligibility and Rules</h3>
           <ul className={classes["rules-list"]}>
             {hackData?.rules?.map((rule, i) => (
               <li key={i}>
                 <p>{rule}</p>
               </li>
-            ))}
-            {/* <li>
+            ))} */}
+        {/* <li>
               <p>
                 Hack Unicorn Club presents Hack Unicorn 2.0, India's prestigious
                 hackathon
@@ -117,8 +114,8 @@ const HackOverview = ({ hackData }) => {
                 amazing Prizes.
               </p>
             </li> */}
-          </ul>
-        </div>
+        {/* </ul>
+        </div> */}
         <div
           className={`${classes["overview-container"]} ${classes["contact-container"]}`}
         >
@@ -155,56 +152,31 @@ const HackOverview = ({ hackData }) => {
         </div> */}
       </div>
 
-      <div>
-        <div className={classes["apply-box"]}>
-          <div className={classes["hack-img-container"]}>
-            <Image
-              src={projectImage}
-              width={240}
-              height={120}
-              alt="projec-img"
-            />
-          </div>
-          <h3>{hackData.hackName}</h3>
-          <div className={classes.row}>
-            <Image src={timeIcon} alt="time" />
-            <p>
-              <span>Time: </span>
-              Oct 29 - Nov 2, 2023
-            </p>
-          </div>
-          <div className={classes.row}>
-            <Image src={locationIcon} alt="venue" />
-            <p>
-              <span>Venue: </span>
-              Online
-            </p>
-          </div>
-          <p>Application ends in </p>
-          <h6>{timeLeft}</h6>
-          <Link href={`/apply/${hackData.hackName}`}>Apply As Builder</Link>
-          <Link style={{ marginTop: "1rem" }} href={`/sponsor`}>
-            Apply As Sponsor
-          </Link>
+      <div className={classes["apply-box"]}>
+        <div className={classes["hack-img-container"]}>
+          <Image src={projectImage} width={240} height={120} alt="projec-img" />
         </div>
-        <button
-          style={{
-            marginTop: "2rem",
-            color: "#fff",
-            backgroundColor: "#aaa",
-            border: "none",
-            padding: "1rem 2rem",
-            borderRadius: "8px",
-            cursor: "not-allowed",
-            fontSize: "20px",
-            fontWeight: "600",
-          }}
-        >
-          Distribute Price
-        </button>
+        <h3>{"Test Hack"}</h3>
+        <div className={classes.row}>
+          <Image src={timeIcon} alt="time" />
+          <p>
+            <span>Time: </span>
+            Oct 29 - Nov 2, 2023
+          </p>
+        </div>
+        <div className={classes.row}>
+          <Image src={locationIcon} alt="venue" />
+          <p>
+            <span>Venue: </span>
+            Online
+          </p>
+        </div>
+        <p>Application ends in </p>
+        <h6>Closed</h6>
+        <Link href={`/`}>Submitted</Link>
       </div>
     </div>
   );
 };
 
-export default HackOverview;
+export default ProjectOverview;

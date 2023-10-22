@@ -3,6 +3,8 @@ import { Database } from "@tableland/sdk";
 import { Registry, helpers } from "@tableland/sdk";
 import { useState } from "react";
 
+export const tableName = "hackathon_314159_641";
+export const projectTableName = "project_314159_646";
 export default function useDatabase() {
   const db = new Database();
   // const [databaseName, setDatabaseName] = useState("");

@@ -1,5 +1,5 @@
 import classes from "@/styles/HackPrizes.module.css";
-const HackPrizeCard = () => {
+const HackPrizeCard = ({ title }) => {
   return (
     <div className={classes["prize-card"]}>
       <div className={classes["sponsor-icon"]}></div>
@@ -11,7 +11,7 @@ const HackPrizeCard = () => {
             fontWeight: "600",
           }}
         >
-          Mask Network
+          {title}
         </h3>
         <h3
           style={{

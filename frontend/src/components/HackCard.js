@@ -2,7 +2,7 @@ import classes from "@/styles/HackCard.module.css";
 import timerIcon from "../../public/icons/timer.svg";
 import shareIcon from "../../public/icons/share.svg";
 import Image from "next/image";
-const HackCard = () => {
+const HackCard = ({ hackData }) => {
   return (
     <div className={classes["card-container"]}>
       <div className={classes["card-top-section"]}>
@@ -15,12 +15,12 @@ const HackCard = () => {
         </div>
       </div>
       <div className={classes["card-content"]}>
-        <h3>Hackathon Name</h3>
-        <p className={classes.type}>Hackathon</p>
+        <h3>{hackData.hackName}</h3>
+        <p className={classes.type}>Online</p>
         <div className={classes.timer}>
           <Image src={timerIcon} alt="time" />
           <p>
-            Ends in | <span>00:00:00</span>
+            Ends in | <span>00:05:00</span>
           </p>
         </div>
         <p className={classes.members}>100+ members</p>
