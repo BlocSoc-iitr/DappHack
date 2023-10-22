@@ -1,0 +1,246 @@
+.hack-details {
+  position: relative;
+  padding-bottom: 1rem;
+}
+.hack-details > h1 {
+  color: var(--neutrals-rich-black, #00061d);
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.hack-details > p {
+  font-size: 20px;
+  font-weight: 600;
+}
+.hack-details::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #03f;
+  opacity: 0.3;
+}
+
+.project-heading {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+  font-weight: 600;
+  font-size: 32px;
+  color: var(--neutrals-rich-black, #00061d);
+}
+.project-container > h3 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #242930;
+}
+.project-details {
+  position: relative;
+  height: 565px;
+  margin: 2rem 0;
+}
+.project-details > div {
+  margin: 2rem 0;
+  margin-top: 1rem;
+  padding: 2rem;
+  background-color: #fff;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 565px;
+  overflow-x: scroll;
+}
+.project-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+.input-field-container {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  border: 0.5px solid rgba(0, 0, 0, 0.6);
+  padding: 18px 20px;
+}
+.input-field-container:nth-child(1) {
+  flex: 2 1 400px;
+}
+.input-field-container:nth-child(2) {
+  flex: 1 1 400px;
+}
+.input-field-container:nth-child(3) {
+  flex: 1 1 1700px;
+}
+.input-field-container > label {
+  color: #03f;
+  font-size: 18px;
+  font-weight: 400;
+  cursor: pointer;
+}
+.input-field-container > input,
+.input-field-container > textarea {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 300;
+}
+.project-info .input-field-container:nth-child(2) {
+  display: flex;
+  justify-content: center;
+}
+.input-field-container:nth-child(2) > .video-label {
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  color: #242930;
+}
+
+.tracks-info {
+  margin: 2rem 0;
+}
+.tracks-info > h3 {
+  color: var(--neutrals-rich-black, #00061d);
+  font-size: 20px;
+  font-weight: 600;
+}
+.track-field-container > div {
+  margin: 1.5rem 0;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 2rem;
+}
+.cancel-btn {
+  border-radius: 24px;
+  border: 0.5px solid #03f;
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--blue-blue, #03f);
+  cursor: pointer;
+  background-color: #fff;
+}
+.next-btn {
+  border-radius: 24px;
+  border: 0.5px solid #03f;
+  padding: 16px 40px;
+  background-color: var(--blue-blue, #03f);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Modal */
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  /* position: absolute;
+  top: 5vh;
+  left: 5%; */
+  width: 90%;
+  transform: translate();
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 30;
+  animation: slide-down 300ms ease-out forwards;
+  max-height: 80%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  text-align: center;
+}
+.modal > h1 {
+  color: var(--color-light-mode-green-green, #05a660);
+  font-size: 24px;
+  font-weight: 500;
+}
+.icon-container {
+  display: flex;
+  justify-content: center;
+}
+.icon {
+  margin: 2rem 0;
+  padding: 1rem;
+  background-color: #ebf8f1;
+  border-radius: 50%;
+  width: fit-content;
+}
+.icon > img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal > p {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  color: var(--color-dark-dark-2, #87898e);
+  margin-bottom: 2rem;
+}
+.modal-btns {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+.modal-btns > a {
+  display: block;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  border-radius: 50px;
+  flex: 1;
+}
+.modal-btns > a:nth-child(1) {
+  background-color: #3772ff;
+  padding: 1rem 1.5rem;
+  color: #fff;
+}
+.modal-btns > a:nth-child(2) {
+  background-color: #f1f1f1;
+  padding: 1rem 1.5rem;
+  color: #23262f;
+}
+@media (height < 500px) {
+  .modal {
+    max-height: 100%;
+  }
+}
+@media (width > 600px) {
+  .modal {
+    max-width: 40rem;
+    left: calc(50% - 20rem);
+    top: 15vh;
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
