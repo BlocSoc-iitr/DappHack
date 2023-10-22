@@ -3,6 +3,7 @@ import { MetamaskProvider } from "@/utils/useMetamask";
 import { Nunito } from "next/font/google";
 import "@/styles/globals.css";
 import { MoralisProvider } from "react-moralis";
+import Script from "next/script";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -14,6 +15,7 @@ const nunito = Nunito({ subsets: ["latin"] });
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <Script src="https://saturn.tech/widget.js"></Script>
       <body className={nunito.className}>
         <MoralisProvider initializeOnMount={false}>
           <MetamaskProvider>{children}</MetamaskProvider>

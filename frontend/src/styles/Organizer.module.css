@@ -190,3 +190,8 @@
   font-weight: 700;
   cursor: pointer;
 }
+.next-btn:disabled {
+  background-color: #aaa;
+  border: none;
+  cursor: not-allowed;
+}
