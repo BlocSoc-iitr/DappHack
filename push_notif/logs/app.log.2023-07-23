@@ -1,0 +1,594 @@
+{"level":"info","message":"🐣 Cron Task Completed -- DappHack notifyAuthRequest(false)","timestamp":"2023-07-23 00:00:00"}
+{"level":"info","message":"🐣 Cron Task Completed -- DappHack notifyAuthRequest(false)","timestamp":"2023-07-23 00:05:00"}
+{"level":"info","message":"✌️   Verifying ENV","timestamp":"2023-07-23 00:05:25"}
+{"level":"info","message":"    -- Checking for ENV File... Found","timestamp":"2023-07-23 00:05:25"}
+{"level":"info","message":"    -- Verifying and building ENV File...","timestamp":"2023-07-23 00:05:25"}
+{"level":"info","message":"    -- ENV file verified!","timestamp":"2023-07-23 00:05:25"}
+{"level":"info","message":"✔️   ENV Verified / Generated and Loaded!","timestamp":"2023-07-23 00:05:25"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Channel Keys...","timestamp":"2023-07-23 00:05:25"}
+{"level":"info","message":"     ✔️  DappHack Loaded 2 Wallet(s)!","timestamp":"2023-07-23 00:05:25"}
+{"level":"info","message":"✌️   Injecting dependencies loaders","timestamp":"2023-07-23 00:05:25"}
+{"level":"info","message":"    -- Checking DB Models...","timestamp":"2023-07-23 00:05:25"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackModel.ts Found!","timestamp":"2023-07-23 00:05:25"}
+{"level":"info","message":"✌️   Loading Mongo DB Models","timestamp":"2023-07-23 00:05:25"}
+{"level":"info","message":"   --  ✔️  Loading Mongo DB Model: { name: 'DappHackModel', model: undefined }","timestamp":"2023-07-23 00:05:25"}
+{"level":"info","message":"✔️   All Mongo DB Models loaded!","timestamp":"2023-07-23 00:05:25"}
+{"level":"info","message":"✔️   Logger Injected","timestamp":"2023-07-23 00:05:25"}
+{"level":"info","message":"✔️   Cache (with Redis) Loaded! 🐳🐳🐳","timestamp":"2023-07-23 00:05:25"}
+{"level":"info","message":"✔️   Dependency Injector loaded","timestamp":"2023-07-23 00:05:25"}
+{"level":"info","message":"✔️   Mongoose Loaded and connected!","timestamp":"2023-07-23 00:05:25"}
+{"level":"info","message":"✔️   Database connected!","timestamp":"2023-07-23 00:05:25"}
+{"level":"info","message":"✌️   Loading DB Events listener","timestamp":"2023-07-23 00:05:25"}
+{"level":"info","message":"✔️   DB Listener loaded!","timestamp":"2023-07-23 00:05:25"}
+{"level":"info","message":"✌️   Loading jobs","timestamp":"2023-07-23 00:05:25"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Jobs...","timestamp":"2023-07-23 00:05:25"}
+{"level":"info","message":"[Sun Jul 23 2023 00:05:26 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Initializing Channel : DappHack","timestamp":"2023-07-23 00:05:26"}
+{"level":"info","message":"[Sun Jul 23 2023 00:05:26 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Getting WalletKey for DappHack","timestamp":"2023-07-23 00:05:26"}
+{"level":"info","message":"🛵 Scheduling Showrunner - Nord Channel [on 24 hours] [Sun Jul 23 2023 00:05:26 GMT+0200 (Central European Summer Time)]","timestamp":"2023-07-23 00:05:26"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackJobs.ts Loaded!","timestamp":"2023-07-23 00:05:26"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Jobs...","timestamp":"2023-07-23 00:05:26"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... scheduling Wallet Monitoring Jobs skipped","timestamp":"2023-07-23 00:05:26"}
+{"level":"info","message":"✔️   Jobs loaded","timestamp":"2023-07-23 00:05:26"}
+{"level":"info","message":"✌️   Loading webhooks","timestamp":"2023-07-23 00:05:26"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Webhooks...","timestamp":"2023-07-23 00:05:26"}
+{"level":"info","message":"     ❌  ../showrunners/DappHack/DappHackAWSSNS.ts Not Found... skipped","timestamp":"2023-07-23 00:05:26"}
+{"level":"info","message":"✔️   Webhooks loaded","timestamp":"2023-07-23 00:05:26"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Routes...","timestamp":"2023-07-23 00:05:26"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackRoutes.ts Loaded!","timestamp":"2023-07-23 00:05:26"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Routes...","timestamp":"2023-07-23 00:05:26"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... ./routes/walletMonitoringRoutes.ts skipped","timestamp":"2023-07-23 00:05:26"}
+{"level":"info","message":"✔️   Express loaded","timestamp":"2023-07-23 00:05:26"}
+{"level":"info","message":"\n      ################################################\n\n\n      ███████╗██╗  ██╗ ██████╗ ██╗    ██╗██████╗ ██╗   ██╗███╗   ██╗███╗   ██╗███████╗██████╗ ███████╗    ███████╗████████╗ █████╗  ██████╗ ██╗███╗   ██╗ ██████╗\n      ██╔════╝██║  ██║██╔═══██╗██║    ██║██╔══██╗██║   ██║████╗  ██║████╗  ██║██╔════╝██╔══██╗██╔════╝    ██╔════╝╚══██╔══╝██╔══██╗██╔════╝ ██║████╗  ██║██╔════╝\n      ███████╗███████║██║   ██║██║ █╗ ██║██████╔╝██║   ██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝███████╗    ███████╗   ██║   ███████║██║  ███╗██║██╔██╗ ██║██║  ███╗\n      ╚════██║██╔══██║██║   ██║██║███╗██║██╔══██╗██║   ██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗╚════██║    ╚════██║   ██║   ██╔══██║██║   ██║██║██║╚██╗██║██║   ██║\n      ███████║██║  ██║╚██████╔╝╚███╔███╔╝██║  ██║╚██████╔╝██║ ╚████║██║ ╚████║███████╗██║  ██║███████║    ███████║   ██║   ██║  ██║╚██████╔╝██║██║ ╚████║╚██████╔╝\n      ╚══════╝╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚══════╝    ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝\n\n\n      🛡️ Server listening on port: 5432 🛡️\n\n      ################################################\n    ","timestamp":"2023-07-23 00:05:26"}
+{"level":"info","message":"[Sun Jul 23 2023 00:05:26 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  currentWalletInfo: { numOfWallets: 2, currentWalletID: 2 }","timestamp":"2023-07-23 00:05:26"}
+{"level":"info","message":"[Sun Jul 23 2023 00:05:26 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  WalletKey Obtained","timestamp":"2023-07-23 00:05:26"}
+{"level":"info","message":"[Sun Jul 23 2023 00:05:26 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  channelAddress : 0x4918b3a9b6767B7C632F536AC8853fCc511Bb2fD","timestamp":"2023-07-23 00:05:26"}
+{"level":"info","message":"[Sun Jul 23 2023 00:05:26 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Channel Initialization Complete","timestamp":"2023-07-23 00:05:26"}
+{"level":"info","message":"✌️   Verifying ENV","timestamp":"2023-07-23 00:06:09"}
+{"level":"info","message":"    -- Checking for ENV File... Found","timestamp":"2023-07-23 00:06:09"}
+{"level":"info","message":"    -- Verifying and building ENV File...","timestamp":"2023-07-23 00:06:09"}
+{"level":"info","message":"    -- ENV file verified!","timestamp":"2023-07-23 00:06:09"}
+{"level":"info","message":"✔️   ENV Verified / Generated and Loaded!","timestamp":"2023-07-23 00:06:09"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Channel Keys...","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"     ✔️  DappHack Loaded 2 Wallet(s)!","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"✌️   Injecting dependencies loaders","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"    -- Checking DB Models...","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackModel.ts Found!","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"✌️   Loading Mongo DB Models","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"   --  ✔️  Loading Mongo DB Model: { name: 'DappHackModel', model: undefined }","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"✔️   All Mongo DB Models loaded!","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"✔️   Logger Injected","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"✔️   Cache (with Redis) Loaded! 🐳🐳🐳","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"✔️   Dependency Injector loaded","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"✔️   Mongoose Loaded and connected!","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"✔️   Database connected!","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"✌️   Loading DB Events listener","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"✔️   DB Listener loaded!","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"✌️   Loading jobs","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Jobs...","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"[Sun Jul 23 2023 00:06:10 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Initializing Channel : DappHack","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"[Sun Jul 23 2023 00:06:10 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Getting WalletKey for DappHack","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"🛵 Scheduling Showrunner - Nord Channel [on 24 hours] [Sun Jul 23 2023 00:06:10 GMT+0200 (Central European Summer Time)]","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackJobs.ts Loaded!","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Jobs...","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... scheduling Wallet Monitoring Jobs skipped","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"✔️   Jobs loaded","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"✌️   Loading webhooks","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Webhooks...","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"     ❌  ../showrunners/DappHack/DappHackAWSSNS.ts Not Found... skipped","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"✔️   Webhooks loaded","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Routes...","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackRoutes.ts Loaded!","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Routes...","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... ./routes/walletMonitoringRoutes.ts skipped","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"✔️   Express loaded","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"\n      ################################################\n\n\n      ███████╗██╗  ██╗ ██████╗ ██╗    ██╗██████╗ ██╗   ██╗███╗   ██╗███╗   ██╗███████╗██████╗ ███████╗    ███████╗████████╗ █████╗  ██████╗ ██╗███╗   ██╗ ██████╗\n      ██╔════╝██║  ██║██╔═══██╗██║    ██║██╔══██╗██║   ██║████╗  ██║████╗  ██║██╔════╝██╔══██╗██╔════╝    ██╔════╝╚══██╔══╝██╔══██╗██╔════╝ ██║████╗  ██║██╔════╝\n      ███████╗███████║██║   ██║██║ █╗ ██║██████╔╝██║   ██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝███████╗    ███████╗   ██║   ███████║██║  ███╗██║██╔██╗ ██║██║  ███╗\n      ╚════██║██╔══██║██║   ██║██║███╗██║██╔══██╗██║   ██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗╚════██║    ╚════██║   ██║   ██╔══██║██║   ██║██║██║╚██╗██║██║   ██║\n      ███████║██║  ██║╚██████╔╝╚███╔███╔╝██║  ██║╚██████╔╝██║ ╚████║██║ ╚████║███████╗██║  ██║███████║    ███████║   ██║   ██║  ██║╚██████╔╝██║██║ ╚████║╚██████╔╝\n      ╚══════╝╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚══════╝    ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝\n\n\n      🛡️ Server listening on port: 5432 🛡️\n\n      ################################################\n    ","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"[Sun Jul 23 2023 00:06:10 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  currentWalletInfo: { numOfWallets: 2, currentWalletID: 1 }","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"[Sun Jul 23 2023 00:06:10 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  WalletKey Obtained","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"[Sun Jul 23 2023 00:06:10 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  channelAddress : 0x4918b3a9b6767B7C632F536AC8853fCc511Bb2fD","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"[Sun Jul 23 2023 00:06:10 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Channel Initialization Complete","timestamp":"2023-07-23 00:06:10"}
+{"level":"info","message":"✌️   Verifying ENV","timestamp":"2023-07-23 00:07:06"}
+{"level":"info","message":"    -- Checking for ENV File... Found","timestamp":"2023-07-23 00:07:06"}
+{"level":"info","message":"    -- Verifying and building ENV File...","timestamp":"2023-07-23 00:07:06"}
+{"level":"info","message":"    -- ENV file verified!","timestamp":"2023-07-23 00:07:06"}
+{"level":"info","message":"✔️   ENV Verified / Generated and Loaded!","timestamp":"2023-07-23 00:07:06"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Channel Keys...","timestamp":"2023-07-23 00:07:06"}
+{"level":"info","message":"     ✔️  DappHack Loaded 2 Wallet(s)!","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"✌️   Injecting dependencies loaders","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"    -- Checking DB Models...","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackModel.ts Found!","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"✌️   Loading Mongo DB Models","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"   --  ✔️  Loading Mongo DB Model: { name: 'DappHackModel', model: undefined }","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"✔️   All Mongo DB Models loaded!","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"✔️   Logger Injected","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"✔️   Cache (with Redis) Loaded! 🐳🐳🐳","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"✔️   Dependency Injector loaded","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"✔️   Mongoose Loaded and connected!","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"✔️   Database connected!","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"✌️   Loading DB Events listener","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"✔️   DB Listener loaded!","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"✌️   Loading jobs","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Jobs...","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"[Sun Jul 23 2023 00:07:07 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Initializing Channel : DappHack","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"[Sun Jul 23 2023 00:07:07 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Getting WalletKey for DappHack","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"🛵 Scheduling Showrunner - Nord Channel [on 24 hours] [Sun Jul 23 2023 00:07:07 GMT+0200 (Central European Summer Time)]","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackJobs.ts Loaded!","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Jobs...","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... scheduling Wallet Monitoring Jobs skipped","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"✔️   Jobs loaded","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"✌️   Loading webhooks","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Webhooks...","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"     ❌  ../showrunners/DappHack/DappHackAWSSNS.ts Not Found... skipped","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"✔️   Webhooks loaded","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Routes...","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackRoutes.ts Loaded!","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Routes...","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... ./routes/walletMonitoringRoutes.ts skipped","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"✔️   Express loaded","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"\n      ################################################\n\n\n      ███████╗██╗  ██╗ ██████╗ ██╗    ██╗██████╗ ██╗   ██╗███╗   ██╗███╗   ██╗███████╗██████╗ ███████╗    ███████╗████████╗ █████╗  ██████╗ ██╗███╗   ██╗ ██████╗\n      ██╔════╝██║  ██║██╔═══██╗██║    ██║██╔══██╗██║   ██║████╗  ██║████╗  ██║██╔════╝██╔══██╗██╔════╝    ██╔════╝╚══██╔══╝██╔══██╗██╔════╝ ██║████╗  ██║██╔════╝\n      ███████╗███████║██║   ██║██║ █╗ ██║██████╔╝██║   ██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝███████╗    ███████╗   ██║   ███████║██║  ███╗██║██╔██╗ ██║██║  ███╗\n      ╚════██║██╔══██║██║   ██║██║███╗██║██╔══██╗██║   ██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗╚════██║    ╚════██║   ██║   ██╔══██║██║   ██║██║██║╚██╗██║██║   ██║\n      ███████║██║  ██║╚██████╔╝╚███╔███╔╝██║  ██║╚██████╔╝██║ ╚████║██║ ╚████║███████╗██║  ██║███████║    ███████║   ██║   ██║  ██║╚██████╔╝██║██║ ╚████║╚██████╔╝\n      ╚══════╝╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚══════╝    ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝\n\n\n      🛡️ Server listening on port: 5432 🛡️\n\n      ################################################\n    ","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"[Sun Jul 23 2023 00:07:07 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  currentWalletInfo: { numOfWallets: 2, currentWalletID: 2 }","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"[Sun Jul 23 2023 00:07:07 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  WalletKey Obtained","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"[Sun Jul 23 2023 00:07:07 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  channelAddress : 0x4918b3a9b6767B7C632F536AC8853fCc511Bb2fD","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"[Sun Jul 23 2023 00:07:07 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Channel Initialization Complete","timestamp":"2023-07-23 00:07:07"}
+{"level":"info","message":"✌️   Verifying ENV","timestamp":"2023-07-23 00:07:17"}
+{"level":"info","message":"    -- Checking for ENV File... Found","timestamp":"2023-07-23 00:07:17"}
+{"level":"info","message":"    -- Verifying and building ENV File...","timestamp":"2023-07-23 00:07:17"}
+{"level":"info","message":"    -- ENV file verified!","timestamp":"2023-07-23 00:07:17"}
+{"level":"info","message":"✔️   ENV Verified / Generated and Loaded!","timestamp":"2023-07-23 00:07:17"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Channel Keys...","timestamp":"2023-07-23 00:07:17"}
+{"level":"info","message":"     ✔️  DappHack Loaded 2 Wallet(s)!","timestamp":"2023-07-23 00:07:17"}
+{"level":"info","message":"✌️   Injecting dependencies loaders","timestamp":"2023-07-23 00:07:17"}
+{"level":"info","message":"    -- Checking DB Models...","timestamp":"2023-07-23 00:07:17"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackModel.ts Found!","timestamp":"2023-07-23 00:07:17"}
+{"level":"info","message":"✌️   Loading Mongo DB Models","timestamp":"2023-07-23 00:07:17"}
+{"level":"info","message":"   --  ✔️  Loading Mongo DB Model: { name: 'DappHackModel', model: undefined }","timestamp":"2023-07-23 00:07:17"}
+{"level":"info","message":"✔️   All Mongo DB Models loaded!","timestamp":"2023-07-23 00:07:17"}
+{"level":"info","message":"✔️   Logger Injected","timestamp":"2023-07-23 00:07:17"}
+{"level":"info","message":"✔️   Cache (with Redis) Loaded! 🐳🐳🐳","timestamp":"2023-07-23 00:07:17"}
+{"level":"info","message":"✔️   Dependency Injector loaded","timestamp":"2023-07-23 00:07:17"}
+{"level":"info","message":"✔️   Mongoose Loaded and connected!","timestamp":"2023-07-23 00:07:17"}
+{"level":"info","message":"✔️   Database connected!","timestamp":"2023-07-23 00:07:17"}
+{"level":"info","message":"✌️   Loading DB Events listener","timestamp":"2023-07-23 00:07:17"}
+{"level":"info","message":"✔️   DB Listener loaded!","timestamp":"2023-07-23 00:07:17"}
+{"level":"info","message":"✌️   Loading jobs","timestamp":"2023-07-23 00:07:17"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Jobs...","timestamp":"2023-07-23 00:07:17"}
+{"level":"info","message":"[Sun Jul 23 2023 00:07:18 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Initializing Channel : DappHack","timestamp":"2023-07-23 00:07:18"}
+{"level":"info","message":"[Sun Jul 23 2023 00:07:18 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Getting WalletKey for DappHack","timestamp":"2023-07-23 00:07:18"}
+{"level":"info","message":"🛵 Scheduling Showrunner - Nord Channel [on 24 hours] [Sun Jul 23 2023 00:07:18 GMT+0200 (Central European Summer Time)]","timestamp":"2023-07-23 00:07:18"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackJobs.ts Loaded!","timestamp":"2023-07-23 00:07:18"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Jobs...","timestamp":"2023-07-23 00:07:18"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... scheduling Wallet Monitoring Jobs skipped","timestamp":"2023-07-23 00:07:18"}
+{"level":"info","message":"✔️   Jobs loaded","timestamp":"2023-07-23 00:07:18"}
+{"level":"info","message":"✌️   Loading webhooks","timestamp":"2023-07-23 00:07:18"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Webhooks...","timestamp":"2023-07-23 00:07:18"}
+{"level":"info","message":"     ❌  ../showrunners/DappHack/DappHackAWSSNS.ts Not Found... skipped","timestamp":"2023-07-23 00:07:18"}
+{"level":"info","message":"✔️   Webhooks loaded","timestamp":"2023-07-23 00:07:18"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Routes...","timestamp":"2023-07-23 00:07:18"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackRoutes.ts Loaded!","timestamp":"2023-07-23 00:07:18"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Routes...","timestamp":"2023-07-23 00:07:18"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... ./routes/walletMonitoringRoutes.ts skipped","timestamp":"2023-07-23 00:07:18"}
+{"level":"info","message":"✔️   Express loaded","timestamp":"2023-07-23 00:07:18"}
+{"level":"info","message":"\n      ################################################\n\n\n      ███████╗██╗  ██╗ ██████╗ ██╗    ██╗██████╗ ██╗   ██╗███╗   ██╗███╗   ██╗███████╗██████╗ ███████╗    ███████╗████████╗ █████╗  ██████╗ ██╗███╗   ██╗ ██████╗\n      ██╔════╝██║  ██║██╔═══██╗██║    ██║██╔══██╗██║   ██║████╗  ██║████╗  ██║██╔════╝██╔══██╗██╔════╝    ██╔════╝╚══██╔══╝██╔══██╗██╔════╝ ██║████╗  ██║██╔════╝\n      ███████╗███████║██║   ██║██║ █╗ ██║██████╔╝██║   ██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝███████╗    ███████╗   ██║   ███████║██║  ███╗██║██╔██╗ ██║██║  ███╗\n      ╚════██║██╔══██║██║   ██║██║███╗██║██╔══██╗██║   ██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗╚════██║    ╚════██║   ██║   ██╔══██║██║   ██║██║██║╚██╗██║██║   ██║\n      ███████║██║  ██║╚██████╔╝╚███╔███╔╝██║  ██║╚██████╔╝██║ ╚████║██║ ╚████║███████╗██║  ██║███████║    ███████║   ██║   ██║  ██║╚██████╔╝██║██║ ╚████║╚██████╔╝\n      ╚══════╝╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚══════╝    ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝\n\n\n      🛡️ Server listening on port: 5432 🛡️\n\n      ################################################\n    ","timestamp":"2023-07-23 00:07:18"}
+{"level":"info","message":"[Sun Jul 23 2023 00:07:18 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  currentWalletInfo: { numOfWallets: 2, currentWalletID: 1 }","timestamp":"2023-07-23 00:07:18"}
+{"level":"info","message":"[Sun Jul 23 2023 00:07:18 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  WalletKey Obtained","timestamp":"2023-07-23 00:07:18"}
+{"level":"info","message":"[Sun Jul 23 2023 00:07:18 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  channelAddress : 0x4918b3a9b6767B7C632F536AC8853fCc511Bb2fD","timestamp":"2023-07-23 00:07:18"}
+{"level":"info","message":"[Sun Jul 23 2023 00:07:18 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Channel Initialization Complete","timestamp":"2023-07-23 00:07:18"}
+{"level":"info","message":"✌️   Verifying ENV","timestamp":"2023-07-23 00:07:49"}
+{"level":"info","message":"    -- Checking for ENV File... Found","timestamp":"2023-07-23 00:07:49"}
+{"level":"info","message":"    -- Verifying and building ENV File...","timestamp":"2023-07-23 00:07:49"}
+{"level":"info","message":"    -- ENV file verified!","timestamp":"2023-07-23 00:07:49"}
+{"level":"info","message":"✔️   ENV Verified / Generated and Loaded!","timestamp":"2023-07-23 00:07:49"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Channel Keys...","timestamp":"2023-07-23 00:07:49"}
+{"level":"info","message":"     ✔️  DappHack Loaded 2 Wallet(s)!","timestamp":"2023-07-23 00:07:49"}
+{"level":"info","message":"✌️   Injecting dependencies loaders","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"    -- Checking DB Models...","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackModel.ts Found!","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"✌️   Loading Mongo DB Models","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"   --  ✔️  Loading Mongo DB Model: { name: 'DappHackModel', model: undefined }","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"✔️   All Mongo DB Models loaded!","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"✔️   Logger Injected","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"✔️   Cache (with Redis) Loaded! 🐳🐳🐳","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"✔️   Dependency Injector loaded","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"✔️   Mongoose Loaded and connected!","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"✔️   Database connected!","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"✌️   Loading DB Events listener","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"✔️   DB Listener loaded!","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"✌️   Loading jobs","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Jobs...","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"[Sun Jul 23 2023 00:07:50 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Initializing Channel : DappHack","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"[Sun Jul 23 2023 00:07:50 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Getting WalletKey for DappHack","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"🛵 Scheduling Showrunner - Nord Channel [on 24 hours] [Sun Jul 23 2023 00:07:50 GMT+0200 (Central European Summer Time)]","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackJobs.ts Loaded!","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Jobs...","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... scheduling Wallet Monitoring Jobs skipped","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"✔️   Jobs loaded","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"✌️   Loading webhooks","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Webhooks...","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"     ❌  ../showrunners/DappHack/DappHackAWSSNS.ts Not Found... skipped","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"✔️   Webhooks loaded","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Routes...","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackRoutes.ts Loaded!","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Routes...","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... ./routes/walletMonitoringRoutes.ts skipped","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"✔️   Express loaded","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"\n      ################################################\n\n\n      ███████╗██╗  ██╗ ██████╗ ██╗    ██╗██████╗ ██╗   ██╗███╗   ██╗███╗   ██╗███████╗██████╗ ███████╗    ███████╗████████╗ █████╗  ██████╗ ██╗███╗   ██╗ ██████╗\n      ██╔════╝██║  ██║██╔═══██╗██║    ██║██╔══██╗██║   ██║████╗  ██║████╗  ██║██╔════╝██╔══██╗██╔════╝    ██╔════╝╚══██╔══╝██╔══██╗██╔════╝ ██║████╗  ██║██╔════╝\n      ███████╗███████║██║   ██║██║ █╗ ██║██████╔╝██║   ██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝███████╗    ███████╗   ██║   ███████║██║  ███╗██║██╔██╗ ██║██║  ███╗\n      ╚════██║██╔══██║██║   ██║██║███╗██║██╔══██╗██║   ██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗╚════██║    ╚════██║   ██║   ██╔══██║██║   ██║██║██║╚██╗██║██║   ██║\n      ███████║██║  ██║╚██████╔╝╚███╔███╔╝██║  ██║╚██████╔╝██║ ╚████║██║ ╚████║███████╗██║  ██║███████║    ███████║   ██║   ██║  ██║╚██████╔╝██║██║ ╚████║╚██████╔╝\n      ╚══════╝╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚══════╝    ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝\n\n\n      🛡️ Server listening on port: 5432 🛡️\n\n      ################################################\n    ","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"[Sun Jul 23 2023 00:07:50 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  currentWalletInfo: { numOfWallets: 2, currentWalletID: 2 }","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"[Sun Jul 23 2023 00:07:50 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  WalletKey Obtained","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"[Sun Jul 23 2023 00:07:50 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  channelAddress : 0x4918b3a9b6767B7C632F536AC8853fCc511Bb2fD","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"[Sun Jul 23 2023 00:07:50 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Channel Initialization Complete","timestamp":"2023-07-23 00:07:50"}
+{"level":"info","message":"🐣 Cron Task Completed -- DappHack notifyAuthRequest(false)","timestamp":"2023-07-23 00:10:00"}
+{"level":"info","message":"✌️   Verifying ENV","timestamp":"2023-07-23 00:10:51"}
+{"level":"info","message":"    -- Checking for ENV File... Found","timestamp":"2023-07-23 00:10:51"}
+{"level":"info","message":"    -- Verifying and building ENV File...","timestamp":"2023-07-23 00:10:51"}
+{"level":"info","message":"    -- ENV file verified!","timestamp":"2023-07-23 00:10:51"}
+{"level":"info","message":"✔️   ENV Verified / Generated and Loaded!","timestamp":"2023-07-23 00:10:51"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Channel Keys...","timestamp":"2023-07-23 00:10:51"}
+{"level":"info","message":"     ✔️  DappHack Loaded 2 Wallet(s)!","timestamp":"2023-07-23 00:10:51"}
+{"level":"info","message":"✌️   Injecting dependencies loaders","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"    -- Checking DB Models...","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackModel.ts Found!","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"✌️   Loading Mongo DB Models","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"   --  ✔️  Loading Mongo DB Model: { name: 'DappHackModel', model: undefined }","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"✔️   All Mongo DB Models loaded!","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"✔️   Logger Injected","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"✔️   Cache (with Redis) Loaded! 🐳🐳🐳","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"✔️   Dependency Injector loaded","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"✔️   Mongoose Loaded and connected!","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"✔️   Database connected!","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"✌️   Loading DB Events listener","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"✔️   DB Listener loaded!","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"✌️   Loading jobs","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Jobs...","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"[Sun Jul 23 2023 00:10:52 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Initializing Channel : DappHack","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"[Sun Jul 23 2023 00:10:52 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Getting WalletKey for DappHack","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"🛵 Scheduling Showrunner - Nord Channel [on 24 hours] [Sun Jul 23 2023 00:10:52 GMT+0200 (Central European Summer Time)]","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackJobs.ts Loaded!","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Jobs...","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... scheduling Wallet Monitoring Jobs skipped","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"✔️   Jobs loaded","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"✌️   Loading webhooks","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Webhooks...","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"     ❌  ../showrunners/DappHack/DappHackAWSSNS.ts Not Found... skipped","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"✔️   Webhooks loaded","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Routes...","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackRoutes.ts Loaded!","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Routes...","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... ./routes/walletMonitoringRoutes.ts skipped","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"✔️   Express loaded","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"\n      ################################################\n\n\n      ███████╗██╗  ██╗ ██████╗ ██╗    ██╗██████╗ ██╗   ██╗███╗   ██╗███╗   ██╗███████╗██████╗ ███████╗    ███████╗████████╗ █████╗  ██████╗ ██╗███╗   ██╗ ██████╗\n      ██╔════╝██║  ██║██╔═══██╗██║    ██║██╔══██╗██║   ██║████╗  ██║████╗  ██║██╔════╝██╔══██╗██╔════╝    ██╔════╝╚══██╔══╝██╔══██╗██╔════╝ ██║████╗  ██║██╔════╝\n      ███████╗███████║██║   ██║██║ █╗ ██║██████╔╝██║   ██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝███████╗    ███████╗   ██║   ███████║██║  ███╗██║██╔██╗ ██║██║  ███╗\n      ╚════██║██╔══██║██║   ██║██║███╗██║██╔══██╗██║   ██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗╚════██║    ╚════██║   ██║   ██╔══██║██║   ██║██║██║╚██╗██║██║   ██║\n      ███████║██║  ██║╚██████╔╝╚███╔███╔╝██║  ██║╚██████╔╝██║ ╚████║██║ ╚████║███████╗██║  ██║███████║    ███████║   ██║   ██║  ██║╚██████╔╝██║██║ ╚████║╚██████╔╝\n      ╚══════╝╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚══════╝    ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝\n\n\n      🛡️ Server listening on port: 5432 🛡️\n\n      ################################################\n    ","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"[Sun Jul 23 2023 00:10:52 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  currentWalletInfo: { numOfWallets: 2, currentWalletID: 1 }","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"[Sun Jul 23 2023 00:10:52 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  WalletKey Obtained","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"[Sun Jul 23 2023 00:10:52 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  channelAddress : 0x4918b3a9b6767B7C632F536AC8853fCc511Bb2fD","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"[Sun Jul 23 2023 00:10:52 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Channel Initialization Complete","timestamp":"2023-07-23 00:10:52"}
+{"level":"info","message":"✌️   Verifying ENV","timestamp":"2023-07-23 00:11:19"}
+{"level":"info","message":"    -- Checking for ENV File... Found","timestamp":"2023-07-23 00:11:19"}
+{"level":"info","message":"    -- Verifying and building ENV File...","timestamp":"2023-07-23 00:11:19"}
+{"level":"info","message":"    -- ENV file verified!","timestamp":"2023-07-23 00:11:19"}
+{"level":"info","message":"✔️   ENV Verified / Generated and Loaded!","timestamp":"2023-07-23 00:11:19"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Channel Keys...","timestamp":"2023-07-23 00:11:19"}
+{"level":"info","message":"     ✔️  DappHack Loaded 2 Wallet(s)!","timestamp":"2023-07-23 00:11:19"}
+{"level":"info","message":"✌️   Injecting dependencies loaders","timestamp":"2023-07-23 00:11:20"}
+{"level":"info","message":"    -- Checking DB Models...","timestamp":"2023-07-23 00:11:20"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackModel.ts Found!","timestamp":"2023-07-23 00:11:20"}
+{"level":"info","message":"✌️   Loading Mongo DB Models","timestamp":"2023-07-23 00:11:20"}
+{"level":"info","message":"   --  ✔️  Loading Mongo DB Model: { name: 'DappHackModel', model: undefined }","timestamp":"2023-07-23 00:11:20"}
+{"level":"info","message":"✔️   All Mongo DB Models loaded!","timestamp":"2023-07-23 00:11:20"}
+{"level":"info","message":"✔️   Logger Injected","timestamp":"2023-07-23 00:11:20"}
+{"level":"info","message":"✔️   Cache (with Redis) Loaded! 🐳🐳🐳","timestamp":"2023-07-23 00:11:20"}
+{"level":"info","message":"✔️   Dependency Injector loaded","timestamp":"2023-07-23 00:11:20"}
+{"level":"info","message":"✔️   Mongoose Loaded and connected!","timestamp":"2023-07-23 00:11:20"}
+{"level":"info","message":"✔️   Database connected!","timestamp":"2023-07-23 00:11:20"}
+{"level":"info","message":"✌️   Loading DB Events listener","timestamp":"2023-07-23 00:11:20"}
+{"level":"info","message":"✔️   DB Listener loaded!","timestamp":"2023-07-23 00:11:20"}
+{"level":"info","message":"✌️   Loading jobs","timestamp":"2023-07-23 00:11:20"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Jobs...","timestamp":"2023-07-23 00:11:20"}
+{"level":"info","message":"✔️   Jobs loaded","timestamp":"2023-07-23 00:11:20"}
+{"level":"info","message":"✌️   Loading webhooks","timestamp":"2023-07-23 00:11:20"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Webhooks...","timestamp":"2023-07-23 00:11:20"}
+{"level":"info","message":"     ❌  ../showrunners/DappHack/DappHackAWSSNS.ts Not Found... skipped","timestamp":"2023-07-23 00:11:20"}
+{"level":"info","message":"✔️   Webhooks loaded","timestamp":"2023-07-23 00:11:20"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Routes...","timestamp":"2023-07-23 00:11:20"}
+{"date":"Sun Jul 23 2023 00:11:20 GMT+0200 (Central European Summer Time)","error":{"diagnosticCodes":[1160]},"exception":true,"level":"error","message":"uncaughtException: ⨯ Unable to compile TypeScript:\n\u001b[96msrc/showrunners/DappHack/DappHackChannel.ts\u001b[0m:\u001b[93m171\u001b[0m:\u001b[93m1\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS1160: \u001b[0mUnterminated template literal.\n\n\u001b[7m171\u001b[0m \n\u001b[7m   \u001b[0m \u001b[91m\u001b[0m\n\nTSError: ⨯ Unable to compile TypeScript:\n\u001b[96msrc/showrunners/DappHack/DappHackChannel.ts\u001b[0m:\u001b[93m171\u001b[0m:\u001b[93m1\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS1160: \u001b[0mUnterminated template literal.\n\n\u001b[7m171\u001b[0m \n\u001b[7m   \u001b[0m \u001b[91m\u001b[0m\n\n    at createTSError (/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts:859:12)\n    at reportTSError (/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts:863:19)\n    at /Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts:1379:34\n    at Object.compile (/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts:1458:13)\n    at Module.m._compile (/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts:1617:30)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1180:10)\n    at Object.require.extensions.<computed> [as .ts] (/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts:1621:12)\n    at Module.load (node:internal/modules/cjs/loader:1004:32)\n    at Function.Module._load (node:internal/modules/cjs/loader:839:12)\n    at Module.require (node:internal/modules/cjs/loader:1028:19)\n    at require (node:internal/modules/cjs/helpers:102:18)\n    at Object.<anonymous> (/Users/yash/Documents/Push/test/push-showrunners-framework/src/showrunners/DappHack/DappHackRoutes.ts:6:1)\n    at Module._compile (node:internal/modules/cjs/loader:1126:14)\n    at Module.m._compile (/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts:1618:23)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1180:10)\n    at Object.require.extensions.<computed> [as .ts] (/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts:1621:12)","os":{"loadavg":[3.64111328125,4.28515625,4.72412109375],"uptime":4931692},"process":{"argv":["/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/.bin/ts-node","/Users/yash/Documents/Push/test/push-showrunners-framework/src/app.ts"],"cwd":"/Users/yash/Documents/Push/test/push-showrunners-framework","execPath":"/usr/local/bin/node","gid":20,"memoryUsage":{"arrayBuffers":20571093,"external":33289310,"heapTotal":130711552,"heapUsed":107362352,"rss":232767488},"pid":71690,"uid":501,"version":"v16.17.0"},"stack":"TSError: ⨯ Unable to compile TypeScript:\n\u001b[96msrc/showrunners/DappHack/DappHackChannel.ts\u001b[0m:\u001b[93m171\u001b[0m:\u001b[93m1\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS1160: \u001b[0mUnterminated template literal.\n\n\u001b[7m171\u001b[0m \n\u001b[7m   \u001b[0m \u001b[91m\u001b[0m\n\n    at createTSError (/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts:859:12)\n    at reportTSError (/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts:863:19)\n    at /Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts:1379:34\n    at Object.compile (/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts:1458:13)\n    at Module.m._compile (/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts:1617:30)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1180:10)\n    at Object.require.extensions.<computed> [as .ts] (/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts:1621:12)\n    at Module.load (node:internal/modules/cjs/loader:1004:32)\n    at Function.Module._load (node:internal/modules/cjs/loader:839:12)\n    at Module.require (node:internal/modules/cjs/loader:1028:19)\n    at require (node:internal/modules/cjs/helpers:102:18)\n    at Object.<anonymous> (/Users/yash/Documents/Push/test/push-showrunners-framework/src/showrunners/DappHack/DappHackRoutes.ts:6:1)\n    at Module._compile (node:internal/modules/cjs/loader:1126:14)\n    at Module.m._compile (/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts:1618:23)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1180:10)\n    at Object.require.extensions.<computed> [as .ts] (/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts:1621:12)","timestamp":"2023-07-23 00:11:20","trace":[{"column":12,"file":"/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts","function":"createTSError","line":859,"method":null,"native":false},{"column":19,"file":"/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts","function":"reportTSError","line":863,"method":null,"native":false},{"column":34,"file":"/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts","function":null,"line":1379,"method":null,"native":false},{"column":13,"file":"/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts","function":"Object.compile","line":1458,"method":"compile","native":false},{"column":30,"file":"/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts","function":"Module.m._compile","line":1617,"method":"_compile","native":false},{"column":10,"file":"node:internal/modules/cjs/loader","function":"Module._extensions..js","line":1180,"method":".js","native":false},{"column":12,"file":"/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts","function":"Object.require.extensions.<computed> [as .ts]","line":1621,"method":"ts]","native":false},{"column":32,"file":"node:internal/modules/cjs/loader","function":"Module.load","line":1004,"method":"load","native":false},{"column":12,"file":"node:internal/modules/cjs/loader","function":"Module._load","line":839,"method":"_load","native":false},{"column":19,"file":"node:internal/modules/cjs/loader","function":"Module.require","line":1028,"method":"require","native":false},{"column":18,"file":"node:internal/modules/cjs/helpers","function":"require","line":102,"method":null,"native":false},{"column":1,"file":"/Users/yash/Documents/Push/test/push-showrunners-framework/src/showrunners/DappHack/DappHackRoutes.ts","function":null,"line":6,"method":null,"native":false},{"column":14,"file":"node:internal/modules/cjs/loader","function":"Module._compile","line":1126,"method":"_compile","native":false},{"column":23,"file":"/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts","function":"Module.m._compile","line":1618,"method":"_compile","native":false},{"column":10,"file":"node:internal/modules/cjs/loader","function":"Module._extensions..js","line":1180,"method":".js","native":false},{"column":12,"file":"/Users/yash/Documents/Push/test/push-showrunners-framework/node_modules/ts-node/src/index.ts","function":"Object.require.extensions.<computed> [as .ts]","line":1621,"method":"ts]","native":false}]}
+{"level":"info","message":"✌️   Verifying ENV","timestamp":"2023-07-23 00:11:33"}
+{"level":"info","message":"    -- Checking for ENV File... Found","timestamp":"2023-07-23 00:11:33"}
+{"level":"info","message":"    -- Verifying and building ENV File...","timestamp":"2023-07-23 00:11:33"}
+{"level":"info","message":"    -- ENV file verified!","timestamp":"2023-07-23 00:11:33"}
+{"level":"info","message":"✔️   ENV Verified / Generated and Loaded!","timestamp":"2023-07-23 00:11:33"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Channel Keys...","timestamp":"2023-07-23 00:11:34"}
+{"level":"info","message":"     ✔️  DappHack Loaded 2 Wallet(s)!","timestamp":"2023-07-23 00:11:34"}
+{"level":"info","message":"✌️   Injecting dependencies loaders","timestamp":"2023-07-23 00:11:34"}
+{"level":"info","message":"    -- Checking DB Models...","timestamp":"2023-07-23 00:11:34"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackModel.ts Found!","timestamp":"2023-07-23 00:11:34"}
+{"level":"info","message":"✌️   Loading Mongo DB Models","timestamp":"2023-07-23 00:11:34"}
+{"level":"info","message":"   --  ✔️  Loading Mongo DB Model: { name: 'DappHackModel', model: undefined }","timestamp":"2023-07-23 00:11:34"}
+{"level":"info","message":"✔️   All Mongo DB Models loaded!","timestamp":"2023-07-23 00:11:34"}
+{"level":"info","message":"✔️   Logger Injected","timestamp":"2023-07-23 00:11:34"}
+{"level":"info","message":"✔️   Cache (with Redis) Loaded! 🐳🐳🐳","timestamp":"2023-07-23 00:11:34"}
+{"level":"info","message":"✔️   Dependency Injector loaded","timestamp":"2023-07-23 00:11:34"}
+{"level":"info","message":"✔️   Mongoose Loaded and connected!","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"✔️   Database connected!","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"✌️   Loading DB Events listener","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"✔️   DB Listener loaded!","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"✌️   Loading jobs","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Jobs...","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"[Sun Jul 23 2023 00:11:35 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Initializing Channel : DappHack","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"[Sun Jul 23 2023 00:11:35 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Getting WalletKey for DappHack","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"🛵 Scheduling Showrunner - Nord Channel [on 24 hours] [Sun Jul 23 2023 00:11:35 GMT+0200 (Central European Summer Time)]","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackJobs.ts Loaded!","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Jobs...","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... scheduling Wallet Monitoring Jobs skipped","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"✔️   Jobs loaded","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"✌️   Loading webhooks","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Webhooks...","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"     ❌  ../showrunners/DappHack/DappHackAWSSNS.ts Not Found... skipped","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"✔️   Webhooks loaded","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Routes...","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackRoutes.ts Loaded!","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Routes...","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... ./routes/walletMonitoringRoutes.ts skipped","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"✔️   Express loaded","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"\n      ################################################\n\n\n      ███████╗██╗  ██╗ ██████╗ ██╗    ██╗██████╗ ██╗   ██╗███╗   ██╗███╗   ██╗███████╗██████╗ ███████╗    ███████╗████████╗ █████╗  ██████╗ ██╗███╗   ██╗ ██████╗\n      ██╔════╝██║  ██║██╔═══██╗██║    ██║██╔══██╗██║   ██║████╗  ██║████╗  ██║██╔════╝██╔══██╗██╔════╝    ██╔════╝╚══██╔══╝██╔══██╗██╔════╝ ██║████╗  ██║██╔════╝\n      ███████╗███████║██║   ██║██║ █╗ ██║██████╔╝██║   ██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝███████╗    ███████╗   ██║   ███████║██║  ███╗██║██╔██╗ ██║██║  ███╗\n      ╚════██║██╔══██║██║   ██║██║███╗██║██╔══██╗██║   ██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗╚════██║    ╚════██║   ██║   ██╔══██║██║   ██║██║██║╚██╗██║██║   ██║\n      ███████║██║  ██║╚██████╔╝╚███╔███╔╝██║  ██║╚██████╔╝██║ ╚████║██║ ╚████║███████╗██║  ██║███████║    ███████║   ██║   ██║  ██║╚██████╔╝██║██║ ╚████║╚██████╔╝\n      ╚══════╝╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚══════╝    ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝\n\n\n      🛡️ Server listening on port: 5432 🛡️\n\n      ################################################\n    ","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"[Sun Jul 23 2023 00:11:35 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  currentWalletInfo: { numOfWallets: 2, currentWalletID: 2 }","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"[Sun Jul 23 2023 00:11:35 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  WalletKey Obtained","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"[Sun Jul 23 2023 00:11:35 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  channelAddress : 0x4918b3a9b6767B7C632F536AC8853fCc511Bb2fD","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"[Sun Jul 23 2023 00:11:35 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Channel Initialization Complete","timestamp":"2023-07-23 00:11:35"}
+{"level":"info","message":"✌️   Verifying ENV","timestamp":"2023-07-23 00:11:52"}
+{"level":"info","message":"    -- Checking for ENV File... Found","timestamp":"2023-07-23 00:11:52"}
+{"level":"info","message":"    -- Verifying and building ENV File...","timestamp":"2023-07-23 00:11:52"}
+{"level":"info","message":"    -- ENV file verified!","timestamp":"2023-07-23 00:11:52"}
+{"level":"info","message":"✔️   ENV Verified / Generated and Loaded!","timestamp":"2023-07-23 00:11:52"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Channel Keys...","timestamp":"2023-07-23 00:11:52"}
+{"level":"info","message":"     ✔️  DappHack Loaded 2 Wallet(s)!","timestamp":"2023-07-23 00:11:52"}
+{"level":"info","message":"✌️   Injecting dependencies loaders","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"    -- Checking DB Models...","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackModel.ts Found!","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"✌️   Loading Mongo DB Models","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"   --  ✔️  Loading Mongo DB Model: { name: 'DappHackModel', model: undefined }","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"✔️   All Mongo DB Models loaded!","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"✔️   Logger Injected","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"✔️   Cache (with Redis) Loaded! 🐳🐳🐳","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"✔️   Dependency Injector loaded","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"✔️   Mongoose Loaded and connected!","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"✔️   Database connected!","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"✌️   Loading DB Events listener","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"✔️   DB Listener loaded!","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"✌️   Loading jobs","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Jobs...","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"[Sun Jul 23 2023 00:11:53 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Initializing Channel : DappHack","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"[Sun Jul 23 2023 00:11:53 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Getting WalletKey for DappHack","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"🛵 Scheduling Showrunner - Nord Channel [on 24 hours] [Sun Jul 23 2023 00:11:53 GMT+0200 (Central European Summer Time)]","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackJobs.ts Loaded!","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Jobs...","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... scheduling Wallet Monitoring Jobs skipped","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"✔️   Jobs loaded","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"✌️   Loading webhooks","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Webhooks...","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"     ❌  ../showrunners/DappHack/DappHackAWSSNS.ts Not Found... skipped","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"✔️   Webhooks loaded","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Routes...","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackRoutes.ts Loaded!","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Routes...","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... ./routes/walletMonitoringRoutes.ts skipped","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"✔️   Express loaded","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"\n      ################################################\n\n\n      ███████╗██╗  ██╗ ██████╗ ██╗    ██╗██████╗ ██╗   ██╗███╗   ██╗███╗   ██╗███████╗██████╗ ███████╗    ███████╗████████╗ █████╗  ██████╗ ██╗███╗   ██╗ ██████╗\n      ██╔════╝██║  ██║██╔═══██╗██║    ██║██╔══██╗██║   ██║████╗  ██║████╗  ██║██╔════╝██╔══██╗██╔════╝    ██╔════╝╚══██╔══╝██╔══██╗██╔════╝ ██║████╗  ██║██╔════╝\n      ███████╗███████║██║   ██║██║ █╗ ██║██████╔╝██║   ██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝███████╗    ███████╗   ██║   ███████║██║  ███╗██║██╔██╗ ██║██║  ███╗\n      ╚════██║██╔══██║██║   ██║██║███╗██║██╔══██╗██║   ██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗╚════██║    ╚════██║   ██║   ██╔══██║██║   ██║██║██║╚██╗██║██║   ██║\n      ███████║██║  ██║╚██████╔╝╚███╔███╔╝██║  ██║╚██████╔╝██║ ╚████║██║ ╚████║███████╗██║  ██║███████║    ███████║   ██║   ██║  ██║╚██████╔╝██║██║ ╚████║╚██████╔╝\n      ╚══════╝╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚══════╝    ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝\n\n\n      🛡️ Server listening on port: 5432 🛡️\n\n      ################################################\n    ","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"[Sun Jul 23 2023 00:11:53 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  currentWalletInfo: { numOfWallets: 2, currentWalletID: 1 }","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"[Sun Jul 23 2023 00:11:53 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  WalletKey Obtained","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"[Sun Jul 23 2023 00:11:53 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  channelAddress : 0x4918b3a9b6767B7C632F536AC8853fCc511Bb2fD","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"[Sun Jul 23 2023 00:11:53 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Channel Initialization Complete","timestamp":"2023-07-23 00:11:53"}
+{"level":"info","message":"✌️   Verifying ENV","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"    -- Checking for ENV File... Found","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"    -- Verifying and building ENV File...","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"    -- ENV file verified!","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"✔️   ENV Verified / Generated and Loaded!","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Channel Keys...","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"     ✔️  DappHack Loaded 2 Wallet(s)!","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"✌️   Injecting dependencies loaders","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"    -- Checking DB Models...","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackModel.ts Found!","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"✌️   Loading Mongo DB Models","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"   --  ✔️  Loading Mongo DB Model: { name: 'DappHackModel', model: undefined }","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"✔️   All Mongo DB Models loaded!","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"✔️   Logger Injected","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"✔️   Cache (with Redis) Loaded! 🐳🐳🐳","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"✔️   Dependency Injector loaded","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"✔️   Mongoose Loaded and connected!","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"✔️   Database connected!","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"✌️   Loading DB Events listener","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"✔️   DB Listener loaded!","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"✌️   Loading jobs","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Jobs...","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"[Sun Jul 23 2023 00:13:06 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Initializing Channel : DappHack","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"[Sun Jul 23 2023 00:13:06 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Getting WalletKey for DappHack","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"🛵 Scheduling Showrunner - Nord Channel [on 24 hours] [Sun Jul 23 2023 00:13:06 GMT+0200 (Central European Summer Time)]","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackJobs.ts Loaded!","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Jobs...","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... scheduling Wallet Monitoring Jobs skipped","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"✔️   Jobs loaded","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"✌️   Loading webhooks","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Webhooks...","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"     ❌  ../showrunners/DappHack/DappHackAWSSNS.ts Not Found... skipped","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"✔️   Webhooks loaded","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Routes...","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackRoutes.ts Loaded!","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Routes...","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... ./routes/walletMonitoringRoutes.ts skipped","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"✔️   Express loaded","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"\n      ################################################\n\n\n      ███████╗██╗  ██╗ ██████╗ ██╗    ██╗██████╗ ██╗   ██╗███╗   ██╗███╗   ██╗███████╗██████╗ ███████╗    ███████╗████████╗ █████╗  ██████╗ ██╗███╗   ██╗ ██████╗\n      ██╔════╝██║  ██║██╔═══██╗██║    ██║██╔══██╗██║   ██║████╗  ██║████╗  ██║██╔════╝██╔══██╗██╔════╝    ██╔════╝╚══██╔══╝██╔══██╗██╔════╝ ██║████╗  ██║██╔════╝\n      ███████╗███████║██║   ██║██║ █╗ ██║██████╔╝██║   ██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝███████╗    ███████╗   ██║   ███████║██║  ███╗██║██╔██╗ ██║██║  ███╗\n      ╚════██║██╔══██║██║   ██║██║███╗██║██╔══██╗██║   ██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗╚════██║    ╚════██║   ██║   ██╔══██║██║   ██║██║██║╚██╗██║██║   ██║\n      ███████║██║  ██║╚██████╔╝╚███╔███╔╝██║  ██║╚██████╔╝██║ ╚████║██║ ╚████║███████╗██║  ██║███████║    ███████║   ██║   ██║  ██║╚██████╔╝██║██║ ╚████║╚██████╔╝\n      ╚══════╝╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚══════╝    ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝\n\n\n      🛡️ Server listening on port: 5432 🛡️\n\n      ################################################\n    ","timestamp":"2023-07-23 00:13:06"}
+{"level":"info","message":"[Sun Jul 23 2023 00:13:07 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  currentWalletInfo: { numOfWallets: 2, currentWalletID: 2 }","timestamp":"2023-07-23 00:13:07"}
+{"level":"info","message":"[Sun Jul 23 2023 00:13:07 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  WalletKey Obtained","timestamp":"2023-07-23 00:13:07"}
+{"level":"info","message":"[Sun Jul 23 2023 00:13:07 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  channelAddress : 0x4918b3a9b6767B7C632F536AC8853fCc511Bb2fD","timestamp":"2023-07-23 00:13:07"}
+{"level":"info","message":"[Sun Jul 23 2023 00:13:07 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Channel Initialization Complete","timestamp":"2023-07-23 00:13:07"}
+{"level":"info","message":"✌️   Verifying ENV","timestamp":"2023-07-23 00:13:27"}
+{"level":"info","message":"    -- Checking for ENV File... Found","timestamp":"2023-07-23 00:13:27"}
+{"level":"info","message":"    -- Verifying and building ENV File...","timestamp":"2023-07-23 00:13:27"}
+{"level":"info","message":"    -- ENV file verified!","timestamp":"2023-07-23 00:13:27"}
+{"level":"info","message":"✔️   ENV Verified / Generated and Loaded!","timestamp":"2023-07-23 00:13:27"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Channel Keys...","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"     ✔️  DappHack Loaded 2 Wallet(s)!","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"✌️   Injecting dependencies loaders","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"    -- Checking DB Models...","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackModel.ts Found!","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"✌️   Loading Mongo DB Models","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"   --  ✔️  Loading Mongo DB Model: { name: 'DappHackModel', model: undefined }","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"✔️   All Mongo DB Models loaded!","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"✔️   Logger Injected","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"✔️   Cache (with Redis) Loaded! 🐳🐳🐳","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"✔️   Dependency Injector loaded","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"✔️   Mongoose Loaded and connected!","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"✔️   Database connected!","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"✌️   Loading DB Events listener","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"✔️   DB Listener loaded!","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"✌️   Loading jobs","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Jobs...","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"[Sun Jul 23 2023 00:13:28 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Initializing Channel : DappHack","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"[Sun Jul 23 2023 00:13:28 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Getting WalletKey for DappHack","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"🛵 Scheduling Showrunner - Nord Channel [on 24 hours] [Sun Jul 23 2023 00:13:28 GMT+0200 (Central European Summer Time)]","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackJobs.ts Loaded!","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Jobs...","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... scheduling Wallet Monitoring Jobs skipped","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"✔️   Jobs loaded","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"✌️   Loading webhooks","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Webhooks...","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"     ❌  ../showrunners/DappHack/DappHackAWSSNS.ts Not Found... skipped","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"✔️   Webhooks loaded","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Routes...","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackRoutes.ts Loaded!","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Routes...","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... ./routes/walletMonitoringRoutes.ts skipped","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"✔️   Express loaded","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"\n      ################################################\n\n\n      ███████╗██╗  ██╗ ██████╗ ██╗    ██╗██████╗ ██╗   ██╗███╗   ██╗███╗   ██╗███████╗██████╗ ███████╗    ███████╗████████╗ █████╗  ██████╗ ██╗███╗   ██╗ ██████╗\n      ██╔════╝██║  ██║██╔═══██╗██║    ██║██╔══██╗██║   ██║████╗  ██║████╗  ██║██╔════╝██╔══██╗██╔════╝    ██╔════╝╚══██╔══╝██╔══██╗██╔════╝ ██║████╗  ██║██╔════╝\n      ███████╗███████║██║   ██║██║ █╗ ██║██████╔╝██║   ██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝███████╗    ███████╗   ██║   ███████║██║  ███╗██║██╔██╗ ██║██║  ███╗\n      ╚════██║██╔══██║██║   ██║██║███╗██║██╔══██╗██║   ██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗╚════██║    ╚════██║   ██║   ██╔══██║██║   ██║██║██║╚██╗██║██║   ██║\n      ███████║██║  ██║╚██████╔╝╚███╔███╔╝██║  ██║╚██████╔╝██║ ╚████║██║ ╚████║███████╗██║  ██║███████║    ███████║   ██║   ██║  ██║╚██████╔╝██║██║ ╚████║╚██████╔╝\n      ╚══════╝╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚══════╝    ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝\n\n\n      🛡️ Server listening on port: 5432 🛡️\n\n      ################################################\n    ","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"[Sun Jul 23 2023 00:13:28 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  currentWalletInfo: { numOfWallets: 2, currentWalletID: 1 }","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"[Sun Jul 23 2023 00:13:28 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  WalletKey Obtained","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"[Sun Jul 23 2023 00:13:28 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  channelAddress : 0x4918b3a9b6767B7C632F536AC8853fCc511Bb2fD","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"[Sun Jul 23 2023 00:13:28 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Channel Initialization Complete","timestamp":"2023-07-23 00:13:28"}
+{"level":"info","message":"✌️   Verifying ENV","timestamp":"2023-07-23 00:13:33"}
+{"level":"info","message":"    -- Checking for ENV File... Found","timestamp":"2023-07-23 00:13:33"}
+{"level":"info","message":"    -- Verifying and building ENV File...","timestamp":"2023-07-23 00:13:33"}
+{"level":"info","message":"    -- ENV file verified!","timestamp":"2023-07-23 00:13:33"}
+{"level":"info","message":"✔️   ENV Verified / Generated and Loaded!","timestamp":"2023-07-23 00:13:33"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Channel Keys...","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"     ✔️  DappHack Loaded 2 Wallet(s)!","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"✌️   Injecting dependencies loaders","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"    -- Checking DB Models...","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackModel.ts Found!","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"✌️   Loading Mongo DB Models","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"   --  ✔️  Loading Mongo DB Model: { name: 'DappHackModel', model: undefined }","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"✔️   All Mongo DB Models loaded!","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"✔️   Logger Injected","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"✔️   Cache (with Redis) Loaded! 🐳🐳🐳","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"✔️   Dependency Injector loaded","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"✔️   Mongoose Loaded and connected!","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"✔️   Database connected!","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"✌️   Loading DB Events listener","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"✔️   DB Listener loaded!","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"✌️   Loading jobs","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Jobs...","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"[Sun Jul 23 2023 00:13:34 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Initializing Channel : DappHack","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"[Sun Jul 23 2023 00:13:34 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Getting WalletKey for DappHack","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"🛵 Scheduling Showrunner - Nord Channel [on 24 hours] [Sun Jul 23 2023 00:13:34 GMT+0200 (Central European Summer Time)]","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackJobs.ts Loaded!","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Jobs...","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... scheduling Wallet Monitoring Jobs skipped","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"✔️   Jobs loaded","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"✌️   Loading webhooks","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Webhooks...","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"     ❌  ../showrunners/DappHack/DappHackAWSSNS.ts Not Found... skipped","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"✔️   Webhooks loaded","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Routes...","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackRoutes.ts Loaded!","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Routes...","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... ./routes/walletMonitoringRoutes.ts skipped","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"✔️   Express loaded","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"\n      ################################################\n\n\n      ███████╗██╗  ██╗ ██████╗ ██╗    ██╗██████╗ ██╗   ██╗███╗   ██╗███╗   ██╗███████╗██████╗ ███████╗    ███████╗████████╗ █████╗  ██████╗ ██╗███╗   ██╗ ██████╗\n      ██╔════╝██║  ██║██╔═══██╗██║    ██║██╔══██╗██║   ██║████╗  ██║████╗  ██║██╔════╝██╔══██╗██╔════╝    ██╔════╝╚══██╔══╝██╔══██╗██╔════╝ ██║████╗  ██║██╔════╝\n      ███████╗███████║██║   ██║██║ █╗ ██║██████╔╝██║   ██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝███████╗    ███████╗   ██║   ███████║██║  ███╗██║██╔██╗ ██║██║  ███╗\n      ╚════██║██╔══██║██║   ██║██║███╗██║██╔══██╗██║   ██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗╚════██║    ╚════██║   ██║   ██╔══██║██║   ██║██║██║╚██╗██║██║   ██║\n      ███████║██║  ██║╚██████╔╝╚███╔███╔╝██║  ██║╚██████╔╝██║ ╚████║██║ ╚████║███████╗██║  ██║███████║    ███████║   ██║   ██║  ██║╚██████╔╝██║██║ ╚████║╚██████╔╝\n      ╚══════╝╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚══════╝    ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝\n\n\n      🛡️ Server listening on port: 5432 🛡️\n\n      ################################################\n    ","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"[Sun Jul 23 2023 00:13:34 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  currentWalletInfo: { numOfWallets: 2, currentWalletID: 2 }","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"[Sun Jul 23 2023 00:13:34 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  WalletKey Obtained","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"[Sun Jul 23 2023 00:13:34 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  channelAddress : 0x4918b3a9b6767B7C632F536AC8853fCc511Bb2fD","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"[Sun Jul 23 2023 00:13:34 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Channel Initialization Complete","timestamp":"2023-07-23 00:13:34"}
+{"level":"info","message":"🐣 Cron Task Completed -- DappHack notifyAuthRequest(false)","timestamp":"2023-07-23 00:15:00"}
+{"level":"info","message":"🐣 Cron Task Completed -- DappHack notifyAuthRequest(false)","timestamp":"2023-07-23 00:20:00"}
+{"level":"info","message":"✌️   Verifying ENV","timestamp":"2023-07-23 00:23:32"}
+{"level":"info","message":"    -- Checking for ENV File... Found","timestamp":"2023-07-23 00:23:32"}
+{"level":"info","message":"    -- Verifying and building ENV File...","timestamp":"2023-07-23 00:23:32"}
+{"level":"info","message":"    -- ENV file verified!","timestamp":"2023-07-23 00:23:32"}
+{"level":"info","message":"✔️   ENV Verified / Generated and Loaded!","timestamp":"2023-07-23 00:23:32"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Channel Keys...","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"     ✔️  DappHack Loaded 2 Wallet(s)!","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"✌️   Injecting dependencies loaders","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"    -- Checking DB Models...","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackModel.ts Found!","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"✌️   Loading Mongo DB Models","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"   --  ✔️  Loading Mongo DB Model: { name: 'DappHackModel', model: undefined }","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"✔️   All Mongo DB Models loaded!","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"✔️   Logger Injected","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"✔️   Cache (with Redis) Loaded! 🐳🐳🐳","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"✔️   Dependency Injector loaded","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"✔️   Mongoose Loaded and connected!","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"✔️   Database connected!","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"✌️   Loading DB Events listener","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"✔️   DB Listener loaded!","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"✌️   Loading jobs","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Jobs...","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"[Sun Jul 23 2023 00:23:33 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Initializing Channel : DappHack","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"[Sun Jul 23 2023 00:23:33 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Getting WalletKey for DappHack","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"🛵 Scheduling Showrunner - Nord Channel [on 24 hours] [Sun Jul 23 2023 00:23:33 GMT+0200 (Central European Summer Time)]","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackJobs.ts Loaded!","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Jobs...","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... scheduling Wallet Monitoring Jobs skipped","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"✔️   Jobs loaded","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"✌️   Loading webhooks","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Webhooks...","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"     ❌  ../showrunners/DappHack/DappHackAWSSNS.ts Not Found... skipped","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"✔️   Webhooks loaded","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Routes...","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackRoutes.ts Loaded!","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Routes...","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... ./routes/walletMonitoringRoutes.ts skipped","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"✔️   Express loaded","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"\n      ################################################\n\n\n      ███████╗██╗  ██╗ ██████╗ ██╗    ██╗██████╗ ██╗   ██╗███╗   ██╗███╗   ██╗███████╗██████╗ ███████╗    ███████╗████████╗ █████╗  ██████╗ ██╗███╗   ██╗ ██████╗\n      ██╔════╝██║  ██║██╔═══██╗██║    ██║██╔══██╗██║   ██║████╗  ██║████╗  ██║██╔════╝██╔══██╗██╔════╝    ██╔════╝╚══██╔══╝██╔══██╗██╔════╝ ██║████╗  ██║██╔════╝\n      ███████╗███████║██║   ██║██║ █╗ ██║██████╔╝██║   ██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝███████╗    ███████╗   ██║   ███████║██║  ███╗██║██╔██╗ ██║██║  ███╗\n      ╚════██║██╔══██║██║   ██║██║███╗██║██╔══██╗██║   ██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗╚════██║    ╚════██║   ██║   ██╔══██║██║   ██║██║██║╚██╗██║██║   ██║\n      ███████║██║  ██║╚██████╔╝╚███╔███╔╝██║  ██║╚██████╔╝██║ ╚████║██║ ╚████║███████╗██║  ██║███████║    ███████║   ██║   ██║  ██║╚██████╔╝██║██║ ╚████║╚██████╔╝\n      ╚══════╝╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚══════╝    ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝\n\n\n      🛡️ Server listening on port: 5432 🛡️\n\n      ################################################\n    ","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"[Sun Jul 23 2023 00:23:33 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  currentWalletInfo: { numOfWallets: 2, currentWalletID: 1 }","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"[Sun Jul 23 2023 00:23:33 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  WalletKey Obtained","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"[Sun Jul 23 2023 00:23:33 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  channelAddress : 0x4918b3a9b6767B7C632F536AC8853fCc511Bb2fD","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"[Sun Jul 23 2023 00:23:33 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Channel Initialization Complete","timestamp":"2023-07-23 00:23:33"}
+{"level":"info","message":"✌️   Verifying ENV","timestamp":"2023-07-23 00:23:49"}
+{"level":"info","message":"    -- Checking for ENV File... Found","timestamp":"2023-07-23 00:23:49"}
+{"level":"info","message":"    -- Verifying and building ENV File...","timestamp":"2023-07-23 00:23:49"}
+{"level":"info","message":"    -- ENV file verified!","timestamp":"2023-07-23 00:23:49"}
+{"level":"info","message":"✔️   ENV Verified / Generated and Loaded!","timestamp":"2023-07-23 00:23:49"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Channel Keys...","timestamp":"2023-07-23 00:23:49"}
+{"level":"info","message":"     ✔️  DappHack Loaded 2 Wallet(s)!","timestamp":"2023-07-23 00:23:49"}
+{"level":"info","message":"✌️   Injecting dependencies loaders","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"    -- Checking DB Models...","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackModel.ts Found!","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"✌️   Loading Mongo DB Models","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"   --  ✔️  Loading Mongo DB Model: { name: 'DappHackModel', model: undefined }","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"✔️   All Mongo DB Models loaded!","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"✔️   Logger Injected","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"✔️   Cache (with Redis) Loaded! 🐳🐳🐳","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"✔️   Dependency Injector loaded","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"✔️   Mongoose Loaded and connected!","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"✔️   Database connected!","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"✌️   Loading DB Events listener","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"✔️   DB Listener loaded!","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"✌️   Loading jobs","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Jobs...","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"[Sun Jul 23 2023 00:23:50 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Initializing Channel : DappHack","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"[Sun Jul 23 2023 00:23:50 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Getting WalletKey for DappHack","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"🛵 Scheduling Showrunner - Nord Channel [on 24 hours] [Sun Jul 23 2023 00:23:50 GMT+0200 (Central European Summer Time)]","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackJobs.ts Loaded!","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Jobs...","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... scheduling Wallet Monitoring Jobs skipped","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"✔️   Jobs loaded","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"✌️   Loading webhooks","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Webhooks...","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"     ❌  ../showrunners/DappHack/DappHackAWSSNS.ts Not Found... skipped","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"✔️   Webhooks loaded","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"    -- Checking and Loading Dynamic Routes...","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"     ✔️  ../showrunners/DappHack/DappHackRoutes.ts Loaded!","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"    -- Checking and Loading Wallet Monitoring Routes...","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"     ❌  Wallet Monitoring is 0... ./routes/walletMonitoringRoutes.ts skipped","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"✔️   Express loaded","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"\n      ################################################\n\n\n      ███████╗██╗  ██╗ ██████╗ ██╗    ██╗██████╗ ██╗   ██╗███╗   ██╗███╗   ██╗███████╗██████╗ ███████╗    ███████╗████████╗ █████╗  ██████╗ ██╗███╗   ██╗ ██████╗\n      ██╔════╝██║  ██║██╔═══██╗██║    ██║██╔══██╗██║   ██║████╗  ██║████╗  ██║██╔════╝██╔══██╗██╔════╝    ██╔════╝╚══██╔══╝██╔══██╗██╔════╝ ██║████╗  ██║██╔════╝\n      ███████╗███████║██║   ██║██║ █╗ ██║██████╔╝██║   ██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝███████╗    ███████╗   ██║   ███████║██║  ███╗██║██╔██╗ ██║██║  ███╗\n      ╚════██║██╔══██║██║   ██║██║███╗██║██╔══██╗██║   ██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗╚════██║    ╚════██║   ██║   ██╔══██║██║   ██║██║██║╚██╗██║██║   ██║\n      ███████║██║  ██║╚██████╔╝╚███╔███╔╝██║  ██║╚██████╔╝██║ ╚████║██║ ╚████║███████╗██║  ██║███████║    ███████║   ██║   ██║  ██║╚██████╔╝██║██║ ╚████║╚██████╔╝\n      ╚══════╝╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚══════╝    ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝\n\n\n      🛡️ Server listening on port: 5432 🛡️\n\n      ################################################\n    ","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"[Sun Jul 23 2023 00:23:50 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  currentWalletInfo: { numOfWallets: 2, currentWalletID: 2 }","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"[Sun Jul 23 2023 00:23:50 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  WalletKey Obtained","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"[Sun Jul 23 2023 00:23:50 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  channelAddress : 0x4918b3a9b6767B7C632F536AC8853fCc511Bb2fD","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"[Sun Jul 23 2023 00:23:50 GMT+0200 (Central European Summer Time)]-[DappHack Channel]-  Channel Initialization Complete","timestamp":"2023-07-23 00:23:50"}
+{"level":"info","message":"🐣 Cron Task Completed -- DappHack notifyAuthRequest(false)","timestamp":"2023-07-23 00:25:00"}

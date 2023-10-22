@@ -1,0 +1,20 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 5
+    },
+    "auditLog": "/Users/yash/Documents/Push/test/push-showrunners-framework/logs/.53fbe9a9000a67a037efe22c2e0cbbc1eeab0747-audit.json",
+    "files": [
+        {
+            "date": 1690056539626,
+            "name": "/Users/yash/Documents/Push/test/push-showrunners-framework/logs/app.log.2023-07-22",
+            "hash": "c1431fd81c8969abd82fe02a725c728f4a5d2740ed6069f5f7593e1c9829d934"
+        },
+        {
+            "date": 1690063200075,
+            "name": "/Users/yash/Documents/Push/test/push-showrunners-framework/logs/app.log.2023-07-23",
+            "hash": "379bbf2a4be0defd997d89561fad74271fb4972d8b4ef89be33d24b8cdaad2c1"
+        }
+    ],
+    "hashType": "sha256"
+}

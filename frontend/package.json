@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@axelar-network/axelar-chains-config": "^0.1.2",
     "@tableland/sdk": "4.5.1",
     "moralis-v1": "^1.13.0",
     "next": "13.5.6",

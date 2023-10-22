@@ -6,6 +6,8 @@ const ApplyTeamInformation = ({
   handleAddTeamMember,
   handleRemoveTeamMember,
   handlePrevious,
+  handleTeamSignup,
+  isLoading,
 }) => {
   const handleTeamNameChange = (event) => {
     setTeamName(event.target.value);
@@ -60,7 +62,9 @@ const ApplyTeamInformation = ({
         <button onClick={handlePrevious} className={classes["cancel-btn"]}>
           Previous
         </button>
-        <button className={classes["next-btn"]}>Done</button>
+        <button onClick={handleTeamSignup} className={classes["next-btn"]}>
+          {isLoading ? <div className="spin"></div> : "Submit"}
+        </button>
       </div>
     </div>
   );

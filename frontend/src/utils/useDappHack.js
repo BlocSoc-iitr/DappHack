@@ -7,7 +7,7 @@ const useDappHack = () => {
   const { runContractFunction, fetch, data, error, isLoading } =
     useWeb3Contract({});
   console.log(contractAddress.dappHack);
-  const stake = 1000000000000000000;
+  const stake = 10000000000;
   const builderSignup = async () => {
     const parameters = {
       abi: abi.dappHack,
@@ -80,7 +80,6 @@ const useDappHack = () => {
         name: teamName,
         participants: teamMembersArray,
       },
-      msgValue: 0,
     };
     try {
       const response = await runContractFunction({
@@ -187,7 +186,7 @@ const useDappHack = () => {
       },
     };
     try {
-      const response = await fetch({
+      const response = await runContractFunction({
         params: parameters,
         onSuccess: (response) => {
           console.log(response);
@@ -210,7 +209,7 @@ const useDappHack = () => {
       params: {},
     };
     try {
-      const response = await fetch({
+      const response = await runContractFunction({
         params: parameters,
         onSuccess: (response) => {
           console.log(response);
@@ -236,7 +235,7 @@ const useDappHack = () => {
       },
     };
     try {
-      const response = await fetch({
+      const response = await runContractFunction({
         params: parameters,
         onSuccess: (response) => {
           console.log(response);
@@ -260,7 +259,7 @@ const useDappHack = () => {
       params: {},
     };
     try {
-      const response = await fetch({
+      const response = await runContractFunction({
         params: parameters,
         onSuccess: (response) => {
           console.log(response);
@@ -284,7 +283,7 @@ const useDappHack = () => {
       params: {},
     };
     try {
-      const response = await fetch({
+      const response = await runContractFunction({
         params: parameters,
         onSuccess: (response) => {
           console.log(response);
@@ -310,7 +309,7 @@ const useDappHack = () => {
       },
     };
     try {
-      const response = await fetch({
+      const response = await runContractFunction({
         params: parameters,
         onSuccess: (response) => {
           console.log(response);
@@ -337,7 +336,7 @@ const useDappHack = () => {
       },
     };
     try {
-      const response = await fetch({
+      const response = await runContractFunction({
         params: parameters,
         onSuccess: (response) => {
           console.log(response);

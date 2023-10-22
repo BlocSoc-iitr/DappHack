@@ -6,7 +6,14 @@ const ImageSelector = ({ title, file, setFile }) => {
     <div className={classes.container}>
       <h3>{title}</h3>
       <div className={classes["input-container"]}>
-        <input style={{ display: "none" }} id={"img"} type="file" />
+        <input
+          style={{ display: "none" }}
+          id={"img"}
+          type="file"
+          onChange={(event) => {
+            setFile(event.target.files[0]);
+          }}
+        />
         <label style={{ cursor: "Pointer" }} htmlFor="img">
           <Image src={uploadIcon} alt="upload" />
           <p>Drag and drop or click to choose</p>
