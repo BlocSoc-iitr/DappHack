@@ -70,7 +70,7 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+![Product Name Screen Shot][product-screenshot]
 
 DappHack is a Web3 Hackathon Portal. It is a platform for hosting hackathons and other events related to blockchain and web3. It is a platform for developers to showcase their skills and build amazing projects. It is a platform for the community to come together and build something amazing.
 We recognized some issues with traditional platforms and went to resolve through on-chain solutions.
