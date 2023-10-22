@@ -9,7 +9,7 @@ checkEnv(env);
 
 // Get the example object.
 const example = require(getExamplePath(exampleName));
-const parent = 'Avalanche';
+const parent = 'Filecoin';
 // Get the chains for the environment.
 const chains = getEVMChains(env, chainsToDeploy, parent);
 

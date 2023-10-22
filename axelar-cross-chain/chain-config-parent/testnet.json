@@ -1,32 +1,35 @@
 [
   {
-    "name": "Avalanche",
-    "id": "Avalanche",
-    "chainId": 43113,
-    "rpc": "https://api.avax-test.network/ext/bc/C/rpc",
-    "tokenSymbol": "AVAX",
+    "name": "Filecoin",
+    "id": "filecoin-2",
+    "chainId": 314159,
+    "rpc": "https://api.calibration.node.glif.io/rpc/v1",
+    "tokenSymbol": "FIL",
     "contracts": {
+      "ConstAddressDeployer": {
+        "address": "0x98B2920D53612483F91F12Ed7754E51b4A77919e"
+      },
       "AxelarGateway": {
-        "address": "0xC249632c2D40b9001FE907806902f63038B737Ab"
+        "address": "0x999117D44220F33e0441fbAb2A5aDB8FF485c54D",
+        "implementation": "0xD2ed9ACBd2Acba9CA3EA60b9Eb7652698598bC53",
+        "authModule": "0x57441fFa88C5F311aeC600bcaC15666198C82B52",
+        "tokenDeployer": "0x364a9f84cD5A0fB88E1953a2fB70F676c284D57C",
+        "deployer": "0xB8Cd93C83A974649D76B1c19f311f639e62272BC"
       },
       "AxelarGasService": {
-        "salt": "AxelarGasService",
-        "address": "0xbE406F0189A0B4cf3A05C286473D23791Dd44Cc6",
-        "implementation": "0x125AAf72B24a78f7aE5Cae92D7717f533633320d",
-        "deployer": "0xB8Cd93C83A974649D76B1c19f311f639e62272BC",
         "collector": "0x7F83F5cA2AE4206AbFf8a3C3668e88ce5F11C0B5",
+        "address": "0xbe406f0189a0b4cf3a05c286473d23791dd44cc6",
+        "implementation": "0x125AAf72B24a78f7aE5Cae92D7717f533633320d",
+        "deployer": "0x5b593E7b1725dc6FcbbFe80b2415B19153F94A85",
         "owner": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
       },
       "AxelarDepositService": {
+        "wrappedSymbol": "",
+        "refundIssuer": "0x4f671f34d2d23fec3eE3087E3A0221f8D314D9dF",
         "salt": "AxelarDepositService",
         "address": "0xc1DCb196BA862B337Aa23eDA1Cb9503C0801b955",
-        "implementation": "0xb6241272C569767072e0587098415DF6BA0aaEe9",
-        "deployer": "0xd55cd98cdE61c3CcE1286F9aF50cDbF16f5dba5b",
-        "wrappedSymbol": "WAVAX",
-        "refundIssuer": "0x4f671f34d2d23fec3eE3087E3A0221f8D314D9dF"
-      },
-      "ConstAddressDeployer": {
-        "address": "0x98B2920D53612483F91F12Ed7754E51b4A77919e"
+        "implementation": "0xd883C8bA523253c93d97b6C7a5087a7B5ff23d79",
+        "deployer": "0xd55cd98cdE61c3CcE1286F9aF50cDbF16f5dba5b"
       },
       "Create3Deployer": {
         "salt": "Create3Deployer",
@@ -35,9 +38,6 @@
         "deploymentMethod": "create2"
       },
       "InterchainTokenService": {
-        "gasOptions": {
-          "gasLimit": 8000000
-        },
         "salt": "ITS v0.3.0",
         "deployer": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
         "tokenManagerDeployer": "0x6Aa459645b696108894C7548A898192E4716Ef15",
@@ -51,7 +51,7 @@
           "tokenManagerMintBurn": "0x2dF7688066d10e6aAEd5116814eB0f701cF6F74f",
           "tokenManagerLiquidityPool": "0x5D16dFFFb32889eB4d023030FD63B598334C9C90"
         },
-        "implementation": "0x60b991bAf941550b0FeA76fa50696b4f488881Dd",
+        "implementation": "0x6f7F028e83696498233EdB778Abe858D8c63d85b",
         "address": "0xF786e21509A9D50a9aFD033B5940A2b7D872C208"
       },
       "InterchainProposalSender": {
@@ -69,14 +69,17 @@
       }
     },
     "explorer": {
-      "url": "https://testnet.snowtrace.io",
-      "api": "https://api-testnet.snowtrace.io/api"
+      "url": "https://calibration.filfox.info"
     },
+    "gasOptions": {
+      "gasLimit": 300000000
+    },
+    "confirmations": 1,
     "AxelarGasService": {
       "address": "0xbE406F0189A0B4cf3A05C286473D23791Dd44Cc6"
     },
-    "gateway": "0xC249632c2D40b9001FE907806902f63038B737Ab",
-    "gasService": "0xbE406F0189A0B4cf3A05C286473D23791Dd44Cc6",
+    "gateway": "0x999117D44220F33e0441fbAb2A5aDB8FF485c54D",
+    "gasService": "0xbe406f0189a0b4cf3a05c286473d23791dd44cc6",
     "contract": {
       "abi": [
         "constructor(uint256 startTime, uint256 endTime, uint256 maxParticipants, uint256 teamSizeLimit, address[] organizers, string name, string symbol, address gateway_, address gasReceiver_)",
@@ -154,7 +157,7 @@
         "function tokenURI(uint256 tokenId) view returns (string)",
         "function transferFrom(address from, address to, uint256 tokenId)"
       ],
-      "address": "0x612cB98334A868096038D790E34071ad5c663291"
+      "address": "0x9aB7f1600E3A0B4c6D2219f22D2B2cfe86436dfa"
     }
   }
 ]

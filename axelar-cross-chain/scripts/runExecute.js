@@ -23,7 +23,7 @@ let selectedChains = [];
 if (args.length >= 2) {
     selectedChains = [args[0], args[1]];
 }
-
-const chains = getEVMChains(env, selectedChains);
-
+const parent = 'Filecoin';
+// Get the chains for the environment.
+const chains = getEVMChains(env, selectedChains, parent);
 executeEVMExample(env, chains, args, wallet, example);

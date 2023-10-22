@@ -65,7 +65,7 @@ async function executeEVMExample(env, chains, args, wallet, example) {
  * @returns The source chain.
  */
 function getSourceChain(chains, args, exampleSourceChain) {
-    return chains.find((chain) => chain.name === (args[0] || exampleSourceChain || 'Avalanche'));
+    return chains.find((chain) => chain.name === (args[0] || exampleSourceChain || 'Filecoin'));
 }
 
 /**
@@ -76,7 +76,7 @@ function getSourceChain(chains, args, exampleSourceChain) {
  * @returns The destination chain.
  */
 function getDestChain(chains, args, exampleDestinationChain) {
-    return chains.find((chain) => chain.name === (args[1] || exampleDestinationChain || 'Fantom'));
+    return chains.find((chain) => chain.name === (args[1] || exampleDestinationChain || 'Avalanche'));
 }
 
 /**
