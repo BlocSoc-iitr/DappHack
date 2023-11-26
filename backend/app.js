@@ -6,8 +6,9 @@ const fileUpload = require("express-fileupload");
 const globalErrorHandler = require("./controllers/errorController");
 const AppError = require("./utils/appError");
 
-const userRouter = require("./routes/userRoutes");
+// const userRouter = require("./routes/userRoutes");
 const hackathonRoutes = require("./routes/hackathonRoutes");
+const userRouterMDB = require("./routes/userRoutesMDB");
 
 dotenv.config();
 
@@ -51,7 +52,11 @@ app.get("/app/v1", (req, res, next) => {
   res.send("Test working");
 });
 
-app.use("/app/v1/users", userRouter);
+//mongo routes to check
+app.use("/app/v1/MDB/users", userRouterMDB);
+
+//commented to check mongo as I dont have env things for SQL
+// app.use("/app/v1/users", userRouter);
 app.use("/api/hackathon", hackathonRoutes);
 
 app.use("*", (req, res, next) => {
