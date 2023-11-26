@@ -7,7 +7,7 @@ router.get("/:hackathonID/projects", hackathonController.getAllProjects);//teste
 router.get("/:hackathonID/teams",hackathonController.getAllTeams)//done//tested
 router.get("/:hackathonID/:teamID/project",hackathonController.getProject)//done//tested
 router.get("/:hackathonID/winners",hackathonController.getWinners)//done//tested
-// router.get("/:hackathonID/:projectID", hackathonController.getProject);
+
 //admin can create a hackathon
 router.post("/createHackathon", hackathonController.createHackathon);//done //tested
 router.post("/:hackathonID/createTeam", hackathonController.createTeam);//done//tested

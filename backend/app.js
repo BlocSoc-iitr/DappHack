@@ -6,7 +6,7 @@ const fileUpload = require("express-fileupload");
 const globalErrorHandler = require("./controllers/errorController");
 const AppError = require("./utils/appError");
 
-// const userRouter = require("./routes/userRoutes");
+
 const hackathonRoutes = require("./routes/hackathonRoutes");
 const userRouterMDB = require("./routes/userRoutesMDB");
 

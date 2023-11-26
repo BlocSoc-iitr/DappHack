@@ -28,10 +28,11 @@ exports.createNft = async (req, res) => {
 };
 
 //////////////////////////////////////////
+const catchAsync = require("./../utils/catchAsync.js");
 const hackathonModel = require("./../models/hackathonModel.js");
 
 const teamModel = require("./../models/teamModel.js");
-exports.createHackathon = async (req, res) => {
+exports.createHackathon = catchAsync(async (req, res) => {
   //make a check if role is admin
   const hackathon = await hackathonModel.create(req.body);
   res.status(201).json({
@@ -39,16 +40,16 @@ exports.createHackathon = async (req, res) => {
     hackathon,
     message: "hackathon created",
   });
-};
-exports.getAllProjects = async (req, res) => {
+});
+exports.getAllProjects = catchAsync(async (req, res) => {
   const hackathonID = req.params.hackathonID;
-  const hackathon = await hackathonModel.findById(hackathonID);
+  const hackathon = await hackathonModel.findById(hackathonID).populate('teams');
   if (hackathon) {
-    const projects = [];
-    console.log(hackathon);
-    hackathon.teams.forEach(async (ele) => {
-      projects.push((await teamModel.findById(ele)).project);
-    });
+    const teams=hackathon.teams;
+    let projects=[];
+    teams.forEach((ele)=>{
+      projects.push(ele.project);
+    })
     res.status(200).json({
       projects,
       message: "found all projects",
@@ -58,8 +59,8 @@ exports.getAllProjects = async (req, res) => {
       message: "no such hackathon exist",
     });
   }
-};
-exports.getHackathon = async (req, res) => {
+});
+exports.getHackathon = catchAsync(async (req, res) => {
   const hackathonID = req.params.hackathonID;
   const hackathon = await hackathonModel.findById(hackathonID);
   if (hackathon) {
@@ -72,25 +73,13 @@ exports.getHackathon = async (req, res) => {
       message: "no such hackathon exists",
     });
   }
-};
-exports.getAllTeams = async (req, res) => {
+});
+exports.getAllTeams = catchAsync(async (req, res) => {
   const hackathonID = req.params.hackathonID;
-  const hackathon = await hackathonModel.findById(hackathonID);
+  const hackathon = await hackathonModel.findById(hackathonID).populate('teams');
 
-  let teamsData = [];
-  async function processLoop(array) {
-    array.forEach(async (ele) => {
-      // console.log(ele);
-      // console.log(await teamModel.findById(ele));
-      var team = await teamModel.findById(ele);
-      console.log(team);
-      teamsData.push(team);
-      console.log(teamsData);
-    });
-  }
-  await processLoop(hackathon.teams);
+  let teamsData = hackathon.teams;
   console.log(teamsData);
-  console.log("reaached");
   if (teamsData) {
     res.status(200).json({
       teamsData,
@@ -101,8 +90,8 @@ exports.getAllTeams = async (req, res) => {
       message: "no teams have registered yet here",
     });
   }
-};
-exports.getProject = async (req, res) => {
+});
+exports.getProject = catchAsync(async (req, res) => {
   const { hackathonID, teamID } = req.params;
   const hackathon = await hackathonModel.findById(hackathonID);
   if (hackathon.teams.includes(teamID)) {
@@ -117,8 +106,8 @@ exports.getProject = async (req, res) => {
       message: "team is not in this hackathon",
     });
   }
-};
-exports.getWinners = async (req, res) => {
+});
+exports.getWinners = catchAsync(async (req, res) => {
   const hackathonID = req.params.hackathonID;
   const hackathon = await hackathonModel.findById(hackathonID);
   const winners = await hackathon.winners;
@@ -131,8 +120,8 @@ exports.getWinners = async (req, res) => {
     message: "winners are here",
     winnersData,
   });
-};
-exports.createProject = async (req, res) => {
+});
+exports.createProject = catchAsync(async (req, res) => {
   const { hackathonID, teamID } = req.params;
   const hackathon = await hackathonModel.findById(hackathonID);
   if (hackathon.teams.includes(teamID)) {
@@ -149,8 +138,8 @@ exports.createProject = async (req, res) => {
       message: "team is not in this hackathon",
     });
   }
-};
-exports.createTeam = async (req, res) => {
+});
+exports.createTeam = catchAsync(async (req, res) => {
   const { hackathonID } = req.params;
   const team = await teamModel.create(req.body);
   const teams = [];
@@ -163,4 +152,4 @@ exports.createTeam = async (req, res) => {
     message: "team registered",
     team,
   });
-};
+});
