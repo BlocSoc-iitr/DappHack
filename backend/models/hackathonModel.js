@@ -43,7 +43,10 @@ const hackathonSchema = new mongoose.Schema(
     hackathonDescription: {
       type: String,
     },
-    createdAt: Date.now,
+    createdAt: {
+      type: Date,
+      default: Date.now(),
+    },
     endTime: {
       type: Date,
       required: true,

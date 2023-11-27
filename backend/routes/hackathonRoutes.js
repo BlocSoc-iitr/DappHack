@@ -18,6 +18,12 @@ router.post(
   hackathonController.createProject
 ); //done
 
+//builder and sponsor routes
+router.post("/:hackathonID/registerBuilder", hackathonController.createBuilder); //done
+router.get("/:hackathonID/:address", hackathonController.getBuilder); //done
+router.post("/:hackathonID/createSponsor", hackathonController.createSponsor); //done
+router.get("/:hackathonID/sponsorDetails", hackathonController.getSponsors); //done
+
 router.post("/create-nft-uri", hackathonController.createNft);
 
 module.exports = router;
