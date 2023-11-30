@@ -74,10 +74,15 @@ exports.createTeam = catchAsync(async (req, res, next) => {
   const { hackathonID } = req.params;
   //assuming req.body has a members array whose  elements are objects with user's address and name
   let dataInside = req.body;
-  dataInside.members.forEach(async (ele) => {
-    let user = await userModel.find(ele.address);
+  let members = req.body.members;
+  const findUser = async (ele) => {
+    let user = await userModel.findOne({ address: ele.address });
     ele = user._id;
-  });
+  };
+  for (const ele of members) {
+    await findUser(ele);
+  }
+  console.log(dataInside);
   const team = await teamModel.create(dataInside);
   const hackathon = await hackathonModel.findById(hackathonID);
   let teams = hackathon.teams;
@@ -96,7 +101,7 @@ exports.createBuilder = catchAsync(async (req, res, next) => {
   const hackathon = await hackathonModel.findById(hackathonID);
   let builders = hackathon.builders;
   //if req has builder address
-  const user = await userModel.findOne(req.body.address);
+  const user = await userModel.findOne({ address: req.body.address });
   if (user) {
     builders.push(user._id);
   } else {
@@ -110,26 +115,12 @@ exports.createBuilder = catchAsync(async (req, res, next) => {
     message: "you have been registered",
   });
 });
-exports.createSponsor = catchAsync(async (req, res, next) => {
-  const hackathonID = req.params.hackathonID;
-  const hackathon = await hackathonModel.findById(hackathonID);
-  let sponsors = hackathon.sponsors;
-  const sponsor = await sponsorModel.create(req.body);
-  sponsors.push(sponsor._id);
-  const hackathonUpdated = await hackathonModel.findByIdAndUpdate(hackathonID, {
-    sponsors: sponsors,
-  });
-  res.status(200).json({
-    message: "you have been registered as a sponsor",
-    sponsor,
-  });
-});
 
 ///get
 exports.getBuilder = catchAsync(async (req, res, next) => {
   const { hackathonID, address } = req.params;
   const hackathon = await hackathonModel.findById(hackathonID);
-  const user = await userModel.findOne(address);
+  const user = await userModel.findOne({ address: address });
   if (user && hackathon.builders.includes(user._id)) {
     res.status(200).json({
       message: "got the builder",
@@ -139,17 +130,7 @@ exports.getBuilder = catchAsync(async (req, res, next) => {
     return next(new AppError("builder not in this hackathon", 400));
   }
 });
-exports.getSponsors = catchAsync(async (req, res, next) => {
-  const hackathonID = req.params.hackathonID;
-  const hackathon = await hackathonModel
-    .findById(hackathonID)
-    .populate("sponsors");
-  let sponsors = hackathon.sponsors;
-  res.status(200).json({
-    message: "you have been registered as a sponsor",
-    sponsors,
-  });
-});
+
 exports.getAllProjects = catchAsync(async (req, res, next) => {
   const hackathonID = req.params.hackathonID;
   const hackathon = await hackathonModel

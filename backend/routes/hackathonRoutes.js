@@ -1,10 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const hackathonController = require("../controllers/hackathonController");
-//tested -- meaans postman testing completed
-//done --function implementatioon completed with all handling of errors and all
-router.post("/createHackathon", hackathonController.createHackathon); //done
-router.get("/:hackathonID", hackathonController.getHackathon); //done
+
+const sponsorController = require("../controllers/sponsorController");
+router.post(
+  "/:hackathonID/sponsor/createSponsor",
+  sponsorController.createSponsor
+); //tested
+router.get(
+  "/:hackathonID/sponsor/sponsorDetails",
+  sponsorController.getSponsors
+); //tested
+
+//write stratTime ,endTime constraints for every function if needed
+router.post("/createHackathon", hackathonController.createHackathon); //tested
+router.get("/:hackathonID", hackathonController.getHackathon); //tested
 
 router.get("/:hackathonID/projects", hackathonController.getAllProjects); //done
 router.get("/:hackathonID/teams", hackathonController.getAllTeams); //done
@@ -19,10 +29,8 @@ router.post(
 ); //done
 
 //builder and sponsor routes
-router.post("/:hackathonID/registerBuilder", hackathonController.createBuilder); //done
-router.get("/:hackathonID/:address", hackathonController.getBuilder); //done
-router.post("/:hackathonID/createSponsor", hackathonController.createSponsor); //done
-router.get("/:hackathonID/sponsorDetails", hackathonController.getSponsors); //done
+router.post("/:hackathonID/registerBuilder", hackathonController.createBuilder); //tested
+router.get("/:hackathonID/:address", hackathonController.getBuilder); //tested
 
 router.post("/create-nft-uri", hackathonController.createNft);
 

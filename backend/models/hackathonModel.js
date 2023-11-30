@@ -47,12 +47,16 @@ const hackathonSchema = new mongoose.Schema(
       type: Date,
       default: Date.now(),
     },
+    startTime: {
+      type: Date,
+      required: true,
+    },
     endTime: {
       type: Date,
       required: true,
     },
     logo: {
-      type: String, //I dont know how to store in other ways
+      type: String,
     },
   },
   {

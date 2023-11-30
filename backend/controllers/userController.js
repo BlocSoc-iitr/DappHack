@@ -11,7 +11,6 @@ exports.createUser = catchAsync(async (req, res) => {
 exports.getUser = catchAsync(async (req, res) => {
   const address = req.params.address;
   const user = await userModel.find({ address: address });
-  console.log(data);
   res.status(200).json({
     message: "found the user",
     user,
