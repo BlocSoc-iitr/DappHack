@@ -6,8 +6,8 @@ const fileUpload = require("express-fileupload");
 const globalErrorHandler = require("./controllers/errorController");
 const AppError = require("./utils/appError");
 
+const hackathonRouter = require("./routes/hackathonRoutes");
 const userRouter = require("./routes/userRoutes");
-const hackathonRoutes = require("./routes/hackathonRoutes");
 
 dotenv.config();
 
@@ -51,8 +51,9 @@ app.get("/app/v1", (req, res, next) => {
   res.send("Test working");
 });
 
-app.use("/app/v1/users", userRouter);
-app.use("/api/hackathon", hackathonRoutes);
+//mongo routes to check
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/hackathon", hackathonRouter);
 
 app.use("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

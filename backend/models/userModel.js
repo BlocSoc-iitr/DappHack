@@ -1,41 +1,18 @@
-const sequelize = require("../db.js");
-const emailValidator = require("email-validator");
-const { DataTypes } = require("sequelize");
-
-const User = sequelize.define(
-  "users",
-  {
-    address: {
-      type: DataTypes.TEXT,
-      primaryKey: true,
-    },
-    name: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-      validate: function () {
-        return emailValidator.validate(this.email);
-      },
-    },
-    contactNumber: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    role: {
-      type: DataTypes.JSON,
-      allowNull: false,
-    },
-    profilePicture: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
+const mongoose = require("mongoose");
+const validator = require("validator");
+const userSchema = new mongoose.Schema({
+  address: { type: String, required: [true, "provide your address please"] },
+  name: { type: String, required: [true, "name please"] },
+  email: {
+    type: String,
+    unique: true,
+    validate: [validator.isEmail, "give a valid EmailId"],
   },
-  {
-    freezeTableName: true,
-  }
-);
+  contactNumber: {
+    type: String,
+  },
+  profilePicture: { type: String },
+});
 
+const User = mongoose.model("User", userSchema);
 module.exports = User;
