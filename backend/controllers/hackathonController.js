@@ -55,7 +55,7 @@ exports.createProject = catchAsync(async (req, res, next) => {
     });
     let projects = hackathon.projects;
     projects.push(project._id);
-    console.log(projects.includes(project._id));
+
     const hackathonUpdated = await hackathonModel.findByIdAndUpdate(
       hackathonID,
       {
@@ -72,25 +72,31 @@ exports.createProject = catchAsync(async (req, res, next) => {
 });
 exports.createTeam = catchAsync(async (req, res, next) => {
   const { hackathonID } = req.params;
-  //assuming req.body has a members array whose  elements are objects with user's address and name
+  //assuming req.body has a members array whose  elements are user addressess
   let dataInside = req.body;
   let members = req.body.members;
-  const findUser = async (ele) => {
-    let user = await userModel.findOne({ address: ele.address });
-    ele = user._id;
-  };
-  for (const ele of members) {
-    await findUser(ele);
+
+  const hackathon0 = await hackathonModel
+    .findById(hackathonID)
+    .populate("builders");
+  let builders = hackathon0.builders;
+  let finalTeam = [];
+  for (let i = 0; i < builders.length; i++) {
+    if (members.includes(builders[i].address)) {
+      finalTeam.push(builders[i]._id);
+    }
   }
-  console.log(dataInside);
+
+  dataInside.members = finalTeam;
   const team = await teamModel.create(dataInside);
   const hackathon = await hackathonModel.findById(hackathonID);
+
   let teams = hackathon.teams;
   teams.push(team._id);
   const hackathonUpdated = await hackathonModel.findByIdAndUpdate(hackathonID, {
     teams: teams,
   });
-  console.log(hackathonUpdated);
+
   res.status(201).json({
     message: "team registered",
     team,
@@ -138,7 +144,7 @@ exports.getAllProjects = catchAsync(async (req, res, next) => {
     .populate("projects");
   if (hackathon) {
     const projects = hackathon.projects;
-    console.log(projects);
+
     res.status(200).json({
       projects,
       message: "found all projects",
@@ -167,7 +173,7 @@ exports.getAllTeams = catchAsync(async (req, res, next) => {
 
   if (hackathon) {
     let teamsData = hackathon.teams;
-    console.log(teamsData);
+
     res.status(200).json({
       teamsData,
       message: "these are the teams",
@@ -200,7 +206,7 @@ exports.getTeam = catchAsync(async (req, res, next) => {
         .findById(teamID)
         .populate("members")
         .populate("project");
-      console.log(team);
+
       res.status(200).json({
         message: "this is the team info",
         team,
@@ -212,7 +218,7 @@ exports.getTeam = catchAsync(async (req, res, next) => {
     return next(new AppError("hackathon not found", 400));
   }
 });
-// implementation uncompleted
+// implementation incomplete
 exports.getWinners = catchAsync(async (req, res, next) => {
   const hackathonID = req.params.hackathonID;
   const hackathon = await hackathonModel.findById(hackathonID);
