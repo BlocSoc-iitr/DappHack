@@ -17,7 +17,7 @@ contract DappHack is ProjectNFTs {
     struct Sponsor {
         string name;
         address[] sponsors;
-        uint256[] prizeArray; //track ke lie prize distribution
+        uint256[] prizeArray; //prize for each track like first prize, second prize as [100,50]
         uint256 poolPrize;
         uint256 numberOfPoolPrize;
     }
@@ -70,7 +70,7 @@ contract DappHack is ProjectNFTs {
 
     mapping(uint256 => Winner) public sponsorToWinner; //track number to winner number
 
-    // Eventsteam
+    // Events
     event SponsorSignedUp(string name, address indexed sponsor, uint256 prize);
     event PrizePoolChanged(
         address indexed sponsor,
@@ -188,39 +188,6 @@ contract DappHack is ProjectNFTs {
 
     // external
     // public
-    /**
-     * @dev Distributes the prize for a track to the organizers.
-     * @param prize The prize amount.
-     * @param team The team that won the track.
-     */
-    function distributePrizeTrack(
-        uint256 prize,
-        Team memory team
-    ) public payable OnlyOrganizer {
-        uint256 num = team.participants.length;
-        uint256 prizeToEach = prize / num;
-
-        for (uint i = 0; i < num; ++i) {
-            payable(msg.sender).transfer(prizeToEach);
-        }
-    }
-
-    /**
-     * @dev Distributes the prize for a pool prize to the organizers.
-     * @param prize The prize amount.
-     * @param team The team that won the pool prize.
-     */
-
-    function distributePrizePool(
-        uint256 prize,
-        Team memory team
-    ) public payable OnlyOrganizer {
-        uint256 num = team.participants.length;
-        uint256 prizeToEach = prize / num;
-        for (uint i = 0; i < num; ++i) {
-            payable(msg.sender).transfer(prizeToEach);
-        }
-    }
 
     /**
      * @dev Allows a sponsor to sign up for the competition and contribute to the prize pool.
@@ -416,6 +383,40 @@ contract DappHack is ProjectNFTs {
 
         // initialize sponsor to winner mapping
         emit WinnerJudged(s_winners.length - 1, poolPrizeWinners.length);
+    }
+
+    /**
+     * @dev Distributes the prize for a track to the organizers.
+     * @param prize The prize amount.
+     * @param team The team that won the track.
+     */
+    function distributePrizeTrack(
+        uint256 prize,
+        Team memory team
+    ) public payable OnlyOrganizer {
+        uint256 num = team.participants.length;
+        uint256 prizeToEach = prize / num;
+
+        for (uint i = 0; i < num; ++i) {
+            payable(msg.sender).transfer(prizeToEach);
+        }
+    }
+
+    /**
+     * @dev Distributes the prize for a pool prize to the organizers.
+     * @param prize The prize amount.
+     * @param team The team that won the pool prize.
+     */
+
+    function distributePrizePool(
+        uint256 prize,
+        Team memory team
+    ) public payable OnlyOrganizer {
+        uint256 num = team.participants.length;
+        uint256 prizeToEach = prize / num;
+        for (uint i = 0; i < num; ++i) {
+            payable(msg.sender).transfer(prizeToEach);
+        }
     }
 
     /**
