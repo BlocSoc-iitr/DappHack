@@ -336,7 +336,6 @@ contract DappHack is ProjectNFTs {
             //update total prize pool
             s_totalPrizePool = s_totalPrizePool - uint256(-amt);
         }
-        s_sponsors[sponsorNumber].poolPrize = newPrize;
         // temp_array holds the old prize array , s_sponsors[sponsorNumber].prizeArray holds the new prize array
         emit PrizeArrayChanged(
             msg.sender,
