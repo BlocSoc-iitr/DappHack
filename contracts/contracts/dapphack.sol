@@ -77,6 +77,13 @@ contract DappHack is ProjectNFTs {
         uint256 oldPrize,
         uint256 newPrize
     );
+    event PrizeArrayChanged(
+        address indexed sponsor,
+        uint256 oldPrize,
+        uint256 newPrize,
+        uint256[] oldPrizeArray,
+        uint256[] newPrizeArray
+    );
     event BuilderSignedUp(address indexed builder);
     event TeamInitialized(string name, address[] participants);
     event ProjectSubmitted(uint256 teamNumber, string nftUri);
@@ -256,20 +263,47 @@ contract DappHack is ProjectNFTs {
         require(newPrize > 0, "Invalid prize amount");
 
         Sponsor memory sponsor = s_sponsors[sponsorNumber];
+        uint256 oldPrize = sponsorPrizePool[sponsorNumber];
 
-        uint256 temp_sum = 0;
-        uint256[] memory temp_array = sponsor.prizeArray;
-        for (uint i = 0; i < temp_array.length; ++i) {
-            temp_sum += temp_array[i];
-        }
+        // as far as the code is structured oldprize = sponsor.poolPrize + all elements of prizeArray , so there is no need to loop to get temp_sum(had to optimise gas )
+        uint256 temp_sum = oldPrize - sponsor.poolPrize;
 
         // check that the newPrize fund is greater than the sum of all the prizes
-        require(
-            newPrize >= temp_sum + sponsor.poolPrize,
-            "Invalid prize amount"
-        );
+        /* here we check that the newPrize is greater than the sum of all the prizes in the sponsor.prizeArray 
+        our aim is to change prize pool, it doesnt matter if the (newPrize-temp_sum) is less or greater than  sponsor.poolPrize*/
+        require(newPrize >= temp_sum, "Invalid prize amount");
+
+        int amt = int(newPrize - oldPrize);
+
+        if (amt >= 0) {
+            payable(address(this)).transfer(uint256(amt));
+            //update total prize pool
+            s_totalPrizePool = s_totalPrizePool + uint256(amt);
+        } else {
+            payable(msg.sender).transfer(uint256(-amt));
+            //update total prize pool
+            s_totalPrizePool = s_totalPrizePool - uint256(-amt);
+        }
+
+        //prizePoolStructChange to be called
+        sponsorPrizePool[sponsorNumber] = newPrize;
+        s_sponsors[sponsorNumber].poolPrize = newPrize;
+
+        emit PrizePoolChanged(msg.sender, oldPrize, newPrize);
+    }
+
+    // i have not put any restriction on how much the sponsor can decrease the prize pool
+    function changePrizeArray(
+        uint256 sponsorNumber,
+        uint256 newPrize
+    ) public payable OnlySponsor {
+        require(newPrize > 0, "Invalid prize amount");
+        Sponsor memory sponsor = s_sponsors[sponsorNumber];
+        require(newPrize > sponsor.poolPrize, "Invalid prize amount");
 
         uint256 oldPrize = sponsorPrizePool[sponsorNumber];
+        uint256 temp_sum = oldPrize - sponsor.poolPrize;
+        uint256[] memory temp_array = sponsor.prizeArray;
 
         int amt = int(newPrize - oldPrize);
 
@@ -278,19 +312,39 @@ contract DappHack is ProjectNFTs {
         } else {
             payable(msg.sender).transfer(uint256(-amt));
         }
-        //update total prize pool
-        s_totalPrizePool += uint256(amt);
+        //prizeArrayStructChange has been called , moreover splitting the amount based on the prize percentage of old prizeArray
+        if (amt >= 0) {
+            for (uint i = 0; i < temp_array.length; ++i) {
+                int256 updatedPrize = (int256(temp_array[i]) * amt) /
+                    int256(temp_sum);
 
-        //prizePoolStructChange to be called
+                s_sponsors[sponsorNumber].prizeArray[i] =
+                    s_sponsors[sponsorNumber].prizeArray[i] +
+                    uint256(updatedPrize);
+            }
+            //update total prize pool
+            s_totalPrizePool = s_totalPrizePool + uint256(amt);
+        } else {
+            for (uint i = 0; i < temp_array.length; ++i) {
+                int256 updatedPrize = (int256(temp_array[i]) * amt) /
+                    int256(temp_sum);
 
-        sponsorPrizePool[sponsorNumber] = newPrize;
+                s_sponsors[sponsorNumber].prizeArray[i] =
+                    s_sponsors[sponsorNumber].prizeArray[i] -
+                    uint256(-updatedPrize);
+            }
+            //update total prize pool
+            s_totalPrizePool = s_totalPrizePool - uint256(-amt);
+        }
         s_sponsors[sponsorNumber].poolPrize = newPrize;
-
-        emit PrizePoolChanged(msg.sender, oldPrize, newPrize);
-    }
-
-    function changePrizePoolSTruct() public payable {
-        /// TODO
+        // temp_array holds the old prize array , s_sponsors[sponsorNumber].prizeArray holds the new prize array
+        emit PrizeArrayChanged(
+            msg.sender,
+            oldPrize,
+            newPrize,
+            temp_array,
+            s_sponsors[sponsorNumber].prizeArray
+        );
     }
 
     /**
