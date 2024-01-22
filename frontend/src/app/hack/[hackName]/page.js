@@ -5,6 +5,8 @@ import classes from "@/styles/HackPage.module.css";
 import HackOverview from "@/components/HackOverview";
 import HackPrizes from "@/components/HackPrizes";
 import useWeb3 from "@/utils/useWeb3";
+import HackTimeline from "@/components/HackTimeline";
+import HackProjects from "@/components/HackProjects";
 // import { ConnectButton } from "web3uikit";
 import useDeployContract from "@/utils/useDeployContract";
 import useDappHack from "@/utils/useDappHack";
@@ -14,8 +16,10 @@ import { tableName } from "@/utils/useDatabase";
 const pageNavigators = ["Overview", "Projects", "Timeline", "Prizes"];
 const HackPage = ({ params }) => {
   const [selectedNavigator, setSelectedNavigator] = useState(pageNavigators[0]);
+  console.log(selectedNavigator);
 
   const handleNavigatorClick = (navigator) => {
+    console.log(navigator);
     setSelectedNavigator(navigator);
   };
   const { chainId, userAccount, Moralis, isWeb3Enabled, web3 } = useWeb3();
@@ -102,12 +106,20 @@ const HackPage = ({ params }) => {
           ))}
         </ul>
       </div>
-      {/* {selectedNavigator === "Overview" && <HackOverview />} */}
-      {selectedNavigator === "Prizes" ? (
-        <HackPrizes />
-      ) : (
-        <HackOverview hackData={hackData} />
-      )}
+      {(() => {
+        switch (selectedNavigator) {
+          case "Overview":
+            return <HackOverview hackData={hackData} />;
+          case "Projects":
+            return <HackProjects />;
+          case "Timeline":
+            return <HackTimeline />;
+          case "Prizes":
+            return <HackPrizes />;
+          default:
+            return <HackOverview hackData={hackData} />;
+        }
+      })()}
     </PageTemplate>
   );
 };

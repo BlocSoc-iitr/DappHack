@@ -1,0 +1,209 @@
+.projects-container {
+  margin: 2rem 0;
+  display: flex;
+  border-radius: 8px;
+  border: 1px solid var(--Blue-Blue, #03f);
+  background: #fff;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.1rem;
+}
+.projects-heading-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  width: -webkit-fill-available;
+  padding: 1.4rem 0.7rem;
+  flex: 1 1 0;
+}
+.project-heading-box-text {
+  color: var(--Blue-Blue, #03f);
+  font-family: "Source Sans Pro";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  flex: 1 1 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+}
+.project-heading-box-text-2 {
+  color: var(--Blue-Blue, #03f);
+  font-family: "Source Sans Pro";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  flex: 2 1 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+}
+.projects-all-project {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.1rem;
+  width: -webkit-fill-available;
+}
+.projects-project {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  width: -webkit-fill-available;
+  padding: 1.4rem 0.7rem;
+  flex: 1 1 0;
+  width: -wibkit-fill-available;
+  gap: 0.7rem;
+}
+.project-name-team-image {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1rem;
+  flex: 1 1 0;
+}
+.project-name-team {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.project-project-name {
+  color: var(--Neutrals-Rich-Black, #00061d);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  white-space: nowrap;
+}
+.project-team-name {
+  color: var(--Neutrals-Rich-Black, #00061d);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  white-space: nowrap;
+}
+.project-team-members {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0rem;
+  flex: 1 1 0;
+  overflow: hidden;
+}
+.project-team-member {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  margin-left: -20px;
+}
+.project-description {
+  flex: 2 1 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  color: var(--Neutrals-Rich-Black, #00061d);
+  font-family: "Source Sans Pro";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.project-action {
+  flex: 1 1 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.project-action > a {
+  color: var(--Neutrals-Light, #fff);
+  font-family: "Source Sans Pro";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  white-space: nowrap;
+  border-radius: 38px;
+  background: var(--Blue-Blue, #03f);
+  display: flex;
+  padding: 10px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1080px) {
+  .project-action > a {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+  .project-name-team-image > div > img {
+    width: 40px;
+    height: 40px;
+  }
+  .project-heading-box-text,
+  .project-heading-box-text-2 {
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 1020px) {
+  .project-name-team-image > div > img {
+    width: 35px;
+    height: 35px;
+  }
+  .project-heading-box-text,
+  .project-heading-box-text-2 {
+    font-size: 16px;
+  }
+  .project-project-name {
+    font-size: 16px;
+  }
+  .project-team-name {
+    font-size: 14px;
+  }
+  .project-description {
+    font-size: 16px;
+  }
+  .project-action > a {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}
+@media screen and (max-width: 780px) {
+  .project-name-team-image > div > img {
+    width: 30px;
+    height: 30px;
+  }
+  .project-heading-box-text,
+  .project-heading-box-text-2 {
+    font-size: 14px;
+  }
+  .project-project-name {
+    font-size: 14px;
+  }
+  .project-team-name {
+    font-size: 12px;
+  }
+  .project-description {
+    font-size: 14px;
+  }
+  .project-action > a {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+}

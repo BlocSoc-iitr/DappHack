@@ -92,6 +92,7 @@ function Sidebar() {
         id="toggle"
         className={classes["toggle-checkbox"]}
       />
+      <div className={classes["top-blur"]}></div>
       <nav className={classes["sidebar"]}>
         <div className={classes["wallet-container"]}>
           <Wallet />
