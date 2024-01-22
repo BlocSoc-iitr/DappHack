@@ -207,3 +207,12 @@
     padding: 4px 8px;
   }
 }
+@media screen and (max-width: 720px) {
+  .project-description {
+    font-size: 14px;
+    display: none;
+  }
+  .project-heading-box-text-2 {
+    display: none;
+  }
+}
