@@ -52,7 +52,7 @@ contract DappHack is ProjectNFTs {
     //Sponsors
     Sponsor[] public s_sponsors;
 
-    mapping(uint256 => uint256) public sponsorPrizePool; //sponsor number to prize pool
+    mapping(uint256 => uint256) public sponsorPrizePool; //sponsor number to total prize pool (includes both prizeArray and poolPrize)
     mapping(address => uint256) public sponsorToId; //sponsor number to sponsor id
     mapping(address => Sponsor) public sponsorToSponsorProtocol; //sponsor number to sponsor struct
     //builders
@@ -268,10 +268,9 @@ contract DappHack is ProjectNFTs {
         // as far as the code is structured oldprize = sponsor.poolPrize + all elements of prizeArray , so there is no need to loop to get temp_sum(had to optimise gas )
         uint256 temp_sum = oldPrize - sponsor.poolPrize;
 
-        // check that the newPrize fund is greater than the sum of all the prizes
         /* here we check that the newPrize is greater than the sum of all the prizes in the sponsor.prizeArray 
-        our aim is to change prize pool, it doesnt matter if the (newPrize-temp_sum) is less or greater than  sponsor.poolPrize*/
-        require(newPrize >= temp_sum, "Invalid prize amount");
+        our aim is to change prize pool, if(newPrize-temp_sum) is less or more we will increase or decrease the prize pool based sponsor.poolPrize*/
+        require(newPrize > temp_sum, "Invalid prize amount");
 
         int amt = int(newPrize - oldPrize);
 
@@ -287,7 +286,7 @@ contract DappHack is ProjectNFTs {
 
         //prizePoolStructChange to be called
         sponsorPrizePool[sponsorNumber] = newPrize;
-        s_sponsors[sponsorNumber].poolPrize = newPrize;
+        s_sponsors[sponsorNumber].poolPrize = newPrize - temp_sum;
 
         emit PrizePoolChanged(msg.sender, oldPrize, newPrize);
     }
@@ -312,7 +311,9 @@ contract DappHack is ProjectNFTs {
         } else {
             payable(msg.sender).transfer(uint256(-amt));
         }
-        //prizeArrayStructChange has been called , moreover splitting the amount based on the prize percentage of old prizeArray
+        /*prizeArrayStructChange has been called , moreover splitting the newPrize amount based on the prize percentage of old prizeArray
+        also updating the prizearraystruct in s_sponsors and s_totalPrizePool */
+
         if (amt >= 0) {
             for (uint i = 0; i < temp_array.length; ++i) {
                 int256 updatedPrize = (int256(temp_array[i]) * amt) /
