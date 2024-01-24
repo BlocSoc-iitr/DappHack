@@ -52,7 +52,7 @@ contract DappHack is ProjectNFTs {
     //Sponsors
     Sponsor[] public s_sponsors;
 
-    mapping(uint256 => uint256) public sponsorPrizePool; //sponsor number to total prize pool (includes both prizeArray and poolPrize)
+    mapping(uint256 => uint256) public sponsorPrizePool; //sponsor number to prize pool
     mapping(address => uint256) public sponsorToId; //sponsor number to sponsor id
     mapping(address => Sponsor) public sponsorToSponsorProtocol; //sponsor number to sponsor struct
     //builders
@@ -79,8 +79,6 @@ contract DappHack is ProjectNFTs {
     );
     event PrizeArrayChanged(
         address indexed sponsor,
-        uint256 oldPrize,
-        uint256 newPrize,
         uint256[] oldPrizeArray,
         uint256[] newPrizeArray
     );
@@ -252,99 +250,106 @@ contract DappHack is ProjectNFTs {
 
     /**
      * @dev Allows a sponsor to change the prize pool for their sponsorship.
-     * @param sponsorNumber The index of the sponsor in the `s_sponsors` array.
-     * @param newPrize The new prize amount for the sponsor.
+     * @param sponsorNumber The index of the sponsor in the `s_sponsors` array .
+     * @param newPrize The new prize pool amount for the sponsor.
      */
+    //sponsorid is same as sponsor number as far as code is structured
+    function calculatePoolPrizeChangePayment(
+        uint256 sponsorNumber,
+        uint256 newPrize
+    ) public view OnlySponsor returns (string memory x, int256 amt) {
+        // Update the sponsor prize pool
+        require(newPrize > 0, "Invalid prize amount");
+        Sponsor memory sponsor = s_sponsors[sponsorNumber];
+
+        uint256 temp_sum = 0;
+        for (uint i = 0; i < sponsor.prizeArray.length; ++i) {
+            temp_sum += sponsor.prizeArray[i];
+        }
+
+        amt = int256(
+            temp_sum + sponsor.poolPrize - sponsorPrizePool[sponsorNumber]
+        );
+        if (sponsorPrizePool[sponsorNumber] >= sponsor.poolPrize + temp_sum) {
+            return ("amount refunded", amt);
+        } else {
+            return ("amount to be paid", amt);
+        }
+    }
+
+    function calculatePrizeArrayChangePayment(
+        uint256 sponsorNumber,
+        uint256[] memory newPrizeArray
+    ) public view OnlySponsor returns (string memory x, int256 amt) {
+        //update the sponsor prize pool
+        uint256 temp_sum = 0;
+        for (uint i = 0; i < newPrizeArray.length; ++i) {
+            temp_sum += newPrizeArray[i];
+        }
+        require(temp_sum > 0, "Invalid prize amount");
+        Sponsor memory sponsor = s_sponsors[sponsorNumber];
+        amt = int256(
+            temp_sum + sponsor.poolPrize - sponsorPrizePool[sponsorNumber]
+        );
+        if (sponsorPrizePool[sponsorNumber] >= sponsor.poolPrize + temp_sum) {
+            return ("amount refunded", amt);
+        } else {
+            return ("amount to be paid", amt);
+        }
+    }
 
     function changePrizePool(
         uint256 sponsorNumber,
         uint256 newPrize
     ) public payable OnlySponsor {
-        require(newPrize > 0, "Invalid prize amount");
-
-        Sponsor memory sponsor = s_sponsors[sponsorNumber];
-        uint256 oldPrize = sponsorPrizePool[sponsorNumber];
-
-        // as far as the code is structured oldprize = sponsor.poolPrize + all elements of prizeArray , so there is no need to loop to get temp_sum(had to optimise gas )
-        uint256 temp_sum = oldPrize - sponsor.poolPrize;
-
-        /* here we check that the newPrize is greater than the sum of all the prizes in the sponsor.prizeArray 
-        our aim is to change prize pool, if(newPrize-temp_sum) is less or more we will increase or decrease the prize pool based sponsor.poolPrize*/
-        require(newPrize > temp_sum, "Invalid prize amount");
-
-        int amt = int(newPrize - oldPrize);
-
-        if (amt >= 0) {
-            payable(address(this)).transfer(uint256(amt));
-            //update total prize pool
-            s_totalPrizePool = s_totalPrizePool + uint256(amt);
+        (
+            string memory refundStatus,
+            int256 paymentRequired
+        ) = calculatePoolPrizeChangePayment(sponsorNumber, newPrize);
+        if (paymentRequired > 0) {
+            require(
+                msg.value >= uint256(paymentRequired),
+                "Insufficient payment"
+            );
+        }
+        uint256 oldPoolPrize = s_sponsors[sponsorNumber].poolPrize;
+        s_sponsors[sponsorNumber].poolPrize = newPrize;
+        if (paymentRequired > 0) {
+            payable(address(this)).transfer(uint256(paymentRequired));
+            sponsorPrizePool[sponsorNumber] += uint256(paymentRequired);
         } else {
-            payable(msg.sender).transfer(uint256(-amt));
-            //update total prize pool
-            s_totalPrizePool = s_totalPrizePool - uint256(-amt);
+            payable(msg.sender).transfer(uint256(-paymentRequired));
+            sponsorPrizePool[sponsorNumber] -= uint256(paymentRequired);
         }
 
-        //prizePoolStructChange to be called
-        sponsorPrizePool[sponsorNumber] = newPrize;
-        s_sponsors[sponsorNumber].poolPrize = newPrize - temp_sum;
-
-        emit PrizePoolChanged(msg.sender, oldPrize, newPrize);
+        emit PrizePoolChanged(msg.sender, oldPoolPrize, newPrize);
     }
 
-    // i have not put any restriction on how much the sponsor can decrease the prize pool
     function changePrizeArray(
         uint256 sponsorNumber,
-        uint256 newPrize
+        uint256[] memory newPrizeArray
     ) public payable OnlySponsor {
-        require(newPrize > 0, "Invalid prize amount");
-        Sponsor memory sponsor = s_sponsors[sponsorNumber];
-        require(newPrize > sponsor.poolPrize, "Invalid prize amount");
-
-        uint256 oldPrize = sponsorPrizePool[sponsorNumber];
-        uint256 temp_sum = oldPrize - sponsor.poolPrize;
-        uint256[] memory temp_array = sponsor.prizeArray;
-
-        int amt = int(newPrize - oldPrize);
-
-        if (amt >= 0) {
-            payable(address(this)).transfer(uint256(amt));
-        } else {
-            payable(msg.sender).transfer(uint256(-amt));
+        (
+            string memory refundStatus,
+            int256 paymentRequired
+        ) = calculatePrizeArrayChangePayment(sponsorNumber, newPrizeArray);
+        if (paymentRequired > 0) {
+            require(
+                msg.value >= uint256(paymentRequired),
+                "Insufficient payment"
+            );
         }
-        /*prizeArrayStructChange has been called , moreover splitting the newPrize amount based on the prize percentage of old prizeArray
-        also updating the prizearraystruct in s_sponsors and s_totalPrizePool */
 
-        if (amt >= 0) {
-            for (uint i = 0; i < temp_array.length; ++i) {
-                int256 updatedPrize = (int256(temp_array[i]) * amt) /
-                    int256(temp_sum);
-
-                s_sponsors[sponsorNumber].prizeArray[i] =
-                    s_sponsors[sponsorNumber].prizeArray[i] +
-                    uint256(updatedPrize);
-            }
-            //update total prize pool
-            s_totalPrizePool = s_totalPrizePool + uint256(amt);
+        uint256[] memory oldPrizeArray = s_sponsors[sponsorNumber].prizeArray;
+        s_sponsors[sponsorNumber].prizeArray = newPrizeArray;
+        if (paymentRequired > 0) {
+            payable(address(this)).transfer(uint256(paymentRequired));
+            sponsorPrizePool[sponsorNumber] += uint256(paymentRequired);
         } else {
-            for (uint i = 0; i < temp_array.length; ++i) {
-                int256 updatedPrize = (int256(temp_array[i]) * amt) /
-                    int256(temp_sum);
-
-                s_sponsors[sponsorNumber].prizeArray[i] =
-                    s_sponsors[sponsorNumber].prizeArray[i] -
-                    uint256(-updatedPrize);
-            }
-            //update total prize pool
-            s_totalPrizePool = s_totalPrizePool - uint256(-amt);
+            payable(msg.sender).transfer(uint256(paymentRequired));
+            sponsorPrizePool[sponsorNumber] -= uint256(paymentRequired);
         }
-        // temp_array holds the old prize array , s_sponsors[sponsorNumber].prizeArray holds the new prize array
-        emit PrizeArrayChanged(
-            msg.sender,
-            oldPrize,
-            newPrize,
-            temp_array,
-            s_sponsors[sponsorNumber].prizeArray
-        );
+        emit PrizeArrayChanged(msg.sender, oldPrizeArray, newPrizeArray);
     }
 
     /**
