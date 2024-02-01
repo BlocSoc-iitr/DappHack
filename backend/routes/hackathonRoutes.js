@@ -14,6 +14,11 @@ router.get(
 
 //we can write stratTime ,endTime constraints for every function if needed
 router.post("/createHackathon", hackathonController.createHackathon);
+router.get("/allHackathons", hackathonController.getAllHackathon);
+router.get(
+  "/getHackathonByPagination",
+  hackathonController.getHackathonByPagination
+);
 router.get("/:hackathonID", hackathonController.getHackathon);
 
 router.get("/:hackathonID/projects", hackathonController.getAllProjects);

@@ -6,7 +6,7 @@ import HackOverview from "@/components/HackOverview";
 import HackPrizes from "@/components/HackPrizes";
 import useDappHack from "@/utils/useDappHack";
 import useCrossDappHack from "@/utils/useCrossDappHack";
-import useDatabase, { projectTableName } from "@/utils/useDatabase";
+import useDatabase from "@/utils/useDatabase";
 import ProjectOverview from "@/components/ProjectOverview";
 const pageNavigators = ["Overview", "Projects", "Timeline", "Prizes"];
 const HackPage = ({ params }) => {
@@ -24,21 +24,20 @@ const HackPage = ({ params }) => {
   const symbol = "MPN"; // Replace with your desired project NFT symbol
   const gateway = "0xC249632c2D40b9001FE907806902f63038B737Ab";
   const gasService = "0xbE406F0189A0B4cf3A05C286473D23791Dd44Cc6";
-  const { createDatabase } = useDatabase();
+  const { submissionProject, getProject } = useDatabase();
   const { builderSignup } = useDappHack();
   const { crossBuilderSignup } = useCrossDappHack();
 
   const [projectData, setProjectData] = useState({});
-  const { readDatabase } = useDatabase();
   console.log(params.hackName.replace("%20", " "));
 
   useEffect(() => {
     const fetch = async () => {
-      const hackData = await readDatabase(projectTableName);
+      const hackData = await getProject(params["hackName"].replace("%20", " "));
       //   const filtered = hackData.filter(
       //     (hack) => hack.name.hackName === params["hackName"].replace("%20", " ")
       //   );
-      setProjectData(hackData[0].name);
+      setProjectData(hackData);
     };
 
     fetch();

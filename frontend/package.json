@@ -11,7 +11,6 @@
   "dependencies": {
     "@axelar-network/axelar-chains-config": "^0.1.2",
     "@rainbow-me/rainbowkit": "^1.3.3",
-    "@tableland/sdk": "4.5.1",
     "next": "13.5.6",
     "react": "^18",
     "react-dom": "^18",

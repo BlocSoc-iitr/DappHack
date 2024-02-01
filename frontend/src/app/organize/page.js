@@ -10,7 +10,6 @@ import { useNetwork } from "wagmi";
 import testNets from "@axelar-network/axelar-chains-config/info/testnet.json";
 import useDeployContract from "@/utils/useDeployContract";
 import useDatabase from "@/utils/useDatabase";
-import { tableName } from "@/utils/useDatabase";
 
 const Page = () => {
   const [aboutHack, setAboutHack] = useState({
@@ -35,7 +34,7 @@ const Page = () => {
   const { deployParentContract, deployChildContract } = useDeployContract();
   const [chainUsed, setChainUsed] = useState(null);
   const [buttonTitle, setButtonTitle] = useState("Submit");
-  const { writeInDatabase } = useDatabase();
+  const { createHackathon } = useDatabase();
 
   const handleHackNameChange = (event) => {
     setAboutHack({ ...aboutHack, hackName: event.target.value });
@@ -111,7 +110,7 @@ const Page = () => {
     try {
       setLoading(true);
       setChainUsed(chainId);
-      await writeInDatabase(tableName, 0, JSON.stringify(tableData));
+      await createHackathon(JSON.stringify(tableData));
       // const contractAddress = await deployParentContract(parentArguments);
       console.log(contractAddress); // if (typeof contractAddress != "undefined") {
 

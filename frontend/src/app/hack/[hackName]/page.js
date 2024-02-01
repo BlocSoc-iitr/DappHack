@@ -8,8 +8,6 @@ import HackTimeline from "@/components/HackTimeline";
 import HackProjects from "@/components/HackProjects";
 import useDappHack from "@/utils/useDappHack";
 import useCrossDappHack from "@/utils/useCrossDappHack";
-import useDatabase from "@/utils/useDatabase";
-import { tableName } from "@/utils/useDatabase";
 const pageNavigators = ["Overview", "Projects", "Timeline", "Prizes"];
 const HackPage = ({ params }) => {
   const [selectedNavigator, setSelectedNavigator] = useState(pageNavigators[0]);
@@ -28,12 +26,10 @@ const HackPage = ({ params }) => {
   const symbol = "MPN"; // Replace with your desired project NFT symbol
   const gateway = "0xC249632c2D40b9001FE907806902f63038B737Ab";
   const gasService = "0xbE406F0189A0B4cf3A05C286473D23791Dd44Cc6";
-  const { createDatabase } = useDatabase();
   const { builderSignup } = useDappHack();
   const { crossBuilderSignup } = useCrossDappHack();
 
   const [hackData, setHackData] = useState([]);
-  const { readDatabase } = useDatabase();
   console.log(params.hackName.replace("%20", " "));
 
   useEffect(() => {

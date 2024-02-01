@@ -153,6 +153,23 @@ exports.getAllProjects = catchAsync(async (req, res, next) => {
     return next(new AppError("no such hackathon exists", 400));
   }
 });
+exports.getAllHackathon = catchAsync(async (req, res, next) => {
+  const hackathons = await hackathonModel.find();
+  res.status(200).json({
+    hackathons,
+    message: "found all hackathons",
+  });
+});
+exports.getHackathonByPagination = catchAsync(async (req, res, next) => {
+  const page = req.params.page * 1 || 1;
+  const limit = req.params.limit * 1 || 10;
+  const skip = (page - 1) * limit;
+  const hackathons = await hackathonModel.find().skip(skip).limit(limit);
+  res.status(200).json({
+    hackathons,
+    message: "found all hackathons",
+  });
+});
 exports.getHackathon = catchAsync(async (req, res, next) => {
   const hackathonID = req.params.hackathonID;
   const hackathon = await hackathonModel.findById(hackathonID);

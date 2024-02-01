@@ -5,7 +5,6 @@ import classes from "@/styles/ProjectSubmission.module.css";
 import SuccessfulModal from "@/components/SuccessfulModal";
 import useDappHack from "@/utils/useDappHack";
 import useDatabase from "@/utils/useDatabase";
-import { projectTableName } from "@/utils/useDatabase";
 import ImageSelector from "@/components/ImageSelector";
 
 const Page = () => {
@@ -20,7 +19,7 @@ const Page = () => {
   const [show, setShow] = useState(false);
   const [file, setFile] = useState(null);
   const [projectImage, setProjectImage] = useState(null);
-  const { writeInDatabase } = useDatabase();
+  const { createNft, createProject } = useDatabase();
 
   const handleProjectChange = (name) => (event) => {
     setProject({ ...project, [name]: event.target.value });
@@ -38,16 +37,9 @@ const Page = () => {
     formData.append("description", project.description);
     formData.append("traits", traits);
     console.log(process.env.NEXT_PUBLIC_BACKEND_URL);
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/hackathon/create-nft-uri`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-      const data = await response.json();
-      // const teamId = await getTeamCount();
+    const response = await createNft(formData);
+    if (response) {
+      const teamId = await getTeamCount();
       const projectData = {
         name: project.name,
         description: project.description,
@@ -55,14 +47,13 @@ const Page = () => {
         track2: project.track2,
         teamId: 1,
         traits: traits,
-        uri: data.Uri[0],
+        uri: response[0],
       };
       if (!data.Uri[0]) return;
-      await writeInDatabase(projectTableName, 0, JSON.stringify(projectData));
-      // const result = await submitProject(teamId, data.Uri[0]);
-      // console.log(result);
-    } catch (err) {
-      console.log(err);
+      const result = await createProject(projectData);
+      console.log(result);
+      const resultblockchain = await submitProject(teamId, data.Uri[0]);
+      console.log(resultblockchain);
     }
   };
   return (
