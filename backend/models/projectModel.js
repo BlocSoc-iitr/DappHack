@@ -30,6 +30,10 @@ const projectSchema = new mongoose.Schema(
     tracks: {
       type: [String],
     },
+    projectLeader: {
+      type: String,
+      required: true,
+    },
   },
   {
     toJSON: { virtuals: true },
