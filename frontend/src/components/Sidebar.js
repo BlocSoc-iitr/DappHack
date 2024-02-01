@@ -13,7 +13,6 @@ import Link from "next/link";
 import Wallet from "./Wallet";
 import { useListen } from "@/utils/useListen";
 import { useMetamask } from "@/utils/useMetamask";
-import { usePathname } from "next/navigation";
 
 const routes = [
   {
@@ -56,7 +55,6 @@ const routes = [
 function Sidebar() {
   const { dispatch } = useMetamask();
   const listen = useListen();
-  const pathname = usePathname()?.split("/")[1];
 
   useEffect(() => {
     if (typeof window !== undefined) {
@@ -78,53 +76,26 @@ function Sidebar() {
       dispatch({ type: "pageLoaded", isMetamaskInstalled, wallet, balance });
     }
   }, []);
-
   return (
-    <>
-      <Image
-        src={"/icons/toggle-sidebar.svg"}
-        width={20}
-        height={20}
-        className={classes["toggle-checkbox-image"]}
-      />
-      <input
-        type="checkbox"
-        id="toggle"
-        className={classes["toggle-checkbox"]}
-      />
-      <nav className={classes["sidebar"]}>
-        <div className={classes["wallet-container"]}>
-          <Wallet />
-        </div>
-        <ul className={classes["links-list"]}>
-          {routes.map((route) => (
-            <li className={classes["links-list-item"]} key={route.title}>
-              <Link className="active" href={route.path}>
-                <Image
-                  style={{ fill: "red" }}
-                  src={route.icon}
-                  alt={route.title}
-                  className={
-                    pathname === route.path.split("/")[1]
-                      ? `${classes["active-icon"]}`
-                      : ""
-                  }
-                />
-                <span
-                  className={
-                    pathname === route.path.split("/")[1]
-                      ? `${classes["text"]} ${classes["active"]}`
-                      : classes["text"]
-                  }
-                >
-                  {route.title}
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </>
+    <nav className={classes["sidebar"]}>
+      <div className={classes["wallet-container"]}>
+        <Wallet />
+      </div>
+      <ul className={classes["links-list"]}>
+        {routes.map((route) => (
+          <li className={classes["links-list-item"]} key={route.title}>
+            <Link className="active" href={route.path}>
+              <Image
+                style={{ fill: "red" }}
+                src={route.icon}
+                alt={route.title}
+              />
+              <span className={classes.text}>{route.title}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 }
 
