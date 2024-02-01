@@ -1,3 +1,6 @@
+::-webkit-scrollbar {
+  display: none;
+}
 :root {
   /* text-colors */
 
@@ -9,6 +12,7 @@
   --clr-light-accent: #f8b294;
   --clr-success: #05a660;
   --clr-btn: #03f;
+  --active-hover: rgba(0, 51, 255, 0.1);
 
   /* background-colors */
   --bg-light: #ffffff;
@@ -54,10 +58,15 @@ a {
   min-height: 100vh;
   display: flex;
 }
+.sidebar-fixed {
+  flex: 2;
+}
 .page {
   flex: 8;
   background-color: var(--bg-secondary);
   padding: 2rem var(--p-page);
+  height: 100vh;
+  overflow-y: scroll;
 }
 .page-top {
   display: flex;
@@ -182,4 +191,18 @@ a {
 .wallet-details > h3 {
   white-space: nowrap;
   margin-bottom: 0.5rem;
+}
+
+@media screen and (max-width: 1040px) {
+  .sidebar-fixed {
+    flex: 2;
+  }
+  .page {
+    flex: 5;
+  }
+}
+@media screen and (max-width: 720px) {
+  .sidebar-fixed {
+    flex: 0;
+  }
 }
