@@ -1,69 +1,56 @@
-import { contractAddress, abi } from "../../constants";
-import { useState, useEffect } from "react";
-import { useWeb3Contract } from "react-moralis";
-import useWeb3 from "./useWeb3";
+import useHandleContractWrite from "./useHandleContractWrite";
+import useHandleContractRead from "./useHandleContractRead";
+import { parseEther } from "viem";
+
 const useDappHack = () => {
-  const { userAccount } = useWeb3();
-  const { runContractFunction, fetch, data, error, isLoading } =
-    useWeb3Contract({});
-  console.log(contractAddress.dappHack);
-  const stake = 10000000000;
+  const stake = parseEther("0.01");
+
+  // builderSignup function
+  const {
+    data: dataBuilderSignup,
+    isLoading: isLoadingBuilderSignup,
+    isSuccess: isSuccessBuilderSignup,
+    write: writeBuilderSignup,
+  } = useHandleContractWrite({
+    functionName: "builderSignup",
+  });
   const builderSignup = async () => {
-    const parameters = {
-      abi: abi.dappHack,
-      contractAddress: contractAddress.dappHack,
-      functionName: "builderSignup",
-      params: {},
-      msgValue: stake,
-    };
     try {
-      const response = await runContractFunction({
-        params: parameters,
-        onSuccess: (response) => {
-          console.log(response);
-        },
-        onError: (error) => {
-          console.log(error);
-        },
+      const response = await writeBuilderSignup({
+        args: [],
+        value: stake,
       });
       console.log(response);
     } catch (error) {
       console.log(error);
     }
   };
-  const sponsorSignup = async (
-    name,
-    sponsorArray,
-    prizeArray,
-    poolPrize,
-    numberofPoolPrize
-  ) => {
+
+  // sponsorSignup function
+  const {
+    data: dataSponsorSignup,
+    isLoading: isLoadingSponsorSignup,
+    isSuccess: isSuccessSponsorSignup,
+    write: writeSponsorSignup,
+  } = useHandleContractWrite({
+    functionName: "sponsorSignup",
+  });
+  const sponsorSignup = async (data) => {
+    const name = data[0];
+    const sponsorArray = data[1];
+    const prizeArray = data[2];
+    const poolPrize = data[3];
+    const numberofPoolPrize = data[4];
+    console.log(name, sponsorArray, prizeArray, poolPrize, numberofPoolPrize);
+
     let sum = 0;
     for (let i = 0; i < prizeArray.length; i++) {
       sum += prizeArray[i];
     }
-    const parameters = {
-      abi: abi.dappHack,
-      contractAddress: contractAddress.dappHack,
-      functionName: "sponsorSignup",
-      params: {
-        name: name,
-        _sponsors: sponsorArray,
-        _prizeArray: prizeArray,
-        _poolPrize: poolPrize,
-        _numberofPoolPrize: numberofPoolPrize,
-      },
-      msgValue: sum + poolPrize,
-    };
     try {
-      const response = await runContractFunction({
-        params: parameters,
-        onSuccess: (response) => {
-          console.log(response);
-        },
-        onError: (error) => {
-          console.log(error);
-        },
+      const response = await writeSponsorSignup({
+        args: [name, sponsorArray, prizeArray, poolPrize, numberofPoolPrize],
+        value: sum + poolPrize,
       });
       console.log(response);
     } catch (error) {
@@ -71,25 +58,20 @@ const useDappHack = () => {
     }
   };
 
+  // createTeam function
+  const {
+    data: dataCreateTeam,
+    isLoading: isLoadingCreateTeam,
+    isSuccess: isSuccessCreateTeam,
+    write: writeCreateTeam,
+  } = useHandleContractWrite({
+    functionName: "initializeTeam",
+  });
   const createTeam = async (teamName, teamMembersArray) => {
-    const parameters = {
-      abi: abi.dappHack,
-      contractAddress: contractAddress.dappHack,
-      functionName: "initializeTeam",
-      params: {
-        name: teamName,
-        participants: teamMembersArray,
-      },
-    };
     try {
-      const response = await runContractFunction({
-        params: parameters,
-        onSuccess: (response) => {
-          console.log(response);
-        },
-        onError: (error) => {
-          console.log(error);
-        },
+      const response = await writeCreateTeam({
+        args: [teamName, teamMembersArray],
+        value: 0,
       });
       console.log(response);
     } catch (error) {
@@ -97,26 +79,20 @@ const useDappHack = () => {
     }
   };
 
+  // submitProject function
+  const {
+    data: dataSubmitProject,
+    isLoading: isLoadingSubmitProject,
+    isSuccess: isSuccessSubmitProject,
+    write: writeSubmitProject,
+  } = useHandleContractWrite({
+    functionName: "submitProject",
+  });
   const submitProject = async (teamId, nftUri) => {
-    const parameters = {
-      abi: abi.dappHack,
-      contractAddress: contractAddress.dappHack,
-      functionName: "submitProject",
-      params: {
-        teamNumber: teamId,
-        nftUri: projectName,
-      },
-      msgValue: 0,
-    };
     try {
-      const response = await runContractFunction({
-        params: parameters,
-        onSuccess: (response) => {
-          console.log(response);
-        },
-        onError: (error) => {
-          console.log(error);
-        },
+      const response = await writeSubmitProject({
+        args: [teamId, nftUri],
+        value: 0,
       });
       console.log(response);
     } catch (error) {
@@ -124,27 +100,20 @@ const useDappHack = () => {
     }
   };
 
+  // judgeWinners function
+  const {
+    data: dataJudgeWinners,
+    isLoading: isLoadingJudgeWinners,
+    isSuccess: isSuccessJudgeWinners,
+    write: writeJudgeWinners,
+  } = useHandleContractWrite({
+    functionName: "judgeWinners",
+  });
   const judgeWinners = async (name, trackWinnerArray, poolPrizeArray) => {
-    const parameters = {
-      abi: abi.dappHack,
-      contractAddress: contractAddress.dappHack,
-      functionName: "judgeWinners",
-      params: {
-        _sponsor_name: name,
-        trackWinners: trackWinnerArray,
-        poolPrizeWinners: poolPrizeArray,
-      },
-      msgValue: 0,
-    };
     try {
-      const response = await runContractFunction({
-        params: parameters,
-        onSuccess: (response) => {
-          console.log(response);
-        },
-        onError: (error) => {
-          console.log(error);
-        },
+      const response = await writeJudgeWinners({
+        args: [name, trackWinnerArray, poolPrizeArray],
+        value: 0,
       });
       console.log(response);
     } catch (error) {
@@ -152,23 +121,20 @@ const useDappHack = () => {
     }
   };
 
+  // distributePrize function
+  const {
+    data: dataDistributePrize,
+    isLoading: isLoadingDistributePrize,
+    isSuccess: isSuccessDistributePrize,
+    write: writeDistributePrize,
+  } = useHandleContractWrite({
+    functionName: "distributePrize",
+  });
   const distributePrize = async () => {
-    const parameters = {
-      abi: abi.dappHack,
-      contractAddress: contractAddress.dappHack,
-      functionName: "distributePrize",
-      params: {},
-      msgValue: 0,
-    };
     try {
-      const response = await runContractFunction({
-        params: parameters,
-        onSuccess: (response) => {
-          console.log(response);
-        },
-        onError: (error) => {
-          console.log(error);
-        },
+      const response = await writeDistributePrize({
+        args: [],
+        value: 0,
       });
       console.log(response);
     } catch (error) {
@@ -176,177 +142,169 @@ const useDappHack = () => {
     }
   };
 
+  // getSponsorName function
+  const {
+    data: dataGetSponsorName,
+    isLoading: isLoadingGetSponsorName,
+    isSuccess: isSuccessGetSponsorName,
+    refetch: refetchGetSponsorName,
+  } = useHandleContractRead({
+    functionName: "getSponsorName",
+    args: [1],
+  });
   const getSponsorName = async (sponsorId) => {
-    const parameters = {
-      abi: abi.dappHack,
-      contractAddress: contractAddress.dappHack,
-      functionName: "getSponsorName",
-      params: {
-        sponsorNumber: sponsorId,
-      },
-    };
     try {
-      const response = await runContractFunction({
-        params: parameters,
-        onSuccess: (response) => {
-          console.log(response);
+      const response = await refetchGetSponsorName(
+        {
+          args: [sponsorId],
         },
-        onError: (error) => {
-          console.log(error);
-        },
-      });
-      console.log(response.result);
-      return response.result;
+        { force: true }
+      );
+      console.log(response);
+      return response;
     } catch (error) {
       console.log(error);
     }
   };
+
+  // getSponsorCount function
+  const {
+    data: dataGetSponsorCount,
+    isLoading: isLoadingGetSponsorCount,
+    isSuccess: isSuccessGetSponsorCount,
+  } = useHandleContractRead({
+    functionName: "getSponsorCount",
+    args: [],
+  });
   const getSponsorCount = async () => {
-    const parameters = {
-      abi: abi.dappHack,
-      contractAddress: contractAddress.dappHack,
-      functionName: "getSponsorCount",
-      params: {},
-    };
     try {
-      const response = await runContractFunction({
-        params: parameters,
-        onSuccess: (response) => {
-          console.log(response);
-        },
-        onError: (error) => {
-          console.log(error);
-        },
-      });
-      console.log(response.result);
-      return response.result;
+      console.log(
+        dataGetSponsorCount,
+        isLoadingGetSponsorCount,
+        isSuccessGetSponsorCount
+      );
+      return dataGetSponsorCount;
     } catch (error) {
       console.log(error);
     }
   };
+
+  // getSponsorAddress function
+  const {
+    data: dataGetSponsorAddress,
+    isLoading: isLoadingGetSponsorAddress,
+    isSuccess: isSuccessGetSponsorAddress,
+    refetch: refetchGetSponsorAddress,
+  } = useHandleContractRead({
+    functionName: "getSponsorAddress",
+    args: [1],
+  });
 
   const getSponsorAddress = async (sponsorId) => {
-    const parameters = {
-      abi: abi.dappHack,
-      contractAddress: contractAddress.dappHack,
-      functionName: "getSponsorAddress",
-      params: {
-        sponsorNumber: sponsorId,
-      },
-    };
     try {
-      const response = await runContractFunction({
-        params: parameters,
-        onSuccess: (response) => {
-          console.log(response);
+      const response = await refetchGetSponsorAddress(
+        {
+          args: [sponsorId],
         },
-        onError: (error) => {
-          console.log(error);
-        },
-      });
-      console.log(response.result);
-      return response.result;
+        { force: true }
+      );
+      console.log(response);
+      return response;
     } catch (error) {
       console.log(error);
     }
   };
+
+  // getBuilderCount function
+  const {
+    data: dataGetBuilderCount,
+    isLoading: isLoadingGetBuilderCount,
+    isSuccess: isSuccessGetBuilderCount,
+  } = useHandleContractRead({
+    functionName: "getBuilderCount",
+    args: [],
+  });
 
   const getBuilderCount = async () => {
-    const parameters = {
-      abi: abi.dappHack,
-      contractAddress: contractAddress.dappHack,
-      functionName: "getBuilderCount",
-      params: {},
-    };
     try {
-      const response = await runContractFunction({
-        params: parameters,
-        onSuccess: (response) => {
-          console.log(response);
-        },
-        onError: (error) => {
-          console.log(error);
-        },
-      });
-      console.log(response.result);
-      return response.result;
+      console.log(
+        dataGetBuilderCount,
+        isLoadingGetBuilderCount,
+        isSuccessGetBuilderCount
+      );
+      return dataGetBuilderCount;
     } catch (error) {
       console.log(error);
     }
   };
 
+  // getTeamCount function
+  const {
+    data: dataGetTeamCount,
+    isLoading: isLoadingGetTeamCount,
+    isSuccess: isSuccessGetTeamCount,
+  } = useHandleContractRead({
+    functionName: "getTeamCount",
+    args: [],
+  });
   const getTeamCount = async () => {
-    const parameters = {
-      abi: abi.dappHack,
-      contractAddress: contractAddress.dappHack,
-      functionName: "getTeamCount",
-      params: {},
-    };
     try {
-      const response = await runContractFunction({
-        params: parameters,
-        onSuccess: (response) => {
-          console.log(response);
-        },
-        onError: (error) => {
-          console.log(error);
-        },
-      });
-      console.log(response.result);
-      return response.result;
+      console.log(
+        dataGetTeamCount,
+        isLoadingGetTeamCount,
+        isSuccessGetTeamCount
+      );
+      return dataGetTeamCount;
     } catch (error) {
       console.log(error);
     }
   };
 
+  // getTeamName function
+  const {
+    data: dataGetTeamName,
+    isLoading: isLoadingGetTeamName,
+    isSuccess: isSuccessGetTeamName,
+    refetch: refetchGetTeamName,
+  } = useHandleContractRead({
+    functionName: "getTeamName",
+    args: [1],
+  });
   const getTeamName = async (teamId) => {
-    const parameters = {
-      abi: abi.dappHack,
-      contractAddress: contractAddress.dappHack,
-      functionName: "getTeamName",
-      params: {
-        teamNumber: teamId,
-      },
-    };
     try {
-      const response = await runContractFunction({
-        params: parameters,
-        onSuccess: (response) => {
-          console.log(response);
+      const response = await refetchGetTeamName(
+        {
+          args: [teamId],
         },
-        onError: (error) => {
-          console.log(error);
-        },
-      });
-      console.log(response.result);
-      return response.result;
+        { force: true }
+      );
+      console.log(response);
+      return response;
     } catch (error) {
       console.log(error);
     }
   };
 
+  // getTeamParticipantCount function
+  const {
+    data: dataGetTeamParticipantCount,
+    isLoading: isLoadingGetTeamParticipantCount,
+    isSuccess: isSuccessGetTeamParticipantCount,
+    refetch: refetchGetTeamParticipantCount,
+  } = useHandleContractRead({
+    functionName: "getTeamParticipantCount",
+    args: [1, 1],
+  });
   const getTeamParticipantAddress = async (teamId, participantId) => {
-    const parameters = {
-      abi: abi.dappHack,
-      contractAddress: contractAddress.dappHack,
-      functionName: "getTeamParticipantAddress",
-      params: {
-        teamNumber: teamId,
-        participantNumber: participantId,
-      },
-    };
     try {
-      const response = await runContractFunction({
-        params: parameters,
-        onSuccess: (response) => {
-          console.log(response);
+      const response = await refetchGetTeamParticipantCount(
+        {
+          args: [teamId, participantId],
         },
-        onError: (error) => {
-          console.log(error);
-        },
-      });
-      console.log(response.result);
-      return response.result;
+        { force: true }
+      );
+      console.log(response);
+      return response;
     } catch (error) {
       console.log(error);
     }
@@ -365,6 +323,7 @@ const useDappHack = () => {
     getBuilderCount,
     getTeamCount,
     getTeamName,
+    getTeamParticipantAddress,
   };
 };
 export default useDappHack;

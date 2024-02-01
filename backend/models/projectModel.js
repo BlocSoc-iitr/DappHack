@@ -9,7 +9,7 @@ const projectSchema = new mongoose.Schema(
     team: {
       type: mongoose.Schema.ObjectId,
       ref: "Team",
-      required:true,
+      required: true,
     },
     name: {
       type: String,

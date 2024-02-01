@@ -5,11 +5,13 @@ import classes from "@/styles/HackApply.module.css";
 import ApplyTeamFormation from "@/components/ApplyTeamFormation";
 import useDappHack from "@/utils/useDappHack";
 import useCrossDappHack from "@/utils/useCrossDappHack";
-import useWeb3 from "@/utils/useWeb3";
+import { useNetwork } from "wagmi";
 
 const pageNavigators = ["Basics", "Team Formation"];
 
 const Page = ({ params }) => {
+  const { chain } = useNetwork();
+  const chainId = chain?.id;
   const [step, setStep] = useState(1);
   const [name, setName] = useState("Puspendra Mahariya");
 
@@ -20,7 +22,6 @@ const Page = ({ params }) => {
   const [teamName, setTeamName] = useState("");
   const [teamMembers, setTeamMembers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { chainId } = useWeb3();
 
   const { builderSignup, createTeam } = useDappHack();
   const { crossBuilderSignup } = useCrossDappHack();
@@ -44,6 +45,9 @@ const Page = ({ params }) => {
         const result = await builderSignup();
         console.log(result);
       } else {
+        console.log(
+          "cross signupdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        );
         const result = await crossBuilderSignup();
         console.log(result);
       }

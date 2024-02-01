@@ -10,10 +10,9 @@ import myProfileIcon from "../../public/icons/my-profile.svg";
 import settingsIcon from "../../public/icons/settings.svg";
 import logoutIcon from "../../public/icons/logout.svg";
 import Link from "next/link";
-import Wallet from "./Wallet";
-import { useListen } from "@/utils/useListen";
-import { useMetamask } from "@/utils/useMetamask";
 import { usePathname } from "next/navigation";
+
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const routes = [
   {
@@ -54,30 +53,7 @@ const routes = [
 ];
 
 function Sidebar() {
-  const { dispatch } = useMetamask();
-  const listen = useListen();
   const pathname = usePathname()?.split("/")[1];
-
-  useEffect(() => {
-    if (typeof window !== undefined) {
-      const ethereumProviderInjected = typeof window.ethereum !== "undefined";
-
-      const isMetamaskInstalled =
-        ethereumProviderInjected && Boolean(window.ethereum.isMetaMask);
-
-      const local = window.localStorage.getItem("metamaskState");
-
-      if (local) {
-        listen();
-      }
-
-      const { wallet, balance } = local
-        ? JSON.parse(local)
-        : { wallet: null, balance: null };
-
-      dispatch({ type: "pageLoaded", isMetamaskInstalled, wallet, balance });
-    }
-  }, []);
 
   return (
     <>
@@ -95,7 +71,7 @@ function Sidebar() {
       <div className={classes["top-blur"]}></div>
       <nav className={classes["sidebar"]}>
         <div className={classes["wallet-container"]}>
-          <Wallet />
+          <ConnectButton showBalance={false} chainStatus="icon" />
         </div>
         <ul className={classes["links-list"]}>
           {routes.map((route) => (

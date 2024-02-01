@@ -6,10 +6,9 @@ import Image from "next/image";
 import offlineIcon from "../../../public/icons/offline.svg";
 import onlineIcon from "../../../public/icons/online.svg";
 import ImageSelector from "@/components/ImageSelector";
-import useWeb3 from "@/utils/useWeb3";
+import { useNetwork } from "wagmi";
 import testNets from "@axelar-network/axelar-chains-config/info/testnet.json";
 import useDeployContract from "@/utils/useDeployContract";
-import { useMetamask } from "@/utils/useMetamask";
 import useDatabase from "@/utils/useDatabase";
 import { tableName } from "@/utils/useDatabase";
 
@@ -25,7 +24,8 @@ const Page = () => {
   });
 
   const [axelar, setAxelar] = useState({ gateway: "", gasService: "" });
-  const { chainId } = useWeb3();
+  const { chain } = useNetwork();
+  const chainId = chain?.id;
   const [organizer, setOrganizer] = useState([
     "0xA65920F5F3672dacf04e20DBAA99DE4053324d96",
   ]);
@@ -34,7 +34,6 @@ const Page = () => {
   const [isLoading, setLoading] = useState(false);
   const { deployParentContract, deployChildContract } = useDeployContract();
   const [chainUsed, setChainUsed] = useState(null);
-  const { dispatch } = useMetamask();
   const [buttonTitle, setButtonTitle] = useState("Submit");
   const { writeInDatabase } = useDatabase();
 
@@ -160,6 +159,13 @@ const Page = () => {
         <Sidebar />
       </div>
       <div className={`page ${classes.right}`}>
+        {/* <button
+          onClick={() => {
+            deployChildContract([axelar.gateway, axelar.gasService]);
+          }}
+        >
+          deployChildContract
+        </button> */}
         <h1 className={classes.heading}>Organiser Registration</h1>
         <div className={classes["mode-selection"]}>
           <h1>Mode of Hackathon</h1>
