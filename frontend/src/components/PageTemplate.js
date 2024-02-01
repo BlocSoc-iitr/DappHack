@@ -6,9 +6,7 @@ import Link from "next/link";
 function PageTemplate({ children }) {
   return (
     <div className="page-template">
-      <div className="sidebar-fixed">
-        <Sidebar />
-      </div>
+      <Sidebar />
       <div className="page">
         <div className="page-top">
           <div className="input-container">

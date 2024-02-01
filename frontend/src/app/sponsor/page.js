@@ -35,9 +35,7 @@ const Page = () => {
 
   return (
     <div className="page-template">
-      <div className="sidebar-fixed">
-        <Sidebar />
-      </div>
+      <Sidebar />
       <div className={`page ${classes.right}`}>
         <h1 className={classes.heading}>Sponsor Registration</h1>
         <div className={classes["sponsor-container"]}>
