@@ -8,6 +8,8 @@ const AppError = require("./utils/appError");
 
 const hackathonRouter = require("./routes/hackathonRoutes");
 const userRouter = require("./routes/userRoutes");
+const projectRouter = require("./routes/projectRoute");
+const teamRouter = require("./routes/teamRoute");
 
 dotenv.config();
 
@@ -54,6 +56,8 @@ app.get("/app/v1", (req, res, next) => {
 //mongo routes to check
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/hackathon", hackathonRouter);
+app.use("/api/v1/project", projectRouter);
+app.use("/api/v1/team", teamRouter);
 
 app.use("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

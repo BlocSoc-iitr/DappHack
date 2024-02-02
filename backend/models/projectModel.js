@@ -9,7 +9,7 @@ const projectSchema = new mongoose.Schema(
     team: {
       type: mongoose.Schema.ObjectId,
       ref: "Team",
-      required:true,
+      required: true,
     },
     name: {
       type: String,
@@ -29,6 +29,10 @@ const projectSchema = new mongoose.Schema(
     //onSubmission choose the tracks for ths project
     tracks: {
       type: [String],
+    },
+    projectLeader: {
+      type: String,
+      required: true,
     },
   },
   {

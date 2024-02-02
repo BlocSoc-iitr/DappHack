@@ -4,6 +4,8 @@ import Sidebar from "@/components/Sidebar";
 import ImageSelector from "@/components/ImageSelector";
 import { useState } from "react";
 import useDappHack from "@/utils/useDappHack";
+import MinorPageTemplate from "@/components/MinorPageTemplate";
+
 const Page = () => {
   const [sponsor, setSponsor] = useState({
     name: "",
@@ -34,8 +36,7 @@ const Page = () => {
   };
 
   return (
-    <div className="page-template">
-      <Sidebar />
+    <MinorPageTemplate>
       <div className={`page ${classes.right}`}>
         <h1 className={classes.heading}>Sponsor Registration</h1>
         <div className={classes["sponsor-container"]}>
@@ -146,7 +147,7 @@ const Page = () => {
           </button>
         </div>
       </div>
-    </div>
+    </MinorPageTemplate>
   );
 };
 

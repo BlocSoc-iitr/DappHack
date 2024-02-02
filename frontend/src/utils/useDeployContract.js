@@ -1,71 +1,46 @@
-import Web3 from "web3";
 import { abi, bytecode } from "constants";
-import useWeb3 from "./useWeb3";
+import { createWalletClient, custom, http } from "viem";
+import { filecoinCalibration } from "viem/chains";
+import { useAccount } from "wagmi";
+
 const useDeployContract = () => {
-  const { userAccount, Moralis } = useWeb3();
+  const walletClient = createWalletClient({
+    chain: filecoinCalibration,
+    transport: http(process.env.yourapikey),
+  });
+
+  const { address: account } = useAccount();
 
   const deployParentContract = async (argument) => {
-    // await Moralis.enableWeb3();
-    let provider = new Web3(Moralis.provider);
-
-    const MyContract = new provider.eth.Contract(abi.dappHack);
-    console.log(MyContract);
-    const gasPrice = await provider?.eth?.getGasPrice();
-
-    // console.log(gasPrice);
-    console.log(userAccount);
-    let newContractInstance;
     try {
-      newContractInstance = await MyContract.deploy({
-        data: bytecode.dappHack,
-        arguments: argument,
-      }).send({
-        from: userAccount,
-        gas: 3000000,
-        gasPrice: gasPrice,
+      console.log("deploying");
+      console.log(argument);
+      const hash = await walletClient.deployContract({
+        abi: abi.dappHack,
+        account,
+        bytecode: bytecode.dappHack,
+        args: argument,
       });
+      console.log(hash);
     } catch (error) {
       console.log(error);
     }
-    console.log(newContractInstance);
-    // setContract(newContractInstance.options.address);
-    // console.log(contract);
-    console.log(
-      `Contract deployed at address ${newContractInstance.options.address}`
-    );
-    return newContractInstance.options.address;
   };
 
   const deployChildContract = async (argument) => {
-    // await Moralis.enableWeb3();
-    let provider = new Web3(Moralis.provider);
-
-    const MyContract = new provider.eth.Contract(abi.crossDappHack);
-    console.log(MyContract);
-    const gasPrice = await provider?.eth?.getGasPrice();
-
-    // console.log(gasPrice);
-    console.log(userAccount);
-    let newContractInstance;
     try {
-      newContractInstance = await MyContract.deploy({
-        data: bytecode.crossDappHack,
-        arguments: argument,
-      }).send({
-        from: userAccount,
-        gas: 3000000,
-        gasPrice: gasPrice,
+      console.log("deploying");
+      console.log(argument);
+      const hash = await walletClient.deployContract({
+        abi: abi.crossDappHack,
+        account,
+        bytecode: bytecode.crossDappHack,
+        args: argument,
       });
+      console.log(hash);
     } catch (error) {
       console.log(error);
     }
-    console.log(newContractInstance);
-    // setContract(newContractInstance.options.address);
-    // console.log(contract);
-    console.log(
-      `Contract deployed at address ${newContractInstance.options.address}`
-    );
-    return newContractInstance.options.address;
   };
 
   return { deployParentContract, deployChildContract };

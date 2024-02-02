@@ -1,9 +1,8 @@
 "use client";
-import { MetamaskProvider } from "@/utils/useMetamask";
 import { Nunito } from "next/font/google";
 import "@/styles/globals.css";
-import { MoralisProvider } from "react-moralis";
 import Script from "next/script";
+import { Providers } from "./providers";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -17,9 +16,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <Script src="https://saturn.tech/widget.js"></Script>
       <body className={nunito.className}>
-        <MoralisProvider initializeOnMount={false}>
-          <MetamaskProvider>{children}</MetamaskProvider>
-        </MoralisProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

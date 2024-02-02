@@ -10,9 +10,9 @@ import myProfileIcon from "../../public/icons/my-profile.svg";
 import settingsIcon from "../../public/icons/settings.svg";
 import logoutIcon from "../../public/icons/logout.svg";
 import Link from "next/link";
-import Wallet from "./Wallet";
-import { useListen } from "@/utils/useListen";
-import { useMetamask } from "@/utils/useMetamask";
+import { usePathname } from "next/navigation";
+
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const routes = [
   {
@@ -52,50 +52,102 @@ const routes = [
   },
 ];
 
-function Sidebar() {
-  const { dispatch } = useMetamask();
-  const listen = useListen();
+function Sidebar({ toggle, setToggle, windowWidth }) {
+  console.log(toggle);
+  const pathname = usePathname()?.split("/")[1];
 
-  useEffect(() => {
-    if (typeof window !== undefined) {
-      const ethereumProviderInjected = typeof window.ethereum !== "undefined";
-
-      const isMetamaskInstalled =
-        ethereumProviderInjected && Boolean(window.ethereum.isMetaMask);
-
-      const local = window.localStorage.getItem("metamaskState");
-
-      if (local) {
-        listen();
-      }
-
-      const { wallet, balance } = local
-        ? JSON.parse(local)
-        : { wallet: null, balance: null };
-
-      dispatch({ type: "pageLoaded", isMetamaskInstalled, wallet, balance });
-    }
-  }, []);
   return (
-    <nav className={classes["sidebar"]}>
-      <div className={classes["wallet-container"]}>
-        <Wallet />
-      </div>
-      <ul className={classes["links-list"]}>
-        {routes.map((route) => (
-          <li className={classes["links-list-item"]} key={route.title}>
-            <Link className="active" href={route.path}>
-              <Image
-                style={{ fill: "red" }}
-                src={route.icon}
-                alt={route.title}
-              />
-              <span className={classes.text}>{route.title}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <>
+      <input
+        type="checkbox"
+        id="toggle"
+        className={classes["toggle-checkbox"]}
+        checked={toggle}
+        onClick={() => {
+          setToggle(!toggle);
+        }}
+      />
+      <Image
+        src={"/icons/toggle-sidebar.svg"}
+        width={20}
+        height={20}
+        className={classes["toggle-checkbox-image"]}
+      />
+      <div className={classes["top-blur"]}></div>
+      <nav className={classes["sidebar"]}>
+        <div
+          className={classes["wallet-container"]}
+          style={{
+            display:
+              windowWidth > 720
+                ? toggle === true
+                  ? "none"
+                  : "block"
+                : "block",
+          }}
+        >
+          <ConnectButton showBalance={false} chainStatus="icon" />
+        </div>
+        <ul className={classes["links-list"]}>
+          {routes.map((route) => (
+            <li className={classes["links-list-item"]} key={route.title}>
+              <Link
+                className="active"
+                href={route.path}
+                style={{
+                  flexDirection:
+                    windowWidth > 720
+                      ? toggle === true
+                        ? "column"
+                        : "row"
+                      : "row",
+                }}
+              >
+                <Image
+                  style={{
+                    fill: "red",
+                    height:
+                      windowWidth > 720
+                        ? toggle === true
+                          ? "3rem"
+                          : "4rem"
+                        : "4rem",
+                    width:
+                      windowWidth > 720
+                        ? toggle === true
+                          ? "3.7rem"
+                          : "4rem"
+                        : "4rem",
+                    paddingLeft:
+                      windowWidth > 720
+                        ? toggle === true
+                          ? "1rem"
+                          : "1.5rem"
+                        : "1.5rem",
+                  }}
+                  src={route.icon}
+                  alt={route.title}
+                  className={
+                    pathname === route.path.split("/")[1]
+                      ? `${classes["active-icon"]}`
+                      : ""
+                  }
+                />
+                <span
+                  className={
+                    pathname === route.path.split("/")[1]
+                      ? `${classes["text"]} ${classes["active"]}`
+                      : classes["text"]
+                  }
+                >
+                  {route.title}
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </>
   );
 }
 
