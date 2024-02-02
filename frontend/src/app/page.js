@@ -3,17 +3,16 @@ import styles from "@/styles/page.module.css";
 import PageTemplate from "@/components/PageTemplate";
 import HackCard from "@/components/HackCard";
 import Link from "next/link";
-import { tableName } from "@/utils/useDatabase";
 import useDatabase from "@/utils/useDatabase";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const [hacks, setHacks] = useState([]);
-  const { readDatabase } = useDatabase();
+  const { allHackathons } = useDatabase();
 
   useEffect(() => {
     const fetch = async () => {
-      const hackData = await readDatabase(tableName);
+      const hackData = await allHackathons();
       hackData.push({
         id: 1,
         name: {

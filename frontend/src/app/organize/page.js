@@ -6,12 +6,11 @@ import Image from "next/image";
 import offlineIcon from "../../../public/icons/offline.svg";
 import onlineIcon from "../../../public/icons/online.svg";
 import ImageSelector from "@/components/ImageSelector";
-import useWeb3 from "@/utils/useWeb3";
+import { useNetwork } from "wagmi";
 import testNets from "@axelar-network/axelar-chains-config/info/testnet.json";
 import useDeployContract from "@/utils/useDeployContract";
-import { useMetamask } from "@/utils/useMetamask";
 import useDatabase from "@/utils/useDatabase";
-import { tableName } from "@/utils/useDatabase";
+import MinorPageTemplate from "@/components/MinorPageTemplate";
 
 const Page = () => {
   const [aboutHack, setAboutHack] = useState({
@@ -25,7 +24,8 @@ const Page = () => {
   });
 
   const [axelar, setAxelar] = useState({ gateway: "", gasService: "" });
-  const { chainId } = useWeb3();
+  const { chain } = useNetwork();
+  const chainId = chain?.id;
   const [organizer, setOrganizer] = useState([
     "0xA65920F5F3672dacf04e20DBAA99DE4053324d96",
   ]);
@@ -34,36 +34,13 @@ const Page = () => {
   const [isLoading, setLoading] = useState(false);
   const { deployParentContract, deployChildContract } = useDeployContract();
   const [chainUsed, setChainUsed] = useState(null);
-  const { dispatch } = useMetamask();
   const [buttonTitle, setButtonTitle] = useState("Submit");
-  const { writeInDatabase } = useDatabase();
+  const { createHackathon } = useDatabase();
 
-  const handleHackNameChange = (event) => {
-    setAboutHack({ ...aboutHack, hackName: event.target.value });
-  };
-
-  const handleStartTimeChange = (event) => {
-    setAboutHack({ ...aboutHack, startTime: event.target.value });
+  const handleChange = (name) => (event) => {
+    setAboutHack({ ...aboutHack, [name]: event.target.value });
   };
 
-  const handleEndTimeChange = (event) => {
-    setAboutHack({ ...aboutHack, endTime: event.target.value });
-  };
-
-  const handleMaxParticipantsChange = (event) => {
-    setAboutHack({ ...aboutHack, maxParticipants: event.target.value });
-  };
-
-  const handleTeamSizeLimitChange = (event) => {
-    setAboutHack({ ...aboutHack, teamSizeLimit: event.target.value });
-  };
-
-  const handleDescriptionChange = (event) => {
-    setAboutHack({ ...aboutHack, description: event.target.value });
-  };
-  const handleSymbolChange = (event) => {
-    setAboutHack({ ...aboutHack, symbol: event.target.value });
-  };
   const handleAddOraganizer = (event) => {
     event.preventDefault();
     const address = event.target.elements["team-member-address"].value;
@@ -112,7 +89,7 @@ const Page = () => {
     try {
       setLoading(true);
       setChainUsed(chainId);
-      await writeInDatabase(tableName, 0, JSON.stringify(tableData));
+      await createHackathon(JSON.stringify(tableData));
       // const contractAddress = await deployParentContract(parentArguments);
       console.log(contractAddress); // if (typeof contractAddress != "undefined") {
 
@@ -155,9 +132,15 @@ const Page = () => {
     console.log(gasService, gateway);
   }, [chainId]);
   return (
-    <div className="page-template">
-      <Sidebar />
+    <MinorPageTemplate>
       <div className={`page ${classes.right}`}>
+        {/* <button
+          onClick={() => {
+            deployChildContract([axelar.gateway, axelar.gasService]);
+          }}
+        >
+          deployChildContract
+        </button> */}
         <h1 className={classes.heading}>Organiser Registration</h1>
         <div className={classes["mode-selection"]}>
           <h1>Mode of Hackathon</h1>
@@ -189,7 +172,7 @@ const Page = () => {
                   id="hack-name"
                   placeholder="What are calling your hackathon?"
                   value={aboutHack.hackName}
-                  onChange={handleHackNameChange}
+                  onChange={handleChange("hackName")}
                 />
               </div>
 
@@ -199,7 +182,7 @@ const Page = () => {
                   type="date"
                   id="start-time"
                   value={aboutHack.startTime}
-                  onChange={handleStartTimeChange}
+                  onChange={handleChange("startTime")}
                 />
               </div>
               <div className={classes["input-field-container"]}>
@@ -208,7 +191,7 @@ const Page = () => {
                   type="date"
                   id="end-time"
                   value={aboutHack.endTime}
-                  onChange={handleEndTimeChange}
+                  onChange={handleChange("endTime")}
                 />
               </div>
               <div className={classes["input-field-container"]}>
@@ -218,7 +201,7 @@ const Page = () => {
                   id="max-participants"
                   placeholder="No. of Participants"
                   value={aboutHack.maxParticipants}
-                  onChange={handleMaxParticipantsChange}
+                  onChange={handleChange("maxParticipants")}
                 />
               </div>
               <div className={classes["input-field-container"]}>
@@ -228,7 +211,7 @@ const Page = () => {
                   id="team-size"
                   placeholder="Limit size of a team"
                   value={aboutHack.teamSizeLimit}
-                  onChange={handleTeamSizeLimitChange}
+                  onChange={handleChange("teamSizeLimit")}
                 />
               </div>
               <div className={classes["input-field-container"]}>
@@ -238,7 +221,7 @@ const Page = () => {
                   id="symbol"
                   placeholder="Your Hack Symbol"
                   value={aboutHack.symbol}
-                  onChange={handleSymbolChange}
+                  onChange={handleChange("symbol")}
                 />
               </div>
               <div className={classes["input-field-container"]}>
@@ -249,7 +232,7 @@ const Page = () => {
                   placeholder="Tell about your hackathon?"
                   rows={6}
                   value={aboutHack.description}
-                  onChange={handleDescriptionChange}
+                  onChange={handleChange("description")}
                 />
               </div>
             </div>
@@ -340,7 +323,7 @@ const Page = () => {
           )}
         </div>
       </div>
-    </div>
+    </MinorPageTemplate>
   );
 };
 

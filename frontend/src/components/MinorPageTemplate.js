@@ -1,11 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
-import searchIcon from "../../public/icons/search.svg";
 import Image from "next/image";
-import Link from "next/link";
 
-function PageTemplate({ children }) {
+function MinorPageTemplate({ children }) {
   const [toggle, setToggle] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
 
@@ -22,7 +20,7 @@ function PageTemplate({ children }) {
 
   return (
     <div className="page-template">
-      <div className="page-top">
+      <div className="page-top-minor">
         <div className="toggle-button">
           <Image
             src={"/icons/toggle-sidebar.svg"}
@@ -31,15 +29,6 @@ function PageTemplate({ children }) {
             className="toggle-checkbox-image"
             onClick={() => setToggle(!toggle)}
           />
-        </div>
-        <div className="input-container">
-          <input id="hack-search" type="text" placeholder="Search" />
-          <label htmlFor="hack-search">
-            <Image src={searchIcon} alt="search" />
-          </label>
-        </div>
-        <div className="organize">
-          <Link href={"/organize"}>+ Organize Hackathon</Link>
         </div>
       </div>
       <div className="page-container">
@@ -63,4 +52,4 @@ function PageTemplate({ children }) {
   );
 }
 
-export default PageTemplate;
+export default MinorPageTemplate;

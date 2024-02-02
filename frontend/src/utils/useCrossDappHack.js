@@ -1,33 +1,22 @@
 import { contractAddress, abi } from "../../constants";
-import { useState, useEffect } from "react";
-import { useWeb3Contract } from "react-moralis";
-import useWeb3 from "./useWeb3";
+import { useContractWrite } from "wagmi";
+import { parseEther } from "viem";
+
 const useCrossDappHack = () => {
-  const { userAccount } = useWeb3();
-  const { runContractFunction, fetch, data, error, isLoading } =
-    useWeb3Contract({});
   console.log(contractAddress.crossDappHack);
-  const stake = "10000000000000000";
+  const stake = parseEther("0.01");
+
+  const { data, isLoading, isSuccess, write } = useContractWrite({
+    address: contractAddress.dappHack,
+    abi: abi.dappHack,
+    functionName: "crossBuilderSignup",
+  });
+
   const crossBuilderSignup = async () => {
-    const parameters = {
-      abi: abi.crossDappHack,
-      contractAddress: contractAddress.crossDappHack,
-      functionName: "crossBuilderSignup",
-      params: {
-        destinationChain: "filecoin-2",
-        destinationAddress: contractAddress.dappHack,
-      },
-      msgValue: stake,
-    };
     try {
-      const response = await runContractFunction({
-        params: parameters,
-        onSuccess: (response) => {
-          console.log(response);
-        },
-        onError: (error) => {
-          console.log(error);
-        },
+      const response = await write({
+        args: ["filecoin-2", contractAddress.dappHack],
+        value: stake,
       });
       console.log(response);
     } catch (error) {
