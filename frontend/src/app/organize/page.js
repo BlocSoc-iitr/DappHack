@@ -10,6 +10,7 @@ import { useNetwork } from "wagmi";
 import testNets from "@axelar-network/axelar-chains-config/info/testnet.json";
 import useDeployContract from "@/utils/useDeployContract";
 import useDatabase from "@/utils/useDatabase";
+import MinorPageTemplate from "@/components/MinorPageTemplate";
 
 const Page = () => {
   const [aboutHack, setAboutHack] = useState({
@@ -36,32 +37,10 @@ const Page = () => {
   const [buttonTitle, setButtonTitle] = useState("Submit");
   const { createHackathon } = useDatabase();
 
-  const handleHackNameChange = (event) => {
-    setAboutHack({ ...aboutHack, hackName: event.target.value });
+  const handleChange = (name) => (event) => {
+    setAboutHack({ ...aboutHack, [name]: event.target.value });
   };
 
-  const handleStartTimeChange = (event) => {
-    setAboutHack({ ...aboutHack, startTime: event.target.value });
-  };
-
-  const handleEndTimeChange = (event) => {
-    setAboutHack({ ...aboutHack, endTime: event.target.value });
-  };
-
-  const handleMaxParticipantsChange = (event) => {
-    setAboutHack({ ...aboutHack, maxParticipants: event.target.value });
-  };
-
-  const handleTeamSizeLimitChange = (event) => {
-    setAboutHack({ ...aboutHack, teamSizeLimit: event.target.value });
-  };
-
-  const handleDescriptionChange = (event) => {
-    setAboutHack({ ...aboutHack, description: event.target.value });
-  };
-  const handleSymbolChange = (event) => {
-    setAboutHack({ ...aboutHack, symbol: event.target.value });
-  };
   const handleAddOraganizer = (event) => {
     event.preventDefault();
     const address = event.target.elements["team-member-address"].value;
@@ -153,10 +132,7 @@ const Page = () => {
     console.log(gasService, gateway);
   }, [chainId]);
   return (
-    <div className="page-template">
-      <div className="sidebar-fixed">
-        <Sidebar />
-      </div>
+    <MinorPageTemplate>
       <div className={`page ${classes.right}`}>
         {/* <button
           onClick={() => {
@@ -196,7 +172,7 @@ const Page = () => {
                   id="hack-name"
                   placeholder="What are calling your hackathon?"
                   value={aboutHack.hackName}
-                  onChange={handleHackNameChange}
+                  onChange={handleChange("hackName")}
                 />
               </div>
 
@@ -206,7 +182,7 @@ const Page = () => {
                   type="date"
                   id="start-time"
                   value={aboutHack.startTime}
-                  onChange={handleStartTimeChange}
+                  onChange={handleChange("startTime")}
                 />
               </div>
               <div className={classes["input-field-container"]}>
@@ -215,7 +191,7 @@ const Page = () => {
                   type="date"
                   id="end-time"
                   value={aboutHack.endTime}
-                  onChange={handleEndTimeChange}
+                  onChange={handleChange("endTime")}
                 />
               </div>
               <div className={classes["input-field-container"]}>
@@ -225,7 +201,7 @@ const Page = () => {
                   id="max-participants"
                   placeholder="No. of Participants"
                   value={aboutHack.maxParticipants}
-                  onChange={handleMaxParticipantsChange}
+                  onChange={handleChange("maxParticipants")}
                 />
               </div>
               <div className={classes["input-field-container"]}>
@@ -235,7 +211,7 @@ const Page = () => {
                   id="team-size"
                   placeholder="Limit size of a team"
                   value={aboutHack.teamSizeLimit}
-                  onChange={handleTeamSizeLimitChange}
+                  onChange={handleChange("teamSizeLimit")}
                 />
               </div>
               <div className={classes["input-field-container"]}>
@@ -245,7 +221,7 @@ const Page = () => {
                   id="symbol"
                   placeholder="Your Hack Symbol"
                   value={aboutHack.symbol}
-                  onChange={handleSymbolChange}
+                  onChange={handleChange("symbol")}
                 />
               </div>
               <div className={classes["input-field-container"]}>
@@ -256,7 +232,7 @@ const Page = () => {
                   placeholder="Tell about your hackathon?"
                   rows={6}
                   value={aboutHack.description}
-                  onChange={handleDescriptionChange}
+                  onChange={handleChange("description")}
                 />
               </div>
             </div>
@@ -347,7 +323,7 @@ const Page = () => {
           )}
         </div>
       </div>
-    </div>
+    </MinorPageTemplate>
   );
 };
 

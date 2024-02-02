@@ -1,9 +1,9 @@
 .sidebar {
   flex: 2;
   max-width: 300px;
-  padding-top: 2rem;
+  padding-top: 0.2rem;
   width: -webkit-fill-available;
-  height: 98vh;
+  height: 90vh;
   overflow-y: scroll;
 }
 
@@ -37,7 +37,6 @@
   font-weight: 600;
   color: var(--Text);
   white-space: nowrap;
-  padding: 1rem 0rem 1rem 0rem;
 }
 .toggle-checkbox {
   display: none;
@@ -47,16 +46,28 @@
 }
 .active-icon {
   border-radius: 0px 5px 5px 0px;
-  background: linear-gradient(90deg, #aca9ff 0%, rgba(172, 169, 255, 0) 91.25%);
+  /* background: linear-gradient(
+    90deg,
+    #aca9ff 0%,
+    rgba(172, 169, 255, 0.2) 91.25%
+  ); */
+  background: linear-gradient(
+    90deg,
+    rgb(173, 170, 255, 0.7) 0%,
+    rgba(172, 169, 255, 0.2) 91.25%
+  );
 }
 .active {
+  color: var(--clr-highlight);
+}
+.active-icon {
   color: var(--clr-highlight);
 }
 .text:hover {
   color: var(--clr-highlight);
 }
 .wallet-container {
-  padding: 0rem 1.5rem;
+  padding: 1rem 1.5rem 0rem 1.5rem;
 }
 .top-blur {
   display: none;
@@ -70,13 +81,17 @@
     background: white;
     transition: left 0.5s ease-in-out;
     height: 100vh;
+    padding-top: 5rem;
+  }
+  .links-list {
+    margin-top: 1rem;
   }
   .toggle-checkbox {
     display: block;
     position: absolute;
-    top: 2rem;
+    top: 1.4rem;
     left: 1rem;
-    z-index: 200;
+    z-index: 300;
     width: 2rem;
     height: 2rem;
     opacity: 0;
@@ -85,18 +100,19 @@
   .toggle-checkbox-image {
     display: block;
     position: absolute;
-    top: 2rem;
+    top: 1.4rem;
     left: 1rem;
     z-index: 200;
     width: 1.7rem;
     height: 1.7rem;
     cursor: pointer;
+    left: -100%;
   }
   .toggle-checkbox:checked ~ .sidebar {
     left: 0%;
   }
-  .wallet-container {
-    display: none;
+  .toggle-checkbox:checked ~ .toggle-checkbox-image {
+    left: 1rem;
   }
   .top-blur {
     display: block;

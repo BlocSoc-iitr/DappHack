@@ -52,33 +52,79 @@ const routes = [
   },
 ];
 
-function Sidebar() {
+function Sidebar({ toggle, setToggle, windowWidth }) {
+  console.log(toggle);
   const pathname = usePathname()?.split("/")[1];
 
   return (
     <>
+      <input
+        type="checkbox"
+        id="toggle"
+        className={classes["toggle-checkbox"]}
+        checked={toggle}
+        onClick={() => {
+          setToggle(!toggle);
+        }}
+      />
       <Image
         src={"/icons/toggle-sidebar.svg"}
         width={20}
         height={20}
         className={classes["toggle-checkbox-image"]}
       />
-      <input
-        type="checkbox"
-        id="toggle"
-        className={classes["toggle-checkbox"]}
-      />
       <div className={classes["top-blur"]}></div>
       <nav className={classes["sidebar"]}>
-        <div className={classes["wallet-container"]}>
+        <div
+          className={classes["wallet-container"]}
+          style={{
+            display:
+              windowWidth > 720
+                ? toggle === true
+                  ? "none"
+                  : "block"
+                : "block",
+          }}
+        >
           <ConnectButton showBalance={false} chainStatus="icon" />
         </div>
         <ul className={classes["links-list"]}>
           {routes.map((route) => (
             <li className={classes["links-list-item"]} key={route.title}>
-              <Link className="active" href={route.path}>
+              <Link
+                className="active"
+                href={route.path}
+                style={{
+                  flexDirection:
+                    windowWidth > 720
+                      ? toggle === true
+                        ? "column"
+                        : "row"
+                      : "row",
+                }}
+              >
                 <Image
-                  style={{ fill: "red" }}
+                  style={{
+                    fill: "red",
+                    height:
+                      windowWidth > 720
+                        ? toggle === true
+                          ? "3rem"
+                          : "4rem"
+                        : "4rem",
+                    width:
+                      windowWidth > 720
+                        ? toggle === true
+                          ? "3.7rem"
+                          : "4rem"
+                        : "4rem",
+                    paddingLeft:
+                      windowWidth > 720
+                        ? toggle === true
+                          ? "1rem"
+                          : "1.5rem"
+                        : "1.5rem",
+                  }}
                   src={route.icon}
                   alt={route.title}
                   className={

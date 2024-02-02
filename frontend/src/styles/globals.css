@@ -57,6 +57,77 @@ a {
 .page-template {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
+}
+.page-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  margin: 1rem;
+  height: 41px;
+}
+.page-top-minor {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 2rem;
+  margin: 1rem;
+  height: 41px;
+}
+.toggle-button {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.toggle-checkbox-image {
+  width: 1.7rem;
+  height: 1.7rem;
+  cursor: pointer;
+}
+.input-container {
+  display: flex;
+  padding: 0rem 1rem;
+  background-color: var(--bg-light);
+  width: 400px;
+  border-radius: 8px;
+  position: relative;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+.input-container > input {
+  flex: 1;
+  outline: none;
+  border: none;
+  color: var(--Text);
+  font-size: var(--ft-400);
+  border: 1px solid #e0e0e0;
+  padding: 0.6rem 2rem;
+  border-radius: 1rem;
+}
+
+.input-container > label {
+  cursor: pointer;
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--clr-primary);
+}
+.organize {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.organize > a {
+  white-space: nowrap;
+}
+.page-container {
+  display: flex;
+  flex-direction: row;
 }
 .sidebar-fixed {
   flex: 2;
@@ -65,35 +136,10 @@ a {
   flex: 8;
   background-color: var(--bg-secondary);
   padding: 2rem var(--p-page);
-  height: 100vh;
+  height: 90vh;
   overflow-y: scroll;
 }
-.page-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2rem;
-  margin-bottom: 2rem;
-}
-.input-container {
-  display: flex;
-  padding: 0.5rem 1rem;
-  background-color: var(--bg-light);
-  width: 400px;
-  border-radius: 8px;
-}
-.input-container > input {
-  flex: 1;
-  outline: none;
-  border: none;
-  color: var(--Text);
-  font-size: var(--ft-400);
-}
-
-.input-container > label {
-  cursor: pointer;
-}
-.page-top > a {
+.page-top a {
   background-color: var(--bg-btn);
   color: var(--clr-light);
   padding: 0.6rem 1rem;
