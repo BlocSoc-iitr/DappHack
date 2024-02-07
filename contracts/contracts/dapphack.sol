@@ -251,15 +251,15 @@ contract DappHack is ProjectNFTs {
     /**
      * @dev Allows a sponsor to change the prize pool for their sponsorship.
      * @param sponsorNumber The index of the sponsor in the `s_sponsors` array .
-     * @param newPrize The new prize pool amount for the sponsor.
+     * @param newPrizePool The new prize pool amount for the sponsor.
      */
     //sponsorid is same as sponsor number as far as code is structured
     function calculatePoolPrizeChangePayment(
         uint256 sponsorNumber,
-        uint256 newPrize
-    ) public view OnlySponsor returns (string memory x, int256 amt) {
+        uint256 newPrizePool
+    ) public view OnlySponsor returns (int256 amt) {
         // Update the sponsor prize pool
-        require(newPrize > 0, "Invalid prize amount");
+        require(newPrizePool > 0, "Invalid prize amount");
         Sponsor memory sponsor = s_sponsors[sponsorNumber];
 
         uint256 temp_sum = 0;
@@ -267,34 +267,17 @@ contract DappHack is ProjectNFTs {
             temp_sum += sponsor.prizeArray[i];
         }
 
-        amt = int256(
-            temp_sum + sponsor.poolPrize - sponsorPrizePool[sponsorNumber]
-        );
-        if (sponsorPrizePool[sponsorNumber] >= sponsor.poolPrize + temp_sum) {
-            return ("amount refunded", amt);
+        //sponsorPrizePool[sponsorNumber]
+        if (temp_sum + newPrizePool > sponsorPrizePool[sponsorNumber]) {
+            amt = int256(
+                temp_sum + newPrizePool - sponsorPrizePool[sponsorNumber]
+            );
+            return amt;
         } else {
-            return ("amount to be paid", amt);
-        }
-    }
-
-    function calculatePrizeArrayChangePayment(
-        uint256 sponsorNumber,
-        uint256[] memory newPrizeArray
-    ) public view OnlySponsor returns (string memory x, int256 amt) {
-        //update the sponsor prize pool
-        uint256 temp_sum = 0;
-        for (uint i = 0; i < newPrizeArray.length; ++i) {
-            temp_sum += newPrizeArray[i];
-        }
-        require(temp_sum > 0, "Invalid prize amount");
-        Sponsor memory sponsor = s_sponsors[sponsorNumber];
-        amt = int256(
-            temp_sum + sponsor.poolPrize - sponsorPrizePool[sponsorNumber]
-        );
-        if (sponsorPrizePool[sponsorNumber] >= sponsor.poolPrize + temp_sum) {
-            return ("amount refunded", amt);
-        } else {
-            return ("amount to be paid", amt);
+            amt = int256(
+                sponsorPrizePool[sponsorNumber] - temp_sum - newPrizePool
+            );
+            return -amt;
         }
     }
 
@@ -302,10 +285,10 @@ contract DappHack is ProjectNFTs {
         uint256 sponsorNumber,
         uint256 newPrize
     ) public payable OnlySponsor {
-        (
-            string memory refundStatus,
-            int256 paymentRequired
-        ) = calculatePoolPrizeChangePayment(sponsorNumber, newPrize);
+        int256 paymentRequired = calculatePoolPrizeChangePayment(
+            sponsorNumber,
+            newPrize
+        );
         if (paymentRequired > 0) {
             require(
                 msg.value >= uint256(paymentRequired),
@@ -325,14 +308,36 @@ contract DappHack is ProjectNFTs {
         emit PrizePoolChanged(msg.sender, oldPoolPrize, newPrize);
     }
 
+    /**
+     * @dev Allows a sponsor to change the prize pool for their sponsorship.
+     * @param sponsorNumber The index of the sponsor in the `s_sponsors` array .
+     * @param newPrizeArray The new prize Array of the sponsor.
+     */
+    function calculatePrizeArrayChangePayment(
+        uint256 sponsorNumber,
+        uint256[] memory newPrizeArray
+    ) public view OnlySponsor returns (int256 amt) {
+        //update the sponsor prize pool
+        uint256 temp_sum = 0;
+        for (uint i = 0; i < newPrizeArray.length; ++i) {
+            temp_sum += newPrizeArray[i];
+        }
+        require(temp_sum > 0, "Invalid prize amount");
+        Sponsor memory sponsor = s_sponsors[sponsorNumber];
+        amt = int256(
+            temp_sum + sponsor.poolPrize - sponsorPrizePool[sponsorNumber]
+        );
+        return amt;
+    }
+
     function changePrizeArray(
         uint256 sponsorNumber,
         uint256[] memory newPrizeArray
     ) public payable OnlySponsor {
-        (
-            string memory refundStatus,
-            int256 paymentRequired
-        ) = calculatePrizeArrayChangePayment(sponsorNumber, newPrizeArray);
+        int256 paymentRequired = calculatePrizeArrayChangePayment(
+            sponsorNumber,
+            newPrizeArray
+        );
         if (paymentRequired > 0) {
             require(
                 msg.value >= uint256(paymentRequired),
@@ -557,6 +562,20 @@ contract DappHack is ProjectNFTs {
         return false;
     }
 
+    // public function for testing purpose
+    function isSponsor1(
+        address sponsor,
+        uint256 sponsorId
+    ) public view returns (bool) {
+        Sponsor memory s = s_sponsors[sponsorId];
+        for (uint256 i = 0; i < s.sponsors.length; i++) {
+            if (s.sponsors[i] == sponsor) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * @dev Checks if the given address is a builder.
      * @param builder The address to check.
@@ -586,6 +605,14 @@ contract DappHack is ProjectNFTs {
     }
 
     // external & public view & pure functions
+
+    /**
+     * @dev Returns the sponsor id .
+     * @return The sponsor id.
+     */
+    function getSponsorId(address _address) public view returns (uint256) {
+        return sponsorToId[_address];
+    }
 
     /**
      * @dev Returns the number of sponsors.
