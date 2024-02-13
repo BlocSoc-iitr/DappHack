@@ -1,6 +1,7 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("hardhat-deploy");
 require("hardhat-deploy-ethers");
+require("@nomicfoundation/hardhat-chai-matchers")
 /** @type import('hardhat/config').HardhatUserConfig */
 // const PRIVATE_KEY = process.env.PRIVATE_KEY;
 module.exports = {
