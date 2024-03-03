@@ -133,7 +133,7 @@ contract DappHack is ProjectNFTs {
 
     //create mapping for this
     modifier NotInTeam() {
-        require(builderToTeamId[msg.sender] != 0, "Already in a team");
+        require(builderToTeamId[msg.sender] == 0, "Already in a team");
         _;
     }
 
@@ -313,8 +313,10 @@ contract DappHack is ProjectNFTs {
         payable(address(this)).transfer(STAKE);
 
         emit BuilderSignedUp(msg.sender);
+    }
 
-        // builder withdraw ?
+    function withdrawBuilder() public OnlyBuilder {
+        require(msg.sender == s_builders[s_builders.length - 1]);
     }
 
     /**
@@ -339,7 +341,7 @@ contract DappHack is ProjectNFTs {
         for (uint256 i = 0; i < participants.length; i++) {
             builderToTeamId[participants[i]] = s_teams.length;
         }
-        // give the team to builder in mapping
+        // give the builder to team in mapping
         for (uint256 i = 0; i < participants.length; i++) {
             builderToTeam[participants[i]] = s_teams[s_teams.length - 1];
         }
@@ -355,9 +357,14 @@ contract DappHack is ProjectNFTs {
         uint256 toTeamId
     ) public OnlyBuilder {
         require(
-            s_teams[toTeamId].participants.length - 1 <= s_maxParticipants,
-            "Teams must have the same number of participants"
+            s_teams[toTeamId].participants.length < s_maxParticipants ,
+            " Invalid team size"
         );
+        require(
+            builderToTeamId[msg.sender] == fromTeamId + 1,
+            "Invalid team id"
+        );
+
         // Calculate the size of the new array
 
         for (uint256 i = 0; i < s_teams[fromTeamId].participants.length; i++) {
@@ -365,6 +372,7 @@ contract DappHack is ProjectNFTs {
                 s_teams[fromTeamId].participants[i] = s_teams[fromTeamId]
                     .participants[s_teams[fromTeamId].participants.length - 1];
                 s_teams[fromTeamId].participants.pop();
+                break;
             }
         }
         s_teams[toTeamId].participants.push(msg.sender);
