@@ -79,6 +79,7 @@ contract DappHack is ProjectNFTs {
         uint256 newPrize
     );
     event BuilderSignedUp(address indexed builder);
+    event BuilderWithdrawn(address indexed builder);
     event TeamInitialized(string name, address[] participants);
     event TeamChanged(uint256 fromTeam, uint256 toTeam);
     event TeamWithdrawn(uint256 teamNumber, address indexed participant);
@@ -316,7 +317,27 @@ contract DappHack is ProjectNFTs {
     }
 
     function withdrawBuilder() public OnlyBuilder {
-        require(msg.sender == s_builders[s_builders.length - 1]);
+    
+        Team memory newTeam; // created a empty team object
+        // Remove from Builders
+        for(uint256 i = 0; i < s_builders.length; i++){
+            if(s_builders[i] == msg.sender){
+                s_builders[i] = s_builders[s_builders.length - 1];
+                s_builders.pop();
+                break;
+            }
+        }
+        // remove builder from Teams 
+        uint256 Teamid = builderToTeamId[msg.sender];
+        for(uint256 i = 0; i < s_teams[Teamid].participants.length; i++){
+            if(s_teams[Teamid].participants[i] == msg.sender){
+                s_teams[Teamid].participants[i] = s_teams[Teamid].participants[s_teams[Teamid].participants.length - 1];
+                s_teams[Teamid].participants.pop();
+            }
+        }
+        builderToTeamId[msg.sender] = 0;
+        builderToTeam[msg.sender] = newTeam;
+        emit BuilderWithdrawn(msg.sender);
     }
 
     /**
@@ -338,48 +359,45 @@ contract DappHack is ProjectNFTs {
         //add the team to the team array
         s_teams.push(Team(name, participants, false, false)); // ATTACK_VECTOR: People can add members already in a team , a Problem
         // give team id to participants
+        // give the builder to team in mapping
+
         for (uint256 i = 0; i < participants.length; i++) {
             builderToTeamId[participants[i]] = s_teams.length;
-        }
-        // give the builder to team in mapping
-        for (uint256 i = 0; i < participants.length; i++) {
             builderToTeam[participants[i]] = s_teams[s_teams.length - 1];
         }
-
         emit TeamInitialized(name, participants);
     }
 
     /**
-     * @dev Initializes a team for the competition.
+     * @dev Change the team for the competition.
      */
     function changeTeam(
         uint256 fromTeamId,
         uint256 toTeamId
     ) public OnlyBuilder {
+        require(s_teams[fromTeamId].participants.length < s_teamSizeLimit,"Invalid team size");
         require(
-            s_teams[toTeamId].participants.length < s_maxParticipants ,
-            " Invalid team size"
-        );
-        require(
-            builderToTeamId[msg.sender] == fromTeamId + 1,
+            builderToTeamId[msg.sender] == fromTeamId+1 ,
             "Invalid team id"
         );
-
-        // Calculate the size of the new array
 
         for (uint256 i = 0; i < s_teams[fromTeamId].participants.length; i++) {
             if (s_teams[fromTeamId].participants[i] == msg.sender) {
                 s_teams[fromTeamId].participants[i] = s_teams[fromTeamId]
                     .participants[s_teams[fromTeamId].participants.length - 1];
+                
                 s_teams[fromTeamId].participants.pop();
                 break;
             }
         }
         s_teams[toTeamId].participants.push(msg.sender);
-        s_teams[toTeamId].participants.push(msg.sender);
-
+        builderToTeam[msg.sender] = s_teams[toTeamId];
+        builderToTeamId[msg.sender] = toTeamId;
         emit TeamChanged(fromTeamId, toTeamId);
     }
+/**
+ * @dev Withdraws a team from the competition.
+ */
 
     function withdrawTeam() public OnlyBuilder {
         Team memory newTeam;

@@ -71,12 +71,6 @@ describe("Testing Team Functions", function () {
 
     });
 
-    // it("Unit test for builder Withdraw functionality", async function () {
-    //     await dappHack.connect(tester1WithProvider).withdrawBuilder();
-    //     await dappHack.connect(tester2WithProvider).withdrawBuilder();
-    //     // checking the updated map data 
-    // });
-
     it("Unit test for initialise team ,changeteam and withdrawTeam functionality", async function () {
 
         const teamName1 = "Team 1";
@@ -106,18 +100,16 @@ describe("Testing Team Functions", function () {
         // check whether participants are added
         const getTeamParticipantAddress1 = await dappHack.getTeamParticipantAddress(0, 0);
         expect(getTeamParticipantAddress1).to.deep.equal(teamMembers1[0]);
-        const getTeamParticipantAddress2 = await dappHack.getTeamParticipantAddress(1, 0);
-        expect(getTeamParticipantAddress2).to.deep.equal(teamMembers2[0]);
+        const getTeamParticipantAddress2 = await dappHack.getTeamParticipantAddress(0, 1);
+        expect(getTeamParticipantAddress2).to.deep.equal(teamMembers1[1]);
+        const getTeamParticipantAddress3 = await dappHack.getTeamParticipantAddress(1, 0);
+        expect(getTeamParticipantAddress3).to.deep.equal(teamMembers2[0]);
 
         // testing changeTeam
 
-        const changeTeam = await dappHack.connect(tester3WithProvider).changeTeam(1, 2);
-        console.log(changeTeam);
+        const changeTeam = await dappHack.connect(tester3WithProvider).changeTeam(0, 1);
+        await expect(changeTeam).to.emit(dappHack, "TeamChanged").withArgs(0, 1);
         
-        // expect(changeTeam).to.emit(dappHack, "TeamChanged").withArgs(0, 10);
     });
-    // await expect(dappHack.connect(tester3WithProvider).changePrizeArray([300 , 200 , 100]))
-    // .to.emit(dappHack, "PrizeArrayChanged")
-    // .withArgs(tester3.address, [500 , 400 , 300] , [300 , 200 , 100]);
 
 });
