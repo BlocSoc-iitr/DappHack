@@ -5,7 +5,7 @@
     "hardhat-deploy-ethers": "^0.4.1"
   },
   "devDependencies": {
-    "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.4",
     "@nomicfoundation/hardhat-ethers": "^3.0.0",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
     "@nomicfoundation/hardhat-toolbox": "^3.0.0",
@@ -16,6 +16,8 @@
     "ethers": "^6.4.0",
     "hardhat": "^2.18.1",
     "hardhat-gas-reporter": "^1.0.8",
+    "install": "^0.13.0",
+    "npm": "^10.4.0",
     "solidity-coverage": "^0.8.0",
     "typechain": "^8.1.0"
   }
