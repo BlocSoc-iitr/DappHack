@@ -67,8 +67,12 @@ describe("Testing Team Functions", function () {
         await dappHack.connect(tester2WithProvider).builderSignup({ value: ethers.parseEther("0.01") });
         await dappHack.connect(tester3WithProvider).builderSignup({ value: ethers.parseEther("0.01") });
         await dappHack.connect(tester4WithProvider).builderSignup({ value: ethers.parseEther("0.01") });
+        
 
+    });
 
+    it("Unit test for withdrawBuilder function", async function () {
+        await expect(dappHack.connect(tester3WithProvider).withdrawBuilder()).to.emit(dappHack, "BuilderWithdrawn").withArgs(tester3.address);
     });
 
     it("Unit test for initialise team ,changeteam and withdrawTeam functionality", async function () {
@@ -93,9 +97,9 @@ describe("Testing Team Functions", function () {
         const getTeamName2 = await dappHack.getTeamName(1);
         expect(getTeamName2).to.equal(teamName2);
         const getTeamSize = await dappHack.getTeamSize(0);
-        console.log(getTeamSize);
         const getTeamSize2 = await dappHack.getTeamSize(1);
-        console.log(getTeamSize2);
+        expect(getTeamSize).to.equal(2);
+        expect(getTeamSize2).to.equal(1);
 
         // check whether participants are added
         const getTeamParticipantAddress1 = await dappHack.getTeamParticipantAddress(0, 0);
@@ -108,8 +112,15 @@ describe("Testing Team Functions", function () {
         // testing changeTeam
 
         const changeTeam = await dappHack.connect(tester3WithProvider).changeTeam(0, 1);
-        await expect(changeTeam).to.emit(dappHack, "TeamChanged").withArgs(0, 1);
+        await expect(changeTeam).to.emit(dappHack, "TeamChanged").withArgs(0, 1); // changing team from 0 to 1
         
+        // testing withdrawTeam
+        const withdrawTeam = await dappHack.connect(tester3WithProvider).withdrawTeam();
+        await expect(withdrawTeam).to.emit(dappHack, "TeamWithdrawn").withArgs(1, tester3.address);
+        // checking the updated map data 
+        const getTeamName3 = await dappHack.getTeamName(1);
+        expect(getTeamName3).to.equal(teamName2);
+        const getTeamSize3 = await dappHack.getTeamSize(1);
+        expect(getTeamSize3).to.equal(1); // team size changes from 2 to 1 due to withdraw 
     });
-
 });
