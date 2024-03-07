@@ -240,6 +240,9 @@ contract DappHack is ProjectNFTs {
         }
 
         //give sponsor a id
+        for(uint256 i = 0; i < _sponsors.length; i++){
+            sponsorToId[_sponsors[i]] = s_sponsors.length - 1;
+        }
         sponsorToId[msg.sender] = s_sponsors.length - 1;
 
         //add in sponsor prizepool array
