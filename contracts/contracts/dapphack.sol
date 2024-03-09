@@ -343,7 +343,7 @@ contract DappHack is ProjectNFTs {
         );
         if (paymentRequired > 0) {
             require(
-                msg.value > uint256(paymentRequired),
+                msg.value >= uint256(paymentRequired),
                 "Insufficient payment"
             );
         }
