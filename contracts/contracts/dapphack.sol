@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
+
 import {ProjectNFTs} from "./project.sol";
 
 contract DappHack is ProjectNFTs {
@@ -9,6 +10,7 @@ contract DappHack is ProjectNFTs {
     error InvalidTeamSize(uint256 teamSize, uint256 teamSizeLimit);
     error MaxParticipantsReached(uint256 maxParticipants);
     error InvalidProject(uint256 teamNumber);
+    error TeamAlreadyExist();
 
     // interfaces, libraries, contracts
     ///////////////////
@@ -87,6 +89,7 @@ contract DappHack is ProjectNFTs {
     event ProjectSubmitted(uint256 teamNumber, string nftUri);
     event WinnerJudged(uint256 trackNumber, uint256 winnerNumber);
     event PrizeDistributed(uint256 amount);
+    event TeamJoined(uint256 index, address indexed builder);
 
     ///////////////////
     // Modifiers //
@@ -134,9 +137,20 @@ contract DappHack is ProjectNFTs {
     }
 
     //create mapping for this
-    modifier NotInTeam() {
+    modifier NotInTeam(address[] memory participants, address MsgSender) {
         // need a mapping from address(of the signer) to team as cant fetch a team that is not created
-        // require(s_teams[msg.sender] == 0, "Already in a team");
+
+        for (uint i = 0; i < participants.length; i++) {
+            require(
+                bytes(builderToTeam[participants[i]].name).length == 0,
+                "Already in a team"
+            );
+        }
+
+        require(
+            bytes(builderToTeam[MsgSender].name).length == 0,
+            "Already in a team"
+        );
         _;
     }
 
@@ -150,6 +164,18 @@ contract DappHack is ProjectNFTs {
             }
         }
         require(!flag, "Already signed up");
+        _;
+    }
+
+    modifier TeamAlreadyExists(string memory teamName) {
+        bool flag = false;
+        for (uint i = 0; i < s_teams.length; i++) {
+            if (
+                keccak256(abi.encodePacked(s_teams[i].name)) ==
+                keccak256(abi.encodePacked(teamName))
+            ) flag = true;
+        }
+        require(flag == false, "Please specify another TeamName");
         _;
     }
 
@@ -391,19 +417,80 @@ contract DappHack is ProjectNFTs {
     function initializeTeam(
         string memory name,
         address[] memory participants
-    ) public OnlyValidTeamSize(participants.length) NotInTeam {
+    )
+        public
+        TeamAlreadyExists(name)
+        OnlyValidTeamSize(participants.length + 1)
+        NotInTeam(participants, msg.sender)
+        OnlyBuilder
+    {
         //add the team to the team array
-        s_teams.push(Team(name, participants, false, false)); // ATTACK_VECTOR: People can add members already in a team , a Problem
+        address[] memory totalParticipants = new address[](
+            participants.length + 1
+        );
+
+        // Copy participants array to totalParticipants
+        for (uint i = 0; i < participants.length; i++) {
+            totalParticipants[i] = participants[i];
+        }
+
+        // Add msg.sender as the last participant
+        totalParticipants[participants.length] = msg.sender;
+
+        s_teams.push(Team(name, totalParticipants, false, false)); // ATTACK_VECTOR: People can add members already in a team , a Problem
 
         // give the team to builder in mapping
 
-        for (uint256 i = 0; i < participants.length; i++) {
-            builderToTeam[participants[i]] = s_teams[s_teams.length - 1];
+        for (uint256 i = 0; i < totalParticipants.length; i++) {
+            builderToTeam[totalParticipants[i]] = s_teams[s_teams.length - 1];
         }
 
-        emit TeamInitialized(name, participants);
+        emit TeamInitialized(name, totalParticipants);
 
         //team withdraw ?
+    }
+
+    function joinTeam(uint256 teamIndex) public OnlyBuilder {
+        require(
+            bytes(builderToTeam[msg.sender].name).length == 0,
+            "Already in a team"
+        );
+
+        require(
+            bytes(s_teams[teamIndex].name).length != 0,
+            "No Such Team Exists"
+        );
+        // for (uint i = 0; i < s_teams.length; i++) {
+        //     if (
+        //         keccak256(abi.encodePacked(s_teams[i].name)) ==
+        //         keccak256(abi.encodePacked(name))
+        //     ) {
+        //         require(
+        //             (s_teams[i].participants.length + 1) > s_teamSizeLimit,
+        //             "TeamLimitExceeded"
+        //         );
+
+        s_teams[teamIndex].participants.push(msg.sender);
+
+        builderToTeam[msg.sender] = s_teams[teamIndex];
+
+        emit TeamJoined(teamIndex, msg.sender);
+    }
+
+    function withdrawTeam(uint256 participantIndex) public OnlyBuilder {
+        require(
+            bytes(builderToTeam[msg.sender].name).length != 0,
+            "Your'e not in any Team"
+        );
+        Team memory team = builderToTeam[msg.sender];
+
+        // for (uint i = 0; i < team.participants.length; i++) {
+        //     if (
+        //         keccak256(abi.encodePacked(team.participants[i])) ==
+        //         keccak256(abi.encodePacked(msg.sender))
+        //     ) {
+        delete team.participants[participantIndex];
+        delete builderToTeam[msg.sender];
     }
 
     /**
@@ -745,5 +832,9 @@ contract DappHack is ProjectNFTs {
         uint256 winnerNumber
     ) public view returns (uint256[] memory) {
         return s_winners[winnerNumber].poolPrizeWinners;
+    }
+
+    function getTeamOfParticipant() public view returns (string memory) {
+        return builderToTeam[msg.sender].name;
     }
 }
