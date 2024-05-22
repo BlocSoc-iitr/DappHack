@@ -431,6 +431,10 @@ contract DappHack is ProjectNFTs {
 
         // Copy participants array to totalParticipants
         for (uint i = 0; i < participants.length; i++) {
+            require(
+                isBuilder(participants[i]),
+                "Only builders can join a team"
+            );
             totalParticipants[i] = participants[i];
         }
 
@@ -442,6 +446,10 @@ contract DappHack is ProjectNFTs {
         // give the team to builder in mapping
 
         for (uint256 i = 0; i < totalParticipants.length; i++) {
+            require(
+                bytes(builderToTeam[participants[i]].name).length == 0,
+                "Duplicate Participants detected"
+            );
             builderToTeam[totalParticipants[i]] = s_teams[s_teams.length - 1];
         }
 
@@ -465,10 +473,10 @@ contract DappHack is ProjectNFTs {
         //         keccak256(abi.encodePacked(s_teams[i].name)) ==
         //         keccak256(abi.encodePacked(name))
         //     ) {
-        //         require(
-        //             (s_teams[i].participants.length + 1) > s_teamSizeLimit,
-        //             "TeamLimitExceeded"
-        //         );
+        require(
+            (s_teams[teamIndex].participants.length + 1) <= s_teamSizeLimit,
+            "TeamLimitExceeded"
+        );
 
         s_teams[teamIndex].participants.push(msg.sender);
 
