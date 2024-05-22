@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.20;
 
 import {ProjectNFTs} from "./project.sol";
 
@@ -53,7 +53,7 @@ contract DappHack is ProjectNFTs {
 
     //Sponsors
     Sponsor[] public s_sponsors;
-
+    mapping(address => bool) private duplication ;
     mapping(uint256 => uint256) public sponsorPrizePool; //sponsor number to prize pool
     mapping(address => uint256) public sponsorToId; //sponsor number to sponsor id
     mapping(address => Sponsor) public sponsorToSponsorProtocol; //sponsor number to sponsor struct
@@ -445,12 +445,18 @@ contract DappHack is ProjectNFTs {
 
         // give the team to builder in mapping
 
-        for (uint256 i = 0; i < totalParticipants.length; i++) {
-            require(
-                bytes(builderToTeam[participants[i]].name).length == 0,
-                "Duplicate Participants detected"
-            );
+       for (uint256 i = 0; i < totalParticipants.length; i++) {
+           if(duplication[totalParticipants[i]] == false){
+            duplication[totalParticipants[i]] = true;
             builderToTeam[totalParticipants[i]] = s_teams[s_teams.length - 1];
+           }else{
+            revert("Duplication detected");
+           }
+            
+        }
+
+        for(uint256 i = 0 ; i < totalParticipants.length; i++){
+          duplication[totalParticipants[i]] = false;
         }
 
         emit TeamInitialized(name, totalParticipants);
