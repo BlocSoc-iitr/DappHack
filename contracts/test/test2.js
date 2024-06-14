@@ -35,6 +35,8 @@ describe("DappHack2", function () {
             await dappHack2.connect(owner).builderSignup();
             await dappHack2.connect(addr5).builderSignup();
             const participants = [addr1.getAddress(), addr2.getAddress()];
+            console.log(participants);
+            console.log(owner.getAddress());
             await dappHack2.connect(owner).initializeTeam("Team1", participants);
 
             const team = await dappHack2.s_teams(0);
@@ -60,13 +62,31 @@ describe("DappHack2", function () {
         });
 
         it("Should fail if team size exceeds limit", async function () {
+
             const participants = Array(5).fill(addr1.getAddress());
             await expect(dappHack2.connect(owner).initializeTeam("Team2", participants)).to.be.revertedWith("Invalid team size");
         });
 
+        it("Should fail if team is duplicated", async function () {
+            await dappHack2.connect(owner).builderSignup();
+            await dappHack2.connect(addr1).builderSignup();
+            const participants = Array(3).fill(addr1.getAddress());
+            await expect(dappHack2.connect(owner).initializeTeam("Team2", participants)).to.be.revertedWith("Duplication detected");
+        });
+
+        it("Should fail if leader is added into the array", async function () {
+            await dappHack2.connect(owner).builderSignup();
+            await dappHack2.connect(addr1).builderSignup();
+            const participants = [owner.getAddress(), addr1.getAddress()]
+            await expect(dappHack2.connect(owner).initializeTeam("Team1", participants)).to.be.revertedWith("Duplication detected");
+        });
+
         it("Should fail if sender is already in participants", async function () {
-            const participants = [owner.getAddress(), addr1.getAddress()];
-            await expect(dappHack2.connect(owner).initializeTeam("Team3", participants)).to.be.revertedWith("Sender already in team");
+            await dappHack2.connect(owner).builderSignup();
+            await dappHack2.connect(addr1).builderSignup();
+            const participants = [addr1.getAddress()];
+            await expect(dappHack2.connect(owner).initializeTeam("Team1", participants))
+            await expect(dappHack2.connect(owner).initializeTeam("Team3", participants)).to.be.revertedWith("Already in a team");
         });
     });
 
@@ -127,8 +147,8 @@ describe("DappHack2", function () {
             const participants = [addr1.getAddress(), addr2.getAddress(), addr3.getAddress(), addr4.getAddress()];
             await dappHack2.connect(owner).initializeTeam("Team1", participants);
 
-            await dappHack2.connect(addr5).joinTeam(0);
-            await expect(dappHack2.connect(addr1).joinTeam(0)).to.be.revertedWith("Team limit exceeded");
+
+            await expect(dappHack2.connect(addr5).joinTeam(0)).to.be.revertedWith("Team limit exceeded");
         });
     });
 
