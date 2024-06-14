@@ -53,7 +53,7 @@ contract DappHack is ProjectNFTs {
 
     //Sponsors
     Sponsor[] public s_sponsors;
-    mapping(address => bool) private duplication ;
+
     mapping(uint256 => uint256) public sponsorPrizePool; //sponsor number to prize pool
     mapping(address => uint256) public sponsorToId; //sponsor number to sponsor id
     mapping(address => Sponsor) public sponsorToSponsorProtocol; //sponsor number to sponsor struct
@@ -70,7 +70,8 @@ contract DappHack is ProjectNFTs {
     //winners
     Winner[] public s_winners;
 
-    mapping(uint256 => Winner) public sponsorToWinner; //track number to winner number
+    mapping(uint256 => Winner) public sponsorToWinner;
+    mapping(address => bool) private duplication; //track number to winner number
 
     // Events
     event SponsorSignedUp(string name, address indexed sponsor, uint256 prize);
@@ -90,6 +91,7 @@ contract DappHack is ProjectNFTs {
     event WinnerJudged(uint256 trackNumber, uint256 winnerNumber);
     event PrizeDistributed(uint256 amount);
     event TeamJoined(uint256 index, address indexed builder);
+    event TeamLeft(uint256 index, address indexed builder);
 
     ///////////////////
     // Modifiers //
@@ -137,7 +139,7 @@ contract DappHack is ProjectNFTs {
     }
 
     //create mapping for this
-    modifier NotInTeam(address[] memory participants, address MsgSender) {
+    modifier NotInTeam(address[] memory participants) {
         // need a mapping from address(of the signer) to team as cant fetch a team that is not created
 
         for (uint i = 0; i < participants.length; i++) {
@@ -148,9 +150,35 @@ contract DappHack is ProjectNFTs {
         }
 
         require(
-            bytes(builderToTeam[MsgSender].name).length == 0,
+            bytes(builderToTeam[msg.sender].name).length == 0,
             "Already in a team"
         );
+        _;
+    }
+
+    modifier DuplicateParticipants(address[] memory participant) {
+        address[] memory totalParticipants = new address[](
+            participant.length + 1
+        );
+
+        for (uint i = 0; i < participant.length; i++) {
+            totalParticipants[i] = participant[i];
+        }
+
+        totalParticipants[participant.length] = msg.sender;
+
+        for (uint256 i = 0; i < totalParticipants.length; i++) {
+            if (duplication[totalParticipants[i]] == false) {
+                duplication[totalParticipants[i]] = true;
+            } else {
+                revert("Duplication detected");
+            }
+        }
+
+        for (uint256 i = 0; i < totalParticipants.length; i++) {
+            duplication[totalParticipants[i]] = false;
+        }
+
         _;
     }
 
@@ -421,47 +449,27 @@ contract DappHack is ProjectNFTs {
         public
         TeamAlreadyExists(name)
         OnlyValidTeamSize(participants.length + 1)
-        NotInTeam(participants, msg.sender)
+        NotInTeam(participants)
+        DuplicateParticipants(participants)
         OnlyBuilder
     {
-        //add the team to the team array
         address[] memory totalParticipants = new address[](
             participants.length + 1
         );
 
-        // Copy participants array to totalParticipants
         for (uint i = 0; i < participants.length; i++) {
-            require(
-                isBuilder(participants[i]),
-                "Only builders can join a team"
-            );
             totalParticipants[i] = participants[i];
         }
 
-        // Add msg.sender as the last participant
         totalParticipants[participants.length] = msg.sender;
 
-        s_teams.push(Team(name, totalParticipants, false, false)); // ATTACK_VECTOR: People can add members already in a team , a Problem
+        s_teams.push(Team(name, totalParticipants, false, false));
 
-        // give the team to builder in mapping
-
-       for (uint256 i = 0; i < totalParticipants.length; i++) {
-           if(duplication[totalParticipants[i]] == false){
-            duplication[totalParticipants[i]] = true;
+        for (uint256 i = 0; i < totalParticipants.length; i++) {
             builderToTeam[totalParticipants[i]] = s_teams[s_teams.length - 1];
-           }else{
-            revert("Duplication detected");
-           }
-            
-        }
-
-        for(uint256 i = 0 ; i < totalParticipants.length; i++){
-          duplication[totalParticipants[i]] = false;
         }
 
         emit TeamInitialized(name, totalParticipants);
-
-        //team withdraw ?
     }
 
     function joinTeam(uint256 teamIndex) public OnlyBuilder {
@@ -505,6 +513,8 @@ contract DappHack is ProjectNFTs {
         //     ) {
         delete team.participants[participantIndex];
         delete builderToTeam[msg.sender];
+
+        emit TeamLeft(participantIndex, msg.sender);
     }
 
     /**
