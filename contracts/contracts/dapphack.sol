@@ -71,7 +71,7 @@ contract DappHack is ProjectNFTs {
     Winner[] public s_winners;
 
     mapping(uint256 => Winner) public sponsorToWinner;
-    mapping(address => bool) private duplication; //track number to winner number
+ //track number to winner number
 
     // Events
     event SponsorSignedUp(string name, address indexed sponsor, uint256 prize);
@@ -156,29 +156,34 @@ contract DappHack is ProjectNFTs {
         _;
     }
 
-    modifier DuplicateParticipants(address[] memory participant) {
-        address[] memory totalParticipants = new address[](
-            participant.length + 1
-        );
-
-        for (uint i = 0; i < participant.length; i++) {
-            totalParticipants[i] = participant[i];
-        }
-
-        totalParticipants[participant.length] = msg.sender;
-
-        for (uint256 i = 0; i < totalParticipants.length; i++) {
-            if (duplication[totalParticipants[i]] == false) {
-                duplication[totalParticipants[i]] = true;
-            } else {
-                revert("Duplication detected");
+   modifier DuplicateParticipants(address[] memory participant) {
+        address[] memory AllParticipants = new address[](1 + participant.length);
+       bool flag = false;
+      
+        for (uint i = 0 ; i != participant.length; ){
+            AllParticipants[i] = participant[i];
+            unchecked{
+                ++i;
             }
         }
 
-        for (uint256 i = 0; i < totalParticipants.length; i++) {
-            duplication[totalParticipants[i]] = false;
+        AllParticipants[participant.length] = msg.sender;
+        for (uint i = 0; i != AllParticipants.length; ) {
+            for (uint j = i + 1; j != AllParticipants.length; ) {
+                if(AllParticipants[j] == AllParticipants[i]) {
+                  flag = true;
+                }
+                unchecked{
+                    ++j;
+                }
+            }
+            unchecked{
+                ++i;
+            }
         }
-
+        if (flag == true) {
+            revert("Duplicate Participants");
+        }
         _;
     }
 
@@ -450,23 +455,29 @@ contract DappHack is ProjectNFTs {
         TeamAlreadyExists(name)
         OnlyValidTeamSize(participants.length + 1)
         NotInTeam(participants)
-        DuplicateParticipants(participants)
+    //    DuplicateParticipants(participants)
         OnlyBuilder
     {
         address[] memory totalParticipants = new address[](
             participants.length + 1
         );
 
-        for (uint i = 0; i < participants.length; i++) {
+        for (uint i = 0; i !=  participants.length; i++) {
             totalParticipants[i] = participants[i];
+            unchecked{
+                ++i;
+            }
         }
 
         totalParticipants[participants.length] = msg.sender;
 
         s_teams.push(Team(name, totalParticipants, false, false));
 
-        for (uint256 i = 0; i < totalParticipants.length; i++) {
+        for (uint256 i = 0; i != totalParticipants.length; ) {
             builderToTeam[totalParticipants[i]] = s_teams[s_teams.length - 1];
+            unchecked{
+                ++i;
+            }
         }
 
         emit TeamInitialized(name, totalParticipants);
