@@ -155,35 +155,25 @@ contract DappHack is ProjectNFTs {
         );
         _;
     }
-
-   modifier DuplicateParticipants(address[] memory participant) {
+modifier DuplicateParticipants(address[] memory participant) {
         address[] memory AllParticipants = new address[](1 + participant.length);
-       bool flag = false;
-      
-        for (uint i = 0 ; i != participant.length; ){
+    
+        for (uint i = 0 ; i != participant.length; i++ ){
             AllParticipants[i] = participant[i];
-            unchecked{
-                ++i;
-            }
         }
-
+        
         AllParticipants[participant.length] = msg.sender;
-        for (uint i = 0; i != AllParticipants.length; ) {
-            for (uint j = i + 1; j != AllParticipants.length; ) {
+
+        for (uint i = 0; i != AllParticipants.length; i++ ) {
+            for (uint j = i + 1; j != AllParticipants.length; j++ ) {
                 if(AllParticipants[j] == AllParticipants[i]) {
-                  flag = true;
+                   revert("Duplicate Participants");
                 }
-                unchecked{
-                    ++j;
-                }
+              
             }
-            unchecked{
-                ++i;
-            }
+           
         }
-        if (flag == true) {
-            revert("Duplicate Participants");
-        }
+       
         _;
     }
 
@@ -447,7 +437,7 @@ contract DappHack is ProjectNFTs {
      * @param name The name of the team.
      * @param participants The addresses of the participants in the team.
      */
-    function initializeTeam(
+        function initializeTeam(
         string memory name,
         address[] memory participants
     )
@@ -455,29 +445,26 @@ contract DappHack is ProjectNFTs {
         TeamAlreadyExists(name)
         OnlyValidTeamSize(participants.length + 1)
         NotInTeam(participants)
-    //    DuplicateParticipants(participants)
+        DuplicateParticipants(participants)
         OnlyBuilder
     {
         address[] memory totalParticipants = new address[](
             participants.length + 1
         );
 
-        for (uint i = 0; i !=  participants.length; i++) {
+        for (uint i = 0; i != participants.length; i++ ) {
             totalParticipants[i] = participants[i];
-            unchecked{
-                ++i;
-            }
+          
         }
 
         totalParticipants[participants.length] = msg.sender;
 
         s_teams.push(Team(name, totalParticipants, false, false));
 
-        for (uint256 i = 0; i != totalParticipants.length; ) {
+        for (uint256 i = 0; i != totalParticipants.length;  i++ ) {
             builderToTeam[totalParticipants[i]] = s_teams[s_teams.length - 1];
-            unchecked{
-                ++i;
-            }
+                
+            
         }
 
         emit TeamInitialized(name, totalParticipants);
