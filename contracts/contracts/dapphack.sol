@@ -448,6 +448,11 @@ modifier DuplicateParticipants(address[] memory participant) {
         DuplicateParticipants(participants)
         OnlyBuilder
     {
+
+     for(uint i = 0; i != participants.length; i++ ) {
+            require(isBuilder(participants[i]), "Builder not found");
+        }
+
         address[] memory totalParticipants = new address[](
             participants.length + 1
         );
@@ -463,56 +468,70 @@ modifier DuplicateParticipants(address[] memory participant) {
 
         for (uint256 i = 0; i != totalParticipants.length;  i++ ) {
             builderToTeam[totalParticipants[i]] = s_teams[s_teams.length - 1];
-                
-            
         }
 
         emit TeamInitialized(name, totalParticipants);
     }
+
+     /**
+     * @dev Adds a participant to a particular team.
+     * @param teamIndex Index of team in s_teams array which you want to join.
+     */
 
     function joinTeam(uint256 teamIndex) public OnlyBuilder {
         require(
             bytes(builderToTeam[msg.sender].name).length == 0,
             "Already in a team"
         );
-
-        require(
-            bytes(s_teams[teamIndex].name).length != 0,
-            "No Such Team Exists"
-        );
-        // for (uint i = 0; i < s_teams.length; i++) {
-        //     if (
-        //         keccak256(abi.encodePacked(s_teams[i].name)) ==
-        //         keccak256(abi.encodePacked(name))
-        //     ) {
+        require(teamIndex < s_teams.length, "No such team exists");
         require(
             (s_teams[teamIndex].participants.length + 1) <= s_teamSizeLimit,
-            "TeamLimitExceeded"
+            "Team limit exceeded" 
         );
 
         s_teams[teamIndex].participants.push(msg.sender);
+       
 
-        builderToTeam[msg.sender] = s_teams[teamIndex];
+        for(uint i = 0; i != s_teams[teamIndex].participants.length; i++ ) {
+            builderToTeam[s_teams[teamIndex].participants[i]] = s_teams[teamIndex];
+        }
 
         emit TeamJoined(teamIndex, msg.sender);
     }
 
-    function withdrawTeam(uint256 participantIndex) public OnlyBuilder {
+    /**
+     * @dev Withdraws a participant from a particular team.
+     * @dev Deletes the team if there are no participants left.
+     * @param participantIndex Index of participant in team which you want to withdraw.
+     * @param TeamIndex Index of team in s_teams array which you want to join.
+    */
+    function withdrawTeam(uint256 participantIndex , uint256 TeamIndex) public OnlyBuilder {
         require(
             bytes(builderToTeam[msg.sender].name).length != 0,
-            "Your'e not in any Team"
+            "You're not in any team"
         );
-        Team memory team = builderToTeam[msg.sender];
 
-        // for (uint i = 0; i < team.participants.length; i++) {
-        //     if (
-        //         keccak256(abi.encodePacked(team.participants[i])) ==
-        //         keccak256(abi.encodePacked(msg.sender))
-        //     ) {
-        delete team.participants[participantIndex];
+       address  temp =  s_teams[TeamIndex].participants[participantIndex] ;
+       s_teams[TeamIndex].participants[participantIndex] = s_teams[TeamIndex].participants[s_teams[participantIndex].participants.length - 1];
+       s_teams[TeamIndex].participants[s_teams[TeamIndex].participants.length - 1] = temp;
+
+       s_teams[TeamIndex].participants.pop();
+       
+
         delete builderToTeam[msg.sender];
 
-        emit TeamLeft(participantIndex, msg.sender);
+        if (s_teams[TeamIndex].participants.length == 0) {
+           Team memory TempStruct = s_teams[TeamIndex];
+            s_teams[TeamIndex] = s_teams[s_teams.length - 1];
+            s_teams[s_teams.length - 1] = TempStruct;
+            s_teams.pop();
+        }else{
+          for(uint i = 0; i != s_teams[TeamIndex].participants.length; i++ ) {
+              builderToTeam[s_teams[TeamIndex].participants[i]] = s_teams[TeamIndex];
+          }
+    
+        }
+
     }
 
     /**
