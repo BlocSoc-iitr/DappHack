@@ -71,14 +71,14 @@ describe("DappHack2", function () {
             await dappHack2.connect(owner).builderSignup();
             await dappHack2.connect(addr1).builderSignup();
             const participants = Array(3).fill(addr1.getAddress());
-            await expect(dappHack2.connect(owner).initializeTeam("Team2", participants)).to.be.revertedWith("Duplication detected");
+            await expect(dappHack2.connect(owner).initializeTeam("Team2", participants)).to.be.revertedWith("Duplicate Participants");
         });
 
         it("Should fail if leader is added into the array", async function () {
             await dappHack2.connect(owner).builderSignup();
             await dappHack2.connect(addr1).builderSignup();
             const participants = [owner.getAddress(), addr1.getAddress()]
-            await expect(dappHack2.connect(owner).initializeTeam("Team1", participants)).to.be.revertedWith("Duplication detected");
+            await expect(dappHack2.connect(owner).initializeTeam("Team1", participants)).to.be.revertedWith("Duplicate Participants");
         });
 
         it("Should fail if sender is already in participants", async function () {
@@ -88,6 +88,12 @@ describe("DappHack2", function () {
             await expect(dappHack2.connect(owner).initializeTeam("Team1", participants))
             await expect(dappHack2.connect(owner).initializeTeam("Team3", participants)).to.be.revertedWith("Already in a team");
         });
+
+        it("Should fail if sender is not a builder", async function () {
+            await dappHack2.connect(owner).builderSignup();
+            await expect(dappHack2.connect(owner).initializeTeam("Team1", [addr1.getAddress()])).to.be.revertedWith("Builder not found");
+        }
+        );
     });
 
     describe("joinTeam", function () {
@@ -150,6 +156,22 @@ describe("DappHack2", function () {
 
             await expect(dappHack2.connect(addr5).joinTeam(0)).to.be.revertedWith("Team limit exceeded");
         });
+
+        it("Mapping must change for every address", async function () {
+            await dappHack2.connect(owner).builderSignup();
+            await dappHack2.connect(addr1).builderSignup();
+            await dappHack2.connect(addr2).builderSignup();
+            await dappHack2.connect(addr3).builderSignup();
+            await dappHack2.connect(addr4).builderSignup();
+
+            const participants = [addr1.getAddress(), addr2.getAddress(), addr3.getAddress()];
+            await dappHack2.connect(owner).initializeTeam("Team1", participants);
+            await dappHack2.connect(addr4).joinTeam(0);
+            const newparticipants = [await addr1.getAddress(), await addr2.getAddress(), await addr3.getAddress(), await owner.getAddress(), await addr4.getAddress()];
+            const [, list, ,] = await dappHack2.connect(addr3).getYourTeamInfo();
+            expect(list).to.be.deep.equal(newparticipants);
+
+        });
     });
 
     describe("withdrawTeam", function () {
@@ -164,7 +186,7 @@ describe("DappHack2", function () {
             const participants = [addr1.getAddress()];
             await dappHack2.connect(owner).initializeTeam("Team1", participants);
 
-            await dappHack2.connect(addr1).withdrawTeam(0);
+            await dappHack2.connect(addr1).withdrawTeam(0, 0);
 
             expect((await dappHack2.s_teams(0)).participants).to.not.include(addr1.getAddress());
             expect((await dappHack2.builderToTeam(addr1.getAddress())).name).to.equal("");
@@ -178,7 +200,56 @@ describe("DappHack2", function () {
             await dappHack2.connect(addr4).builderSignup();
 
             await dappHack2.connect(addr5).builderSignup();
-            await expect(dappHack2.connect(addr1).withdrawTeam(0)).to.be.revertedWith("You're not in any team");
+            await expect(dappHack2.connect(addr1).withdrawTeam(0, 0)).to.be.revertedWith("You're not in any team");
         });
+
+        it("Should delete team if no participants are left", async function () {
+            await dappHack2.connect(owner).builderSignup();
+            await dappHack2.connect(addr1).builderSignup();
+            await dappHack2.connect(addr2).builderSignup();
+
+            const participants = [addr1.getAddress(), addr2.getAddress()];
+            await dappHack2.connect(owner).initializeTeam("Team1", participants);
+            await dappHack2.connect(addr1).withdrawTeam(0, 0);
+            const size = await dappHack2.getTeamSize(0);
+            expect(size).to.be.equal(2);
+            await dappHack2.connect(owner).withdrawTeam(0, 0);
+            await dappHack2.connect(addr2).withdrawTeam(0, 0);
+            await dappHack2.connect(owner).initializeTeam("Team2", participants);
+            expect((await dappHack2.s_teams(0)).name).to.equal("Team2");
+        });
+
+        it("Should be able to withdraw & Join a team again", async function () {
+            await dappHack2.connect(owner).builderSignup();
+            await dappHack2.connect(addr1).builderSignup();
+            await dappHack2.connect(addr2).builderSignup();
+            await dappHack2.connect(addr3).builderSignup();
+            await dappHack2.connect(addr4).builderSignup();
+
+            const participants = [addr1.getAddress(), addr2.getAddress(), addr3.getAddress(), addr4.getAddress()];
+            await dappHack2.connect(owner).initializeTeam("Team1", participants);
+            await dappHack2.connect(addr1).withdrawTeam(0, 0);
+            await dappHack2.connect(addr1).joinTeam(0);
+            const size = await dappHack2.getTeamSize(0);
+
+            expect(size).to.be.equal(5);
+        });
+
+        it("Mapping must change for every address", async function () {
+            await dappHack2.connect(owner).builderSignup();
+            await dappHack2.connect(addr1).builderSignup();
+            await dappHack2.connect(addr2).builderSignup();
+            await dappHack2.connect(addr3).builderSignup();
+            await dappHack2.connect(addr4).builderSignup();
+
+            const participants = [addr1.getAddress(), addr2.getAddress(), addr3.getAddress(), addr4.getAddress()];
+            await dappHack2.connect(owner).initializeTeam("Team1", participants);
+            await dappHack2.connect(addr1).withdrawTeam(0, 0);
+            const newparticipants = [await owner.getAddress(), await addr2.getAddress(), await addr3.getAddress(), await addr4.getAddress()];
+
+            const [, list, ,] = await dappHack2.getYourTeamInfo();
+            expect(list).to.be.deep.equal(newparticipants);
+
+        })
     });
 });
