@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.20;
 
 contract universal {
     ///////////////////
@@ -78,6 +78,38 @@ contract universal {
         _;
     }
 
+    modifier OnlyValidTeamSize(uint256 teamSize){
+        _;
+    }
+
+    modifier OnlyMaxParticipantsNotReached(){
+        _;
+    }
+
+    modifier OnlyValidProject(uint256 teamNumber) {
+        _;  
+    }
+
+      modifier NotInTeam(address[] memory participants) {
+        _;
+    }
+
+    modifier DuplicateParticipants(address[] memory participant) {
+        _;
+    }
+
+    modifier NotAlreadySignedUp() {
+        _;  
+    }
+
+    modifier TeamAlreadyExists(string memory name) {
+        _;
+    }
+
+ 
+
+
+
     // Functions
 
     // Layout of Functions:
@@ -116,6 +148,11 @@ contract universal {
     function judgeWinner(Winner memory winner) public {} //onlySponsor
 
     function distributePrize() public payable {} //onlyOrganizer
+
+    function joinTeam(uint256 teamIndex) public OnlyBuilder {}
+
+    function withdrawTeam(uint256 participantIndex , uint256 TeamIndex) public OnlyBuilder{}
+
     // internal
     // private
     // internal & private view & pure functions
