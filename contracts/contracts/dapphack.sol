@@ -879,11 +879,11 @@ modifier DuplicateParticipants(address[] memory participant) {
         return builderToTeam[msg.sender].name;
     }
 
-    function getYourTeamInfo()
+    function getTeamInfo(address builder)
         public
         view
         returns (string memory, address[] memory , bool , bool)
     {
-        return (builderToTeam[msg.sender].name, builderToTeam[msg.sender].participants , builderToTeam[msg.sender].validProject , builderToTeam[msg.sender].projectSubmitted);
+        return (builderToTeam[builder].name, builderToTeam[builder].participants , builderToTeam[builder].validProject , builderToTeam[builder].projectSubmitted);
     }
 }

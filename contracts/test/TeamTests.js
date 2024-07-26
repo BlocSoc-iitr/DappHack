@@ -274,7 +274,7 @@ describe("DappHack", function () {
             await dappHack.connect(owner).initializeTeam("Team1", participants);
             await dappHack.connect(addr4).joinTeam(0);
             const newparticipants = [await addr1.getAddress(), await addr2.getAddress(), await addr3.getAddress(), await owner.getAddress(), await addr4.getAddress()];
-            const [, list, ,] = await dappHack.connect(addr3).getYourTeamInfo();
+            const [, list, ,] = await dappHack.connect(addr3).getTeamInfo(await addr3.getAddress());
             expect(list).to.be.deep.equal(newparticipants);
 
         });
@@ -403,7 +403,7 @@ describe("DappHack", function () {
             await dappHack.connect(addr1).withdrawTeam(0, 0);
             const newparticipants = [await owner.getAddress(), await addr2.getAddress(), await addr3.getAddress(), await addr4.getAddress()];
 
-            const [, list, ,] = await dappHack.getYourTeamInfo();
+            const [, list, ,] = await dappHack.getTeamInfo(addr2.getAddress());
             expect(list).to.be.deep.equal(newparticipants);
 
         })

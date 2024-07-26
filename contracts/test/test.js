@@ -22,6 +22,8 @@ async function deployContract() {
         "0x7c852118294e51e653712a81e05800f419141751be58f605c371e15141b007a6",
         ethers.provider
     );
+
+
     const spon = new ethers.Wallet(
         "0x47e179ec197488593b187f80a00eb0da91f1b9d0b13f8733639f19c30a34926a",
         ethers.provider
@@ -30,6 +32,7 @@ async function deployContract() {
     const tester2WithProvider = await ethers.provider.getSigner(tester2.address);
     const tester3WithProvider = await ethers.provider.getSigner(tester3.address);
     const tester4WithProvider = await ethers.provider.getSigner(tester4.address);
+
     const sponWithProvider = await ethers.provider.getSigner(spon.address);
 
 
@@ -149,16 +152,33 @@ describe("Testing calculatePoolPrizeChangePayment", function () {
         expect(sponsorBalance2 + gasUsed - sponsorBalance).to.equal(600);
     });
     it("Unit test for join and leave team", async function () {
-        await dappHack.connect(tester1WithProvider).initializeTeam("Team 1", [tester2, tester3, tester4, 0x2]);
-        await expect(initializeTeam).to.emit(dappHack, "TeamInitialized").withArgs("Team 1", [tester1, tester2, tester3, tester4, 0x2]);
-        await dappHack.connect(tester2WithProvider).withdrawTeam();
+        await dappHack.connect(tester2WithProvider).builderSignup({
+            value: ethers.parseEther("1.0")
+        });
+        await dappHack.connect(tester3WithProvider).builderSignup({
+            value: ethers.parseEther("1.0")
+        });
+        await dappHack.connect(tester4WithProvider).builderSignup({
+            value: ethers.parseEther("1.0")
+        });
+
+        await dappHack.connect(sponWithProvider).builderSignup({
+            value: ethers.parseEther("1.0")
+        });
+        await dappHack.connect(tester1WithProvider).builderSignup({
+            value: ethers.parseEther("1.0")
+        });
+
+        const initializeTeam = await dappHack.connect(tester1WithProvider).initializeTeam("Team 1", [tester2, tester3, tester4, spon]);
+        await expect(initializeTeam).to.emit(dappHack, "TeamInitialized").withArgs("Team 1", [tester2, tester3, tester4, spon, tester1]);
+        await dappHack.connect(tester2WithProvider).withdrawTeam(0, 0);
         const TeamSize = await dappHack.connect(tester2WithProvider).getTeamSize(0);
         expect(TeamSize).to.equal(4);
-        await dappHack.connect(tester2WithProvider).joinTeam(0);
+        const joinTeam = await dappHack.connect(tester2WithProvider).joinTeam(0);
         await expect(joinTeam).to.emit(dappHack, "TeamJoined").withArgs(0, tester2);
         const TeamSizeNew = await dappHack.connect(tester2WithProvider).getTeamSize(0);
         expect(TeamSizeNew).to.equal(5);
-        await dappHack.connect(0x1).joinTeam(0).to.be.reverted();
+        await expect(dappHack.connect(tester3WithProvider).joinTeam(0)).to.be.revertedWith("Already in a team");
         const TeamShouldBe1 = await dappHack.connect(tester2WithProvider).getTeamOfParticipant();
         expect(TeamShouldBe1).to.equal("Team 1");
     });
