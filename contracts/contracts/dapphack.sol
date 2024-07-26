@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.19;
 
 import {ProjectNFTs} from "./project.sol";
 
@@ -198,7 +198,7 @@ modifier DuplicateParticipants(address[] memory participant) {
                 keccak256(abi.encodePacked(teamName))
             ) flag = true;
         }
-        require(flag == false, "Please specify another TeamName");
+        require(flag == false, "Team already exists");
         _;
     }
 
@@ -877,5 +877,13 @@ modifier DuplicateParticipants(address[] memory participant) {
 
     function getTeamOfParticipant() public view returns (string memory) {
         return builderToTeam[msg.sender].name;
+    }
+
+    function getYourTeamInfo()
+        public
+        view
+        returns (string memory, address[] memory , bool , bool)
+    {
+        return (builderToTeam[msg.sender].name, builderToTeam[msg.sender].participants , builderToTeam[msg.sender].validProject , builderToTeam[msg.sender].projectSubmitted);
     }
 }
