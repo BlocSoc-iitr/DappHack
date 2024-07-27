@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
+
 import {ProjectNFTs} from "./project.sol";
 
 contract DappHack is ProjectNFTs {
@@ -9,6 +10,7 @@ contract DappHack is ProjectNFTs {
     error InvalidTeamSize(uint256 teamSize, uint256 teamSizeLimit);
     error MaxParticipantsReached(uint256 maxParticipants);
     error InvalidProject(uint256 teamNumber);
+    error TeamAlreadyExist();
 
     // interfaces, libraries, contracts
     ///////////////////
@@ -68,7 +70,8 @@ contract DappHack is ProjectNFTs {
     //winners
     Winner[] public s_winners;
 
-    mapping(uint256 => Winner) public sponsorToWinner; //track number to winner number
+    mapping(uint256 => Winner) public sponsorToWinner;
+ //track number to winner number
 
     // Events
     event SponsorSignedUp(string name, address indexed sponsor, uint256 prize);
@@ -87,6 +90,8 @@ contract DappHack is ProjectNFTs {
     event ProjectSubmitted(uint256 teamNumber, string nftUri);
     event WinnerJudged(uint256 trackNumber, uint256 winnerNumber);
     event PrizeDistributed(uint256 amount);
+    event TeamJoined(uint256 index, address indexed builder);
+    event TeamLeft(uint256 index, address indexed builder);
 
     ///////////////////
     // Modifiers //
@@ -134,9 +139,41 @@ contract DappHack is ProjectNFTs {
     }
 
     //create mapping for this
-    modifier NotInTeam() {
+    modifier NotInTeam(address[] memory participants) {
         // need a mapping from address(of the signer) to team as cant fetch a team that is not created
-        // require(s_teams[msg.sender] == 0, "Already in a team");
+
+        for (uint i = 0; i < participants.length; i++) {
+            require(
+                bytes(builderToTeam[participants[i]].name).length == 0,
+                "Already in a team"
+            );
+        }
+
+        require(
+            bytes(builderToTeam[msg.sender].name).length == 0,
+            "Already in a team"
+        );
+        _;
+    }
+modifier DuplicateParticipants(address[] memory participant) {
+        address[] memory AllParticipants = new address[](1 + participant.length);
+    
+        for (uint i = 0 ; i != participant.length; i++ ){
+            AllParticipants[i] = participant[i];
+        }
+        
+        AllParticipants[participant.length] = msg.sender;
+
+        for (uint i = 0; i != AllParticipants.length; i++ ) {
+            for (uint j = i + 1; j != AllParticipants.length; j++ ) {
+                if(AllParticipants[j] == AllParticipants[i]) {
+                   revert("Duplicate Participants");
+                }
+              
+            }
+           
+        }
+       
         _;
     }
 
@@ -150,6 +187,18 @@ contract DappHack is ProjectNFTs {
             }
         }
         require(!flag, "Already signed up");
+        _;
+    }
+
+    modifier TeamAlreadyExists(string memory teamName) {
+        bool flag = false;
+        for (uint i = 0; i < s_teams.length; i++) {
+            if (
+                keccak256(abi.encodePacked(s_teams[i].name)) ==
+                keccak256(abi.encodePacked(teamName))
+            ) flag = true;
+        }
+        require(flag == false, "Team already exists");
         _;
     }
 
@@ -388,22 +437,101 @@ contract DappHack is ProjectNFTs {
      * @param name The name of the team.
      * @param participants The addresses of the participants in the team.
      */
-    function initializeTeam(
+        function initializeTeam(
         string memory name,
         address[] memory participants
-    ) public OnlyValidTeamSize(participants.length) NotInTeam {
-        //add the team to the team array
-        s_teams.push(Team(name, participants, false, false)); // ATTACK_VECTOR: People can add members already in a team , a Problem
+    )
+        public
+        TeamAlreadyExists(name)
+        OnlyValidTeamSize(participants.length + 1)
+        NotInTeam(participants)
+        DuplicateParticipants(participants)
+        OnlyBuilder
+    {
 
-        // give the team to builder in mapping
-
-        for (uint256 i = 0; i < participants.length; i++) {
-            builderToTeam[participants[i]] = s_teams[s_teams.length - 1];
+     for(uint i = 0; i != participants.length; i++ ) {
+            require(isBuilder(participants[i]), "Builder not found");
         }
 
-        emit TeamInitialized(name, participants);
+        address[] memory totalParticipants = new address[](
+            participants.length + 1
+        );
 
-        //team withdraw ?
+        for (uint i = 0; i != participants.length; i++ ) {
+            totalParticipants[i] = participants[i];
+          
+        }
+
+        totalParticipants[participants.length] = msg.sender;
+
+        s_teams.push(Team(name, totalParticipants, false, false));
+
+        for (uint256 i = 0; i != totalParticipants.length;  i++ ) {
+            builderToTeam[totalParticipants[i]] = s_teams[s_teams.length - 1];
+        }
+
+        emit TeamInitialized(name, totalParticipants);
+    }
+
+     /**
+     * @dev Adds a participant to a particular team.
+     * @param teamIndex Index of team in s_teams array which you want to join.
+     */
+
+    function joinTeam(uint256 teamIndex) public OnlyBuilder {
+        require(
+            bytes(builderToTeam[msg.sender].name).length == 0,
+            "Already in a team"
+        );
+        require(teamIndex < s_teams.length, "No such team exists");
+        require(
+            (s_teams[teamIndex].participants.length + 1) <= s_teamSizeLimit,
+            "Team limit exceeded" 
+        );
+
+        s_teams[teamIndex].participants.push(msg.sender);
+       
+
+        for(uint i = 0; i != s_teams[teamIndex].participants.length; i++ ) {
+            builderToTeam[s_teams[teamIndex].participants[i]] = s_teams[teamIndex];
+        }
+
+        emit TeamJoined(teamIndex, msg.sender);
+    }
+
+    /**
+     * @dev Withdraws a participant from a particular team.
+     * @dev Deletes the team if there are no participants left.
+     * @param participantIndex Index of participant in team which you want to withdraw.
+     * @param TeamIndex Index of team in s_teams array which you want to join.
+    */
+    function withdrawTeam(uint256 participantIndex , uint256 TeamIndex) public OnlyBuilder {
+        require(
+            bytes(builderToTeam[msg.sender].name).length != 0,
+            "You're not in any team"
+        );
+
+       address  temp =  s_teams[TeamIndex].participants[participantIndex] ;
+       s_teams[TeamIndex].participants[participantIndex] = s_teams[TeamIndex].participants[s_teams[participantIndex].participants.length - 1];
+       s_teams[TeamIndex].participants[s_teams[TeamIndex].participants.length - 1] = temp;
+
+       s_teams[TeamIndex].participants.pop();
+       
+
+        delete builderToTeam[msg.sender];
+
+        if (s_teams[TeamIndex].participants.length == 0) {
+           Team memory TempStruct = s_teams[TeamIndex];
+            s_teams[TeamIndex] = s_teams[s_teams.length - 1];
+            s_teams[s_teams.length - 1] = TempStruct;
+            s_teams.pop();
+        }else{
+          for(uint i = 0; i != s_teams[TeamIndex].participants.length; i++ ) {
+              builderToTeam[s_teams[TeamIndex].participants[i]] = s_teams[TeamIndex];
+          }
+    
+        }
+
     }
 
     /**
@@ -745,5 +873,17 @@ contract DappHack is ProjectNFTs {
         uint256 winnerNumber
     ) public view returns (uint256[] memory) {
         return s_winners[winnerNumber].poolPrizeWinners;
+    }
+
+    function getTeamOfParticipant() public view returns (string memory) {
+        return builderToTeam[msg.sender].name;
+    }
+
+    function getTeamInfo(address builder)
+        public
+        view
+        returns (string memory, address[] memory , bool , bool)
+    {
+        return (builderToTeam[builder].name, builderToTeam[builder].participants , builderToTeam[builder].validProject , builderToTeam[builder].projectSubmitted);
     }
 }
