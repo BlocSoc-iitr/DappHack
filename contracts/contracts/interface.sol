@@ -65,6 +65,8 @@ contract universal {
 
     mapping(uint256 => uint256) public sponsorToWinner; //track number to winner number
     // Events
+
+
     ///////////////////
     // Modifiers //
     ///////////////////
@@ -106,9 +108,6 @@ contract universal {
         _;
     }
 
- 
-
-
 
     // Functions
 
@@ -141,17 +140,17 @@ contract universal {
 
     function builderSignup() public payable {}
 
-    function initializeTeam(Team memory team) public {}
-
+    function initializeTeam(Team memory team) public {}  //TeamAlreadyExists()  //OnlyValidTeamSize()   //NotInTeam()   //DuplicateParticipants() // OnlyBuilder()
+  
     function submitProject() public {}
 
     function judgeWinner(Winner memory winner) public {} //onlySponsor
 
     function distributePrize() public payable {} //onlyOrganizer
 
-    function joinTeam(uint256 teamIndex) public OnlyBuilder {}
+    function joinTeam(uint256 teamIndex) public  {} //OnlyBuilder
 
-    function withdrawTeam(uint256 participantIndex , uint256 TeamIndex) public OnlyBuilder{}
+    function withdrawTeam(uint256 participantIndex , uint256 TeamIndex) public {} //OnlyBuilder
 
     // internal
     // private
