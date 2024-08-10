@@ -140,7 +140,7 @@ contract universal {
 
     function builderSignup() public payable {}
 
-    function initializeTeam(Team memory team) public {}  //TeamAlreadyExists()  OnlyValidTeamSize()   NotInTeam()   DuplicateParticipants()  OnlyBuilder()
+    function initializeTeam(address[] memory team) public {}  //TeamAlreadyExists()  OnlyValidTeamSize()   NotInTeam()   DuplicateParticipants()  OnlyBuilder()
   
     function submitProject() public {}
 

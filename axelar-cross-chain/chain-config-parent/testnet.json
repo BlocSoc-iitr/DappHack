@@ -2,6 +2,7 @@
   {
     "name": "Filecoin",
     "id": "filecoin-2",
+    "axelarId": "filecoin-2",
     "chainId": 314159,
     "rpc": "https://api.calibration.node.glif.io/rpc/v1",
     "tokenSymbol": "FIL",
@@ -11,15 +12,18 @@
       },
       "AxelarGateway": {
         "address": "0x999117D44220F33e0441fbAb2A5aDB8FF485c54D",
-        "implementation": "0xD2ed9ACBd2Acba9CA3EA60b9Eb7652698598bC53",
-        "authModule": "0x57441fFa88C5F311aeC600bcaC15666198C82B52",
-        "tokenDeployer": "0x364a9f84cD5A0fB88E1953a2fB70F676c284D57C",
-        "deployer": "0xB8Cd93C83A974649D76B1c19f311f639e62272BC"
+        "implementation": "0x99B5FA03a5ea4315725c43346e55a6A6fbd94098",
+        "authModule": "0xaDa0F9d5698459a57c2c8b9c380398E71C69D6fA",
+        "tokenDeployer": "0xb28478319B64f8D47e19A120209A211D902F8b8f",
+        "deployer": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
+        "implementationCodehash": "0xc3516b0df24004564d42ebd7c4e4d3814655ea19ec2535627ebcdced0970cccd",
+        "deploymentMethod": "create3",
+        "salt": "AxelarGateway v6.2"
       },
       "AxelarGasService": {
         "collector": "0x7F83F5cA2AE4206AbFf8a3C3668e88ce5F11C0B5",
         "address": "0xbe406f0189a0b4cf3a05c286473d23791dd44cc6",
-        "implementation": "0x125AAf72B24a78f7aE5Cae92D7717f533633320d",
+        "implementation": "0xA72afaa3130fE7F25CfcA4A49ed48e377a35aB6C",
         "deployer": "0x5b593E7b1725dc6FcbbFe80b2415B19153F94A85",
         "owner": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
       },
@@ -33,26 +37,11 @@
       },
       "Create3Deployer": {
         "salt": "Create3Deployer",
-        "address": "0xf49B10ccFB7D82C3a8749fFB1aAF3e0c936Eba36",
+        "address": "0x6513Aedb4D1593BA12e50644401D976aebDc90d8",
         "deployer": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
-        "deploymentMethod": "create2"
-      },
-      "InterchainTokenService": {
-        "salt": "ITS v0.3.0",
-        "deployer": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
-        "tokenManagerDeployer": "0x6Aa459645b696108894C7548A898192E4716Ef15",
-        "standardizedTokenLockUnlock": "0x3a27e5d92C50C022510B74D2eBc53956E3b3cAd6",
-        "standardizedTokenMintBurn": "0x9b63b458cD214C3786f117aD3d2821a9aC8E4201",
-        "standardizedTokenDeployer": "0x6c6632071c792f7F73BBC404A1FD1973e60B8C0C",
-        "remoteAddressValidatorImplementation": "0x33FEfaaD1D97d82C930B2d920613c8697787823D",
-        "remoteAddressValidator": "0x30c8dffBfb0f0535A1B56A7D00d5627692B399D5",
-        "tokenManagerImplementations": {
-          "tokenManagerLockUnlock": "0xADE0d3f7E7325219610907F80e7438CD22B0d27D",
-          "tokenManagerMintBurn": "0x2dF7688066d10e6aAEd5116814eB0f701cF6F74f",
-          "tokenManagerLiquidityPool": "0x5D16dFFFb32889eB4d023030FD63B598334C9C90"
-        },
-        "implementation": "0x6f7F028e83696498233EdB778Abe858D8c63d85b",
-        "address": "0xF786e21509A9D50a9aFD033B5940A2b7D872C208"
+        "deploymentMethod": "create2",
+        "codehash": "0xf0ad66defbe082df243d4d274e626f557f97579c5c9e19f33d8093d6160808b7",
+        "predeployCodehash": "0x73fc31262c4bad113c79439fd231281201c7c7d45b50328bd86bccf37684bf92"
       },
       "InterchainProposalSender": {
         "address": "0x1f8A4d195B647647c7dD45650CBd553FD33cCAA6",
@@ -66,15 +55,63 @@
         "deployer": "0xB8Cd93C83A974649D76B1c19f311f639e62272BC",
         "deploymentMethod": "create2",
         "salt": "Operators"
+      },
+      "InterchainGovernance": {
+        "governanceChain": "Axelarnet",
+        "governanceAddress": "axelar10d07y265gmmuvt4z0w9aw880jnsr700j7v9daj",
+        "minimumTimeDelay": 300,
+        "address": "0xfDF36A30070ea0241d69052ea85ff44Ad0476a66",
+        "deployer": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
+        "deploymentMethod": "create3",
+        "codehash": "0x0a188afb57c6c5caec589da3096f75f674e48a8a8abb5d747a251630dbf5b2ab",
+        "predeployCodehash": "0xe2de43b29f2387b6f3575a1b50d566908fc00e03a8d88ad6be74b674a70874d2",
+        "salt": "InterchainGovernance v5.5"
+      },
+      "Multisig": {
+        "threshold": 2,
+        "signers": [
+          "0x15837c1318AB83d99b19392Fd4811813f520d843",
+          "0x64247a441CeF0b7A46614AC34d046c0fdfe35954",
+          "0xEE64c8eb48437DbD2D5B8598dc4A3E8a6c8CEaD9"
+        ],
+        "address": "0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68",
+        "deployer": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
+        "deploymentMethod": "create3",
+        "codehash": "0x912095d5076ee40a9dd49c0f9d61d61334c47a78c7512852791652baef26c296",
+        "predeployCodehash": "0x912095d5076ee40a9dd49c0f9d61d61334c47a78c7512852791652baef26c296",
+        "salt": "Multisig v5.5"
+      },
+      "InterchainTokenService": {
+        "salt": "ITS v1.2.4",
+        "deployer": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
+        "tokenManagerDeployer": "0x121b0e54Cd7ad2BBCb4c4C9275697978EBaF3653",
+        "interchainToken": "0x7F9F70Da4af54671a6abAc58e705b5634cac8819",
+        "interchainTokenDeployer": "0x58667c5f134420Bf6904C7dD01fDDcB4Fea3a760",
+        "tokenManager": "0x81a0545091864617E7037171FdfcBbdCFE3aeb23",
+        "tokenHandler": "0x07715674F74c560200c7C95430673180812fCE73",
+        "implementation": "0x6d59D9360BDAe406614b7E61c53F43a03198A4ef",
+        "address": "0xB5FB4BE02232B1bBA4dC8f81dc24C26980dE9e3C",
+        "proxySalt": "ITS v1.0.0"
+      },
+      "InterchainTokenFactory": {
+        "salt": "ITS Factory v1.0.0",
+        "deployer": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
+        "implementation": "0xA852412D2d91fE05d790934B6E64C3C351fAB54f",
+        "address": "0x83a93500d23Fbc3e82B410aD07A6a9F7A0670D66"
       }
     },
     "explorer": {
+      "name": "Filfox",
       "url": "https://calibration.filfox.info"
     },
     "gasOptions": {
       "gasLimit": 300000000
     },
-    "confirmations": 1,
+    "confirmations": 3,
+    "eip1559": true,
+    "finality": "120",
+    "approxFinalityWaitTime": 60,
+    "txTimeout": 180000,
     "AxelarGasService": {
       "address": "0xbE406F0189A0B4cf3A05C286473D23791Dd44Cc6"
     },
@@ -96,6 +133,8 @@
         "event ProjectSubmitted(uint256 teamNumber, string nftUri)",
         "event SponsorSignedUp(string name, address indexed sponsor, uint256 prize)",
         "event TeamInitialized(string name, address[] participants)",
+        "event TeamJoined(uint256 index, address indexed builder)",
+        "event TeamLeft(uint256 index, address indexed builder)",
         "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
         "event WinnerJudged(uint256 trackNumber, uint256 winnerNumber)",
         "function STAKE() view returns (uint256)",
@@ -103,8 +142,7 @@
         "function balanceOf(address owner) view returns (uint256)",
         "function builderSignup() payable",
         "function builderToTeam(address) view returns (string name, bool validProject, bool projectSubmitted)",
-        "function changePrizePool(uint256 sponsorNumber, uint256 newPrize) payable",
-        "function changePrizePoolSTruct() payable",
+        "function crosssubmitProject(uint256 teamNumber, string nftUri)",
         "function distributePrize() payable",
         "function distributePrizePool(uint256 prize, tuple(string name, address[] participants, bool validProject, bool projectSubmitted) team) payable",
         "function distributePrizeTrack(uint256 prize, tuple(string name, address[] participants, bool validProject, bool projectSubmitted) team) payable",
@@ -128,6 +166,7 @@
         "function getWinnerTrackWinners(uint256 winnerNumber) view returns (uint256[])",
         "function initializeTeam(string name, address[] participants)",
         "function isApprovedForAll(address owner, address operator) view returns (bool)",
+        "function joinTeam(uint256 teamIndex)",
         "function judgeWinner(string _sponsor_name, uint256[] trackWinners, uint256[] poolPrizeWinners)",
         "function name() view returns (string)",
         "function ownerOf(uint256 tokenId) view returns (address)",
@@ -155,9 +194,10 @@
         "function symbol() view returns (string)",
         "function tokenIdOf(address owner) view returns (uint256)",
         "function tokenURI(uint256 tokenId) view returns (string)",
-        "function transferFrom(address from, address to, uint256 tokenId)"
+        "function transferFrom(address from, address to, uint256 tokenId)",
+        "function withdrawTeam(uint256 participantIndex, uint256 TeamIndex)"
       ],
-      "address": "0x9aB7f1600E3A0B4c6D2219f22D2B2cfe86436dfa"
+      "address": "0x8CBC7F3ddB155c2a030DDd64509C8a775657e7a9"
     }
   }
 ]

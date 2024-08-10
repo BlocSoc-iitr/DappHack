@@ -84,6 +84,8 @@ contract DappHack is ProjectNFTs, AxelarExecutable {
     );
     event BuilderSignedUp(address indexed builder);
     event TeamInitialized(string name, address[] participants);
+    event TeamJoined(uint256 index, address indexed builder);
+    event TeamLeft(uint256 index, address indexed builder);
     event ProjectSubmitted(uint256 teamNumber, string nftUri);
     event WinnerJudged(uint256 trackNumber, uint256 winnerNumber);
     event PrizeDistributed(uint256 amount);
@@ -134,9 +136,41 @@ contract DappHack is ProjectNFTs, AxelarExecutable {
     }
 
     //create mapping for this
-    modifier NotInTeam() {
+     modifier NotInTeam(address[] memory participants) {
         // need a mapping from address(of the signer) to team as cant fetch a team that is not created
-        // require(s_teams[msg.sender] == 0, "Already in a team");
+
+        for (uint i = 0; i < participants.length; i++) {
+            require(
+                bytes(builderToTeam[participants[i]].name).length == 0,
+                "Already in a team"
+            );
+        }
+
+        require(
+            bytes(builderToTeam[msg.sender].name).length == 0,
+            "Already in a team"
+        );
+        _;
+    }
+modifier DuplicateParticipants(address[] memory participant) {
+        address[] memory AllParticipants = new address[](1 + participant.length);
+    
+        for (uint i = 0 ; i != participant.length; i++ ){
+            AllParticipants[i] = participant[i];
+        }
+        
+        AllParticipants[participant.length] = msg.sender;
+
+        for (uint i = 0; i != AllParticipants.length; i++ ) {
+            for (uint j = i + 1; j != AllParticipants.length; j++ ) {
+                if(AllParticipants[j] == AllParticipants[i]) {
+                   revert("Duplicate Participants");
+                }
+              
+            }
+           
+        }
+       
         _;
     }
 
@@ -152,6 +186,19 @@ contract DappHack is ProjectNFTs, AxelarExecutable {
         require(!flag, "Already signed up");
         _;
     }
+
+    modifier TeamAlreadyExists(string memory teamName) {
+        bool flag = false;
+        for (uint i = 0; i < s_teams.length; i++) {
+            if (
+                keccak256(abi.encodePacked(s_teams[i].name)) ==
+                keccak256(abi.encodePacked(teamName))
+            ) flag = true;
+        }
+        require(flag == false, "Team already exists");
+        _;
+    }
+
 
     // Functions
 
@@ -290,49 +337,45 @@ contract DappHack is ProjectNFTs, AxelarExecutable {
      * @param newPrize The new prize amount for the sponsor.
      */
 
-    function changePrizePool(
-        uint256 sponsorNumber,
-        uint256 newPrize
-    ) public payable OnlySponsor {
-        require(newPrize > 0, "Invalid prize amount");
+ function changePrizePool(
+     uint256 sponsorNumber,
+     uint256 newPrize
+ ) public payable OnlySponsor {
+     require(newPrize > 0, "Invalid prize amount");
 
-        Sponsor memory sponsor = s_sponsors[sponsorNumber];
+     Sponsor memory sponsor = s_sponsors[sponsorNumber];
 
-        uint256 temp_sum = 0;
-        uint256[] memory temp_array = sponsor.prizeArray;
-        for (uint i = 0; i < temp_array.length; ++i) {
-            temp_sum += temp_array[i];
-        }
+     uint256 temp_sum = 0;
+     uint256[] memory temp_array = sponsor.prizeArray;
+     for (uint i = 0; i < temp_array.length; ++i) {
+         temp_sum += temp_array[i];
+     }
 
         // check that the newPrize fund is greater than the sum of all the prizes
-        require(
-            newPrize >= temp_sum + sponsor.poolPrize,
-            "Invalid prize amount"
-        );
+     require(
+         newPrize >= temp_sum + sponsor.poolPrize,
+         "Invalid prize amount"
+     );
 
-        uint256 oldPrize = sponsorPrizePool[sponsorNumber];
+     uint256 oldPrize = sponsorPrizePool[sponsorNumber];
 
         int amt = int(newPrize - oldPrize);
 
-        if (amt >= 0) {
-            payable(address(this)).transfer(uint256(amt));
-        } else {
-            payable(msg.sender).transfer(uint256(-amt));
-        }
-        //update total prize pool
-        s_totalPrizePool += uint256(amt);
+         if (amt >= 0) {
+             payable(address(this)).transfer(uint256(amt));
+         } else {
+             payable(msg.sender).transfer(uint256(-amt));
+         }
+         //update total prize pool
+         s_totalPrizePool += uint256(amt);
 
-        //prizePoolStructChange to be called
+         //prizePoolStructChange to be called
 
-        sponsorPrizePool[sponsorNumber] = newPrize;
-        s_sponsors[sponsorNumber].poolPrize = newPrize;
+         sponsorPrizePool[sponsorNumber] = newPrize;
+         s_sponsors[sponsorNumber].poolPrize = newPrize;
 
-        emit PrizePoolChanged(msg.sender, oldPrize, newPrize);
-    }
-
-    function changePrizePoolSTruct() public payable {
-        /// TODO
-    }
+         emit PrizePoolChanged(msg.sender, oldPrize, newPrize);
+     }
 
     /**
      * @dev Allows a builder to sign up for the competition.
@@ -361,22 +404,50 @@ contract DappHack is ProjectNFTs, AxelarExecutable {
      * @param name The name of the team.
      * @param participants The addresses of the participants in the team.
      */
-    function initializeTeam(
+      function initializeTeam(
         string memory name,
         address[] memory participants
-    ) public OnlyValidTeamSize(participants.length) NotInTeam {
-        //add the team to the team array
-        s_teams.push(Team(name, participants, false, false)); // ATTACK_VECTOR: People can add members already in a team , a Problem
+    )
+        public 
+        DuplicateParticipants(participants)
+   
+    {
 
-        // give the team to builder in mapping
-
-        for (uint256 i = 0; i < participants.length; i++) {
-            builderToTeam[participants[i]] = s_teams[s_teams.length - 1];
+     for(uint i = 0; i != participants.length; i++ ) {
+            require(isBuilder(participants[i]), "Builder not found");
         }
 
-        emit TeamInitialized(name, participants);
+        address[] memory totalParticipants = new address[](
+            participants.length + 1
+        );
 
-        //team withdraw ?
+        for (uint i = 0; i != participants.length; i++ ) {
+            totalParticipants[i] = participants[i];
+          
+        }
+
+        totalParticipants[participants.length] = msg.sender;
+
+       crossinitializeTeam(name, totalParticipants);
+    }
+
+     /**
+     * @dev Adds a participant to a particular team.
+     * @param teamIndex Index of team in s_teams array which you want to join.
+     */
+
+    function joinTeam(uint256 teamIndex) public {
+       crossjoinTeam(teamIndex, msg.sender);
+    }
+
+    /**
+     * @dev Withdraws a participant from a particular team.
+     * @dev Deletes the team if there are no participants left.
+     * @param participantIndex Index of participant in team which you want to withdraw.
+     * @param TeamIndex Index of team in s_teams array which you want to join.
+    */
+    function withdrawTeam(uint256 participantIndex , uint256 TeamIndex) public {
+        crosswithdrawTeam(participantIndex, TeamIndex, msg.sender);
     }
 
     /**
@@ -388,19 +459,7 @@ contract DappHack is ProjectNFTs, AxelarExecutable {
         uint256 teamNumber,
         string memory nftUri
     ) public OnlyBuilder {
-        require(
-            s_teams[teamNumber].projectSubmitted == false,
-            "Project already submitted"
-        );
-        s_teams[teamNumber].validProject = true;
-        for (uint256 i = 0; i < s_teams[teamNumber].participants.length; i++) {
-            mint();
-            setTokenOwner(s_tokenId, s_teams[teamNumber].participants[i]);
-            setOwnerTokenId(s_teams[teamNumber].participants[i], s_tokenId);
-            setTokenUri(s_tokenId, nftUri);
-            s_teams[teamNumber].projectSubmitted = true;
-        }
-        emit ProjectSubmitted(teamNumber, nftUri);
+      crosssubmitProject(teamNumber, nftUri);
     }
 
     /**
@@ -415,15 +474,7 @@ contract DappHack is ProjectNFTs, AxelarExecutable {
         uint256[] memory poolPrizeWinners
     ) public OnlySponsor {
         //POSSIBLE ATTACK : a protocol has assigned 4 sponsors and each sponsor can give his own winners which is a problem
-
-        s_winners.push(Winner(_sponsor_name, trackWinners, poolPrizeWinners));
-
-        sponsorToWinner[sponsorToId[msg.sender]] = s_winners[
-            s_winners.length - 1
-        ];
-
-        // initialize sponsor to winner mapping
-        emit WinnerJudged(s_winners.length - 1, poolPrizeWinners.length);
+        crossjudgeWinner(_sponsor_name, trackWinners, poolPrizeWinners, msg.sender);
     }
 
     /**
@@ -492,18 +543,7 @@ contract DappHack is ProjectNFTs, AxelarExecutable {
      * @param sponsor The address to check.
      * @return True if the address is a sponsor, false otherwise.
      */
-    function isSponsor(
-        address sponsor,
-        uint256 sponsorId
-    ) internal view returns (bool) {
-        Sponsor memory s = s_sponsors[sponsorId];
-        for (uint256 i = 0; i < s.sponsors.length; i++) {
-            if (s.sponsors[i] == sponsor) {
-                return true;
-            }
-        }
-        return false;
-    }
+   
 
     /**
      * @dev Checks if the given address is a builder.
@@ -534,14 +574,159 @@ contract DappHack is ProjectNFTs, AxelarExecutable {
     }
 
     // Axelar Cross-Chain Functions
-        function _execute(string calldata sourceChain_, string calldata sourceAddress_, bytes calldata payload_) internal override {
+  
+
+    
+    function _execute(string calldata sourceChain_, string calldata sourceAddress_, bytes calldata payload_) internal override {
         // // DealRequest calldata deal;
         // DealRequest[] memory deal = abi.decode(payload_, (DealRequest[]));
         // makeBatchDealProposal(deal);
-        address builder = abi.decode(payload_, (address));
+        string memory _func;
+      (_func) = abi.decode(payload_, (string));
+      bytes32 _funcHash = keccak256(abi.encodePacked(_func));
+      if(_funcHash == keccak256(abi.encodePacked("builderSignup"))) {
+
+        (, address builder) = abi.decode(payload_, (string , address));
+        require(!isBuilder(builder), "Already signed up");
         s_builders.push(builder);
         emit BuilderSignedUp(builder);
+
+      }else if(_funcHash == keccak256(abi.encodePacked("initializeTeam"))){
+         (, string memory _name , address[] memory participants) = abi.decode(payload_, (string, string, address[]));
+         crossinitializeTeam(_name, participants);
+      }else if(_funcHash == keccak256(abi.encodePacked("joinTeam"))){
+          (, uint256 teamIndex, address  user) = abi.decode(payload_, (string, uint256, address));
+          crossjoinTeam(teamIndex, user);
+      }else if(_funcHash == keccak256(abi.encodePacked("withdrawTeam"))){
+            (, uint256 participantIndex , uint256 teamIndex ,  address user) = abi.decode(payload_, (string, uint256, uint256, address));
+            crosswithdrawTeam(participantIndex, teamIndex, user);
+      }else if(_funcHash == keccak256(abi.encodePacked("submitProject"))){
+            (, uint256 teamNumber, string memory nftUri, address user) = abi.decode(payload_, (string , uint256, string, address));
+            require(isBuilder(user), "Not a Builder");
+            crosssubmitProject(teamNumber , nftUri);
+      }else if(_funcHash == keccak256(abi.encodePacked("judgeWinner"))){
+       (,string memory _sponsor_name, uint256[] memory trackWinners, uint256[] memory poolPrizeWinners, address user) = abi.decode(payload_, (string,string , uint256[] , uint256[], address));
+          
+        require(
+            sponsorToId[msg.sender] != 0,
+            "Only sponsors can call this function"
+        );
+            crossjudgeWinner(_sponsor_name, trackWinners, poolPrizeWinners, user);
+      }
+
     }
+
+    function crossinitializeTeam(string memory name , address[] memory participants) internal
+    TeamAlreadyExists(name) 
+    OnlyValidTeamSize(participants.length)  {
+     for(uint i = 0 ; i != participants.length ; i++ ){
+            require(isBuilder(participants[i]), "Builder not found");
+            require(
+                bytes(builderToTeam[participants[i]].name).length == 0,
+                "Already in a team"
+            );
+        }
+
+        s_teams.push(Team(name, participants, false, false));
+
+        for (uint256 i = 0; i != participants.length;  i++ ) {
+            builderToTeam[participants[i]] = s_teams[s_teams.length - 1];
+        }
+
+        emit TeamInitialized(name, participants);
+    }
+
+    function crossjoinTeam(uint256 teamIndex, address user) internal {
+        require(isBuilder(user), "Not a Builder");
+        require(
+            bytes(builderToTeam[user].name).length == 0,
+            "Already in a team"
+        );
+        require(teamIndex < s_teams.length, "No such team exists");
+        require(
+            (s_teams[teamIndex].participants.length + 1) <= s_teamSizeLimit,
+            "Team limit exceeded"
+        );
+
+        s_teams[teamIndex].participants.push(user);
+
+        for(uint i = 0; i != s_teams[teamIndex].participants.length; i++ ) {
+            builderToTeam[s_teams[teamIndex].participants[i]] = s_teams[teamIndex];
+        }
+
+        emit TeamJoined(teamIndex, user);
+    }
+
+    function crosswithdrawTeam(uint256 participantIndex, uint256 teamIndex, address user) internal {
+        require(isBuilder(user), "Not a Builder");
+        require(
+            bytes(builderToTeam[user].name).length != 0,
+            "You're not in any team"
+        );
+
+       address  temp =  s_teams[teamIndex].participants[participantIndex] ;
+       s_teams[teamIndex].participants[participantIndex] = s_teams[teamIndex].participants[s_teams[participantIndex].participants.length - 1];
+       s_teams[teamIndex].participants[s_teams[teamIndex].participants.length - 1] = temp;
+
+       s_teams[teamIndex].participants.pop();
+       
+
+        delete builderToTeam[user];
+
+        if (s_teams[teamIndex].participants.length == 0) {
+           Team memory TempStruct = s_teams[teamIndex];
+            s_teams[teamIndex] = s_teams[s_teams.length - 1];
+            s_teams[s_teams.length - 1] = TempStruct;
+            s_teams.pop();
+        }else{
+          for(uint i = 0; i != s_teams[teamIndex].participants.length; i++ ) {
+              builderToTeam[s_teams[teamIndex].participants[i]] = s_teams[teamIndex];
+          }
+    
+        }
+
+        
+
+    }
+
+     function crosssubmitProject(
+        uint256 teamNumber,
+        string memory nftUri
+    ) public{
+        require(
+            s_teams[teamNumber].projectSubmitted == false,
+            "Project already submitted"
+        );
+        s_teams[teamNumber].validProject = true;
+        for (uint256 i = 0; i < s_teams[teamNumber].participants.length; i++) {
+            mint();
+            setTokenOwner(s_tokenId, s_teams[teamNumber].participants[i]);
+            setOwnerTokenId(s_teams[teamNumber].participants[i], s_tokenId);
+            setTokenUri(s_tokenId, nftUri);
+            s_teams[teamNumber].projectSubmitted = true;
+        }
+        emit ProjectSubmitted(teamNumber, nftUri);
+    }
+       function crossjudgeWinner(
+        string memory _sponsor_name,
+        uint256[] memory trackWinners, 
+        uint256[] memory poolPrizeWinners,
+        address user
+       )internal {
+           
+        //POSSIBLE ATTACK : a protocol has assigned 4 sponsors and each sponsor can give his own winners which is a problem
+
+        s_winners.push(Winner(_sponsor_name, trackWinners, poolPrizeWinners));
+
+        sponsorToWinner[sponsorToId[user]] = s_winners[
+            s_winners.length - 1
+        ];
+
+        // initialize sponsor to winner mapping
+        emit WinnerJudged(s_winners.length - 1, poolPrizeWinners.length);
+    }
+       
+
 
 
 

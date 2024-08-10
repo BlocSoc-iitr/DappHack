@@ -135,14 +135,16 @@ function calculateBridgeFee(source, destination, options = {}) {
     const api = new AxelarQueryAPI({ environment: Environment.TESTNET });
 
     const { gasLimit, gasMultiplier, symbol } = options;
-    console.log(CHAINS.TESTNET[source.name]);
+    console.log(source.name.toUpperCase());
+    console.log("here", CHAINS.TESTNET["ARBITRUM_SEPOLIA"]);
     return api.estimateGasFee(
-        CHAINS.TESTNET[source.name.toUpperCase()],
+        CHAINS.TESTNET["ARBITRUM_SEPOLIA"],
         CHAINS.TESTNET[destination.name.toUpperCase()],
-        symbol || source.tokenSymbol,
         gasLimit,
         gasMultiplier,
+        symbol || source.tokenSymbol
     );
+
 }
 
 /**
